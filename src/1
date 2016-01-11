@@ -1,3 +1,0 @@
-reports/report2.py:        for dt in datetimeIterator(min_date, max_date):
-reports/report3.py:        for dt in datetimeIterator(min_date, max_date):
-reports/report5.py:            for dt in datetimeIterator(min_date, max_date):
