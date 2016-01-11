@@ -1,0 +1,1 @@
+wget -U 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:42.0) Gecko/20100101 Firefox/42.0' --referer='http://www.nseindia.com/products/content/derivatives/equities/archieve_eq.htm' http://www.nseindia.com/content/historical/DERIVATIVES/2016/JAN/fo01JAN2016bhav.csv.zip

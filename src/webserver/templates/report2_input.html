@@ -1,0 +1,16 @@
+$def with(data)
+<html>
+<head>
+</head>
+
+<body>
+    <form action="/reports?report=2" method="post">
+        <select name="scrip">
+        $for scrip in data['scrips']:
+            <option value=$scrip>$scrip</option>
+        </select>
+        <br><br><br>
+        <input type="submit" value="Submit"> 
+    </form>
+</body>
+</html>

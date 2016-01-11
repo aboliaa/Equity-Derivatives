@@ -1,0 +1,21 @@
+import os
+
+import matplotlib.pyplot as plt
+
+class Table(object):
+    def __init__(self, path):
+        self.path = path
+
+    def plot_report4(self, data):
+        columns = ['No.', 'Symbol', 'Percentage Movement', 'Increase/Decrease']
+        cell_text = []
+        i = 0
+        for d in data:
+            i += 1
+            increase = 'Increase' if d['increase'] == True else 'Decrease'
+            increase = 'Decrease' if d['increase'] == False else 'No Change'
+            cell_text.append([str(i), d['scrip'], d['move_percent'], increase])
+
+        table = plt.table(cellText=cell_text, colLabels=columns)
+        plt.savefig(os.path.join(self.path, "report_4.png"))
+

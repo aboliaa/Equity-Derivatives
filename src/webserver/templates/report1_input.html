@@ -1,0 +1,23 @@
+$def with(data)
+<html>
+<head>
+</head>
+
+<body>
+    <form action="/reports?report=1" method="post">
+        <select name="scrip">
+        $for scrip in data['scrips']:
+            <option value=$scrip>$scrip</option>
+        </select>
+        
+        <br><br><br>
+        <label>Date</label>
+        <input type="text" name="dd" placeholder="dd" size=2 maxlength=2>/
+        <input type="text" name="mm" placeholder="mm" size=2 maxlength=2>/
+        <input type="text" name="yyyy" placeholder="yyyy" size=4 maxlength=4>
+        
+        <br><br><br>
+        <input type="submit" value="Submit"> 
+    </form>
+</body>
+</html>

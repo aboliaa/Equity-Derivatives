@@ -1,0 +1,4 @@
+sUCCESS = 1
+FALLED = 0
+
+DEBUG = False
