@@ -1,10 +1,14 @@
 import logging
+import sys
 
 class Logger(object):
-    def __init__(self, filepath):
+    def __init__(self, filepath, logname=None):
         logger = logging.getLogger(filepath)
         logger.setLevel(logging.DEBUG)
-        handler = logging.FileHandler(filepath)
+        if logname == 'stdout':
+            handler = logging.StreamHandler(sys.stdout)
+        else:
+            handler = logging.FileHandler(filepath)
         formatter = logging.Formatter('[%(asctime)s] [%(levelname)s] %(message)s')
         handler.setFormatter(formatter)
         logger.addHandler(handler)

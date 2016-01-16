@@ -16,7 +16,6 @@ Should application take multiple CSV's as input?
 import os
 from zipfile import ZipFile
 
-from db import dbops_sqlite3
 from data import read_one_csv
 
 from utils import get_tablename
@@ -26,32 +25,23 @@ from utils import tablename_to_idx
 
 from const import *
 
-CDBOps = dbops_sqlite3.SQLite_DBOps
-
 class Populator(object):
     __doc__ = """
                 csvs: list of full paths of csv files
-                dbname: full path of the db file (for sqlite)
-                
-                TODO: need to improve for mysql where username and passwd is needed
+                dbname: full path of the db file (for sqlite)  
               """
 
-    def __init__(self, csvs, dbname):
-        self.csvs = csvs
-        self.dbname = dbname
-        self.init_dbops()
+    def __init__(self, dbops):
+        self.dbops = dbops
         self.get_tables()
         self.scrips = []
-
-    def init_dbops(self):
-        self.dbops = CDBOps(self.dbname)
 
     def get_tables(self):
         spec = {'cols': ['name'], 'clauses': [[('type', '=', 'table')]]}
         tables = self.dbops.select_meta(spec)
         self.tablenames = [x[0] for x in tables]
         self.scrip_info = True if 'M_SCRIP_INFO' in self.tablenames else False 
-        dlog.info('Exising table list = ' + str(self.tablenames))
+        # dlog.info('Exising table list = ' + str(self.tablenames))
 
     def create_table(self, tablename):
         # Create scrip info table if needed.
@@ -112,8 +102,9 @@ class Populator(object):
         }
         return spec
 
-    def start(self):
-        for csv in self.csvs:
+    def start(self, csvs):
+        for csv in csvs:
+            # TODO: Once this csv is done, add this to csv's db
             reader = read_one_csv.CSVReader(csv)
             for e in reader.walk():
                 # print 'e = ', e
@@ -151,7 +142,6 @@ if __name__ == '__main__':
     
     path = '/Users/amitkulkarni/Downloaded_Bhavcopies/2015/DEC2015'
     csvs = walk_path(path)
-    print "*****************", csvs
 
     dbname = '/Users/amitkulkarni/temp_Derivatives/populate_test.db'
     

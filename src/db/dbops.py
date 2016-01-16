@@ -27,7 +27,7 @@ class DBOps(object):
         pk = spec.get('primary_key')
         nk = spec.get('non_key')
         tn = spec.get('tablename')
-        if not pk or not nk or not tn:
+        if not pk or not tn:
             raise Exception("Spec Verification Failed")
 
     def verify_select_spec(self, spec):

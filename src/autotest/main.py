@@ -15,11 +15,8 @@ def run(tc):
     return result
 
 def main():
-    debuglogger = log.Logger(DEBUGLOG)
-    __builtins__.dlog = debuglogger
-
-    requestlogger = log.Logger(NULLLOG)
-    __builtins__.rlog = requestlogger
+    __builtins__.dlog = log.Logger(DEBUGLOG)
+    __builtins__.rlog =log.Logger(NULLLOG)
 
     success = 0
     failed = 0

@@ -113,6 +113,7 @@ class SQLite_DBOps(dbops.DBOps):
     def select(self, _spec):
         super(SQLite_DBOps, self).select(_spec)
         spec = self.query
+        # dlog.debug('spec for select = %s' % (spec,))
         clauses = self._process_select_clauses(spec.get('clauses'))
         _cols = ''
         if spec.get('cols'):

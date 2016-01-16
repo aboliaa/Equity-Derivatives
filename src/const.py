@@ -54,8 +54,10 @@ REV_IDX_MAP = {
 
 OPT_TYPE_MAP = {"XX": XX, "CE": CE, "PE": PE}
 
-
 DATATABLE_PREFIX = "D_"
+INDEX_TABLE_PREFIX = "I_"
+METADATA_TABLE_PREFIX = "M_"
+PERIPHERAL_TABLE_PREFIX = "P_"
 
 DAY_ZERO = '01-01-1980'
 
@@ -77,6 +79,6 @@ CSVSTORE = os.path.join(HOMEDIR, "bhavcopies")
 
 # TODO: remove DBNAME and PLOT_PATH
 DBNAME = "/Users/amitkulkarni/temp_Derivatives/populate_test.db"
-PLOT_PATH = "/Users/amitkulkarni/Derivatives/src/static/"
+PLOT_PATH = "/Users/amitkulkarni/Derivatives/src/static/reports/"
 
 
