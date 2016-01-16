@@ -19,7 +19,7 @@ class Report4DataGetter(DataGetter):
             s = self.get_sum(scrip, derivative_type, 'open_int', clauses=clauses)
         except:
             # TODO: Ideally we should handle specific errors here
-            print 'Exception in getting data for', scrip, derivative_type
+            dlog.error("Exception in getting data for %s:%s" % (scrip, derivative_type))
             s = 0
 
         # There are no rows in db for holidays. Hence aggregate query will
@@ -40,7 +40,7 @@ class Report4DataGetter(DataGetter):
             try:
                 _series = self.get_all_series(scrip, FUTURE)
             except:
-                print "Nothing found for scrip, derivative_type ", scrip, FUTURE
+                dlog.error("Nothing found for scrip, derivative_type = %s:%s" % (scrip, FUTURE))
                 series_future = set()
             else:
                 series_future = set([x[0] for x in _series])
@@ -49,7 +49,7 @@ class Report4DataGetter(DataGetter):
             try:
                 _series = self.get_all_series(scrip, OPTION)
             except:
-                print "Nothing found for scrip, derivative_type ", scrip, OPTION
+                dlog.error("Nothing found for scrip, derivative_type = %s:%s " % (scrip, OPTION))
                 series_option = set()
             else:
                 series_option = set([x[0] for x in _series])
@@ -57,11 +57,11 @@ class Report4DataGetter(DataGetter):
             _series = series_future.union(series_option)
             series = sorted(list(_series))
 
-            # print "For scrip ", scrip, " series = ", series
+            # dlog.info("For scrip %s series = %s:%s" % (scrip, series))
         
             n_series = len(series)
             if n_series < 3:
-                print "For scrip ", scrip, " there are less than 3 series"
+                dlog.error("For scrip %s there are less than 3 series" % (scrip,))
                 continue
 
             i = 0
@@ -82,13 +82,13 @@ class Report4DataGetter(DataGetter):
 
                 sum2 = s1 + s2
                 
-                # print "for scrip ", scrip, " sum1 and sum2 for series ", _s, " are: ", sum1, sum2
+                # dlog.info("for scrip %s sum1 and sum2 for series %s are: %s, %s " % (scrip, _s, sum1, sum2))
                 
                 sums[_s][scrip] = (sum1, sum2)
 
                 move = sum1 - sum2
                 if sum2 == 0:
-                    print 'For scrip ', scrip, ' the OI_sum_prev_date is zero'
+                    dlog.info('For scrip %s the OI_sum_prev_date is zero' % (scrip))
                     continue
 
                 move_percent = move * 100.0 / sum2
@@ -113,7 +113,7 @@ class Report4DataGetter(DataGetter):
 
             move = sum1 - sum2
             if sum2 == 0:
-                print 'For scrip ', scrip, ' the OI_sum_prev_date is zero'
+                dlog.info('For scrip %s the OI_sum_prev_date is zero' % (scrip,))
                 continue
 
             move_percent = move * 100.0 / sum2

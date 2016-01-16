@@ -1,3 +1,7 @@
+from const import *
+
+from utils import log
+
 WEBPY = "webpy"
 
 class WebServer():
@@ -12,6 +16,16 @@ class WebServer():
         self.webserver.run_app()
 
 if __name__ == "__main__":
+    debuglogger = log.Logger(DEBUGLOG)
+    __builtins__.dlog = debuglogger
+
+    dlog.info("Starting server at port %s" % ("8080",))
+
+    # TODO: Ideally request logs should go in DB.
+    requestlogger = log.Logger(REQUESTLOG)
+    __builtins__.rlog = requestlogger
+
     srv = WebServer()
     srv.make_app()
     srv.run_app()
+

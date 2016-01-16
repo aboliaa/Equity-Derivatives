@@ -40,7 +40,7 @@ class Report5DataGetter(DataGetter):
                 min_date = self.get_min_value(scrip, FUTURE, 'timestamp')
             except:
                 traceback.print_exc()
-                print "Exception in scrip", scrip
+                dlog.error("Exception in scrip %s" % (scrip,))
                 continue
 
             min_date = from_str_to_pytime(min_date)
@@ -59,9 +59,10 @@ class Report5DataGetter(DataGetter):
             elif date_for_max_sum_of_OI == max_date:
                 data['highest'].append(scrip)
 
-        print "HIGHEST DATA =", data['highest']
-        print "LOWEST DATA =", data['lowest']
+        dlog.info("HIGHEST DATA = %s" % (data['highest'],))
+        dlog.info("LOWEST DATA = %s" % (data['lowest'],))
         return data
    
     def plot_data(self, data):
         self.plot.table.plot_report5(data)
+

@@ -1,4 +1,7 @@
+import os
+import shutil
 import time
+from glob import glob
 from datetime import datetime,timedelta
 
 import const
@@ -51,3 +54,19 @@ def get_prev_date(date):
     pdt = dt - timedelta(days=1)
     return pdt.date().timetuple()
 
+def remove_path(path):
+    if not path.startswith(const.PLOT_PATH):
+        return
+
+    if os.path.isdir(path):
+        # Path is a folder
+        if os.path.exists(path):
+            shutil.rmtree(path)
+    else:
+        # Path is a file
+        if os.path.exists(path):
+            os.remove(path)
+
+def remove_fileglob(path):
+    for p in glob(path):
+        remove_path(p)

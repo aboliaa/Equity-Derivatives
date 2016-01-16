@@ -3,10 +3,12 @@ import urlparse
 
 from data import WebData
 
+from const import *
+
 __all__ = ["IndexHandler", "ReportHandler"]
 
 render = web.template.render("webserver/templates/")
-dbname = "/Users/amitkulkarni/temp_Derivatives/populate_test.db"
+dbname = DBPATH
 wdata = WebData()
 
 def get_input(func):

@@ -1,3 +1,6 @@
+import sys
+import os
+
 # Types of derivatives
 OPTION = 1
 FUTURE = 2
@@ -51,10 +54,29 @@ REV_IDX_MAP = {
 
 OPT_TYPE_MAP = {"XX": XX, "CE": CE, "PE": PE}
 
-DBNAME = "/Users/amitkulkarni/temp_Derivatives/populate_test.db"
-PLOT_PATH = "/Users/amitkulkarni/Derivatives/src/static/"
 
 DATATABLE_PREFIX = "D_"
 
 DAY_ZERO = '01-01-1980'
+
+if sys.platform == 'win32':
+    # TODO: Change this to app data
+    HOMEDIR = "C:\\DerivativesHome"
+    NULLLOG = "NUL"
+else:
+    USER_HOME = os.path.expanduser('~')
+    HOMEDIR = os.path.join(USER_HOME, "DerivativesHome")
+    NULLLOG = "/dev/null"
+
+DEBUGLOG = os.path.join(HOMEDIR, "debug.log")
+REQUESTLOG = os.path.join(HOMEDIR, "request.log")
+
+DBPATH = os.path.join(HOMEDIR, "Derivatives.db")
+
+CSVSTORE = os.path.join(HOMEDIR, "bhavcopies")
+
+# TODO: remove DBNAME and PLOT_PATH
+DBNAME = "/Users/amitkulkarni/temp_Derivatives/populate_test.db"
+PLOT_PATH = "/Users/amitkulkarni/Derivatives/src/static/"
+
 

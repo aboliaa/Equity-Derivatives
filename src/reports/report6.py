@@ -23,7 +23,7 @@ class Report6DataGetter(DataGetter):
                 data['calls'][scrip] = {'scrip': scrip, 'max_contracts': max_contracts} 
             except:
                 # traceback.print_exc()
-                print "Exception in getting calls for scrip", scrip
+                dlog.error("Exception in getting calls for scrip %s" % (scrip,))
 
             try: 
                 clauses = [ [('timestamp', '=', date), ('opt_type', '=', PE)] ]
@@ -31,7 +31,7 @@ class Report6DataGetter(DataGetter):
                 data['puts'][scrip] = {'scrip': scrip, 'max_contracts': max_contracts}
             except:
                 # traceback.print_exc()
-                print "Exception in getting puts for scrip", scrip
+                dlog.error("Exception in getting puts for scrip %s" % (scrip,))
 
 
         data['calls'] = sorted(data['calls'].values(), key=lambda k:k['max_contracts'], reverse=True)
@@ -55,9 +55,10 @@ class Report6DataGetter(DataGetter):
             scrip = self.get_scrip_data(put['scrip'], OPTION, cols=cols, clauses=clauses)
             put.update(scrip[0])
 
-        print "DATA ", data
+        dlog.info("DATA = %s" % (data,))
 
         return data
     
     def plot_data(self, data):
         self.plot.table.plot_report6(data)
+
