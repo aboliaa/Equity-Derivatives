@@ -2,7 +2,6 @@ import sqlite3
 import time
 
 from db import dbops
-from utils.log import log
 from utils import from_pytime_to_str, from_str_to_pytime
 from const import *
 
@@ -81,7 +80,7 @@ class SQLite_DBOps(dbops.DBOps):
     def create(self, spec):
         super(SQLite_DBOps, self).create(spec)
         schema = self.schema
-        # print 'schema = ', schema
+        # dlog.info('schema = %s' % (schema,))
         tablename = schema['tablename']
         cols = schema['cols']
         cols = self._process_create_cols(cols)
@@ -90,28 +89,26 @@ class SQLite_DBOps(dbops.DBOps):
         _cols = ",".join(l)
         _cols += ", PRIMARY KEY (%s)" % (_pk,)
         query = """CREATE TABLE "%s" (%s)""" % (tablename, _cols)
-        # print 'sqlite create query =', query
+        # dlog.info('sqlite create query = %s' % (query,))
         rc = self.cur.execute(query)
         self.conn.commit()
-        # print rc
 
     def put(self, spec):
         super(SQLite_DBOps, self).put(spec)
         query = self.query
-        # print 'query = ', query
+        # dlog.info('query = %s' % (query,))
         tablename = query['tablename']
         values = self._process_put_vals(query['values'])
         _cols = [x[0] for x in values]
-        # print '_cols = ', _cols
+        # dlog.info('_cols = ' % (_cols,))
         _vals = [x[1] for x in values]
-        # print '_vals = ', _vals
+        # dlog.info('_vals = %s' % (_vals,))
         cols = ", ".join([x[0] for x in values])
         vals = ", ".join([x[1] for x in values])
         _query = """INSERT INTO "%s" (%s) VALUES (%s)""" % (tablename, cols, vals)
-        # print 'sqlite put query =', _query
+        # dlog.info('sqlite put query = %s' % (_query,))
         rc = self.cur.execute(_query)
         self.conn.commit()
-        # print rc
 
     def select(self, _spec):
         super(SQLite_DBOps, self).select(_spec)
@@ -139,10 +136,9 @@ class SQLite_DBOps(dbops.DBOps):
                 cls. append(cl)
             clause = " OR ".join(cls)
             query += " WHERE " + clause
-        # print 'sqlite select meta query is ', query
+        # dlog.info('sqlite select query is %s' % (query,))
         rc = self.cur.execute(query)
         l = self.cur.fetchall()
-        # print 'Output of select query is ', l, 'type(l) = ', type(l)
         # TODO: ideally, this method should be an iterator
         ll = self._process_select_output(l)
         return ll

@@ -1,6 +1,5 @@
 import copy
 
-from utils.log import log
 
 """
 This module implements the methods used for creation of db.

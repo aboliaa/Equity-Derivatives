@@ -4,8 +4,6 @@ import copy
 
 from const import *
 
-from utils.log import log
-
 from utils import get_date
 from utils import from_pytime_to_str
 
@@ -46,22 +44,22 @@ def verify_report_1(scrip, data, f):
         d = {'open_int': open_int, 'exp_dt': exp_dt, 'strike_pr': strike_pr,
              'opt_type': opt_type}
         if d not in data:
-            log('%s not found in data' % (d,))
-            log('data = %s' % (data,))
+            dlog.info('%s not found in data' % (d,))
+            dlog.info('data = %s' % (data,))
             result = FAILED
     return result
 
 def verify_report_2(scrip, data, files):
     result = SUCCESS
     for f in files:
-        # log("starting verifiecation for a csv file")
+        # dlog.info("starting verifiecation for a csv file")
         near_series = None
         near_series_record = None
         date = None
         sumOI = 0
         for e in get_records(f, scrip=scrip):
             if e[0].startswith("FUT"):
-                # log("got a record : %s" % (e,))
+                # dlog.info("got a record : %s" % (e,))
                 date = from_pytime_to_str(get_date(e[14]))
                 exp_dt = from_pytime_to_str(get_date(e[2]))
                 if not near_series:
@@ -73,26 +71,26 @@ def verify_report_2(scrip, data, files):
             sumOI += long(e[12])
             
         if not date:
-            log("Date missing")
+            dlog.info("Date missing")
             result = FAILED
 
         # TODO: Detailed cases like that scrip actually was not there on that date
 
         settle_pr = near_series_record[9]
         if data[date]['settlement_price'] <> float(settle_pr):
-            log('Near series settlement price for date %s does not match' % (date,))
+            dlog.info('Near series settlement price for date %s does not match' % (date,))
             result = FAILED
         
         if data[date]['summation_of_OI'] <> sumOI:
-            log('Sum of OI does not match')
+            dlog.info('Sum of OI does not match')
             result = FAILED 
-        # log("Settlement price verified")
+        # dlog.info("Settlement price verified")
     return result
 
 def verify_report_3(scrip, data, files):
     result = SUCCESS
     for f in files:
-        # log("starting verifiecation for a csv file")
+        # dlog.info("starting verifiecation for a csv file")
         near_series = None
         near_series_record = None
         date = None
@@ -100,7 +98,7 @@ def verify_report_3(scrip, data, files):
         sum_calls_oi, sum_calls_trade = 0, 0
         for e in get_records(f, scrip=scrip):
             if e[0].startswith("FUT"):
-                # log("got a record : %s" % (e,))
+                # dlog.info("got a record : %s" % (e,))
                 date = from_pytime_to_str(get_date(e[14]))
                 exp_dt = from_pytime_to_str(get_date(e[2]))
                 if not near_series:
@@ -120,29 +118,26 @@ def verify_report_3(scrip, data, files):
                 sum_puts_trade += trade
  
         if not date:
-            log("Date missing")
+            dlog.info("Date missing")
             result = FAILED
 
         # TODO: Detailed cases like that scrip actually was not there on that date
 
         settle_pr = near_series_record[9]
         if data[date]['settlement_price'] <> float(settle_pr):
-            log('Near series settlement price for date %s does not match' % (date,))
+            dlog.info('Near series settlement price for date %s does not match' % (date,))
             result = FAILED
-        # log("Settlement price verified")
+        # dlog.info("Settlement price verified")
 
         pcr_oi = float(sum_puts_oi) / float(sum_calls_oi)
         if data[date]['PCR_OI'] <> pcr_oi:
-            log('PCR OI for date %s does not match' % (date,))
+            dlog.info('PCR OI for date %s does not match' % (date,))
             result = FAILED
  
         pcr_trade = float(sum_puts_trade) / float(sum_calls_trade)
         if data[date]['PCR_trade'] <> pcr_trade:
-            log('PCR trade for date %s does not match' % (date,))
+            dlog.info('PCR trade for date %s does not match' % (date,))
             result = FAILED
 
     return result
-        
-
-
 

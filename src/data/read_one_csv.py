@@ -1,4 +1,3 @@
-from utils import log
 from const import *
 
 HEADERS_V1 = [
@@ -40,7 +39,7 @@ class CSVReader():
         # print 'headers = ', headers
         # print 'HEADERS_V1 = ', HEADERS_V1
         if headers <>  HEADERS_V1:
-            log.log("Headers changed! new headers = %s", headers)
+            dlog.info("Headers changed! new headers = %s" % (headers,))
             raise Exception("New Headers")
 
     def __del__(self):
