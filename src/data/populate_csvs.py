@@ -93,9 +93,9 @@ class DailyUpdate:
 
 if __name__ == "__main__":
     __builtins__.dlog = log.Logger('stdout', logname='stdout')
-    __builtins__.rlog = log.Logger(NULLLOG)
+    # __builtins__.rlog = log.Logger(NULLLOG)
 
-    dbname = "/Users/amitkulkarni/temp_Derivatives/daily_update.db"
+    dbname = "/Users/amitkulkarni/temp_Derivatives/daily_update_1.db"
     updater = DailyUpdate(dbname, CSVSTORE)
     updater.start()
 

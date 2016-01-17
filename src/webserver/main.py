@@ -4,6 +4,8 @@ from utils import log
 
 WEBPY = "webpy"
 
+import webpy
+
 class WebServer():
     def __init__(self, webserver_type=WEBPY):
         module = __import__(webserver_type)
