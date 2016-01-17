@@ -69,5 +69,24 @@ class Report3DataGetter(DataGetter):
         
         return data
 
+    def transform_data(self, data, json=False):
+        x = []
+        y = []
+        y1 = []
+        y2 = []
+        i = 1
+        for k,v in data.iteritems():
+            #x.append(k)
+            x.append(i)
+            i += 1
+            y.append(v['settlement_price'])
+            y1.append(v['PCR_OI'])
+            y2.append(v['PCR_trade'])
+
+        data = self.plot.plotly.form_plotargs_report3(x, y, y1, y2)
+        if json:
+            data = jsonify(data)
+        return data
+
     def plot_data(self, data):
         self.plot.graph.plot_report3(data)

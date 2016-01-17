@@ -1,6 +1,7 @@
 import os
 import shutil
 import time
+import json
 from glob import glob
 from datetime import datetime,timedelta
 
@@ -33,17 +34,25 @@ def from_str_to_pytime(strtime):
         t = None
     return t
 
-def datetimeIterator(from_date, to_date, delta=timedelta(days=1), skip_holidays=True):
+def is_holiday(date):
+    ''' date is timetuple '''
     SATURDAY = 5
     SUNDAY = 6
+
+    # TODO: Also skip NSE holidays
+    if date.tm_wday in [SATURDAY, SUNDAY]:
+        return True
+    return False
+
+def datetimeIterator(from_date, to_date, delta=timedelta(days=1), skip_holidays=True):
 
     from_date = datetime.fromtimestamp(time.mktime(from_date))
     to_date = datetime.fromtimestamp(time.mktime(to_date))
 
     while from_date <= to_date:
         date = from_date.date().timetuple()
-        if skip_holidays and date.tm_wday in [SATURDAY, SUNDAY]:
-            # Skip holidays
+
+        if skip_holidays and is_holiday(date):
             pass
         else:
             yield date
@@ -53,6 +62,9 @@ def get_prev_date(date):
     dt = datetime.fromtimestamp(time.mktime(date))
     pdt = dt - timedelta(days=1)
     return pdt.date().timetuple()
+
+def jsonify(data):
+    return json.dumps(data)
 
 def remove_path(path):
     if not path.startswith(const.PLOT_PATH):

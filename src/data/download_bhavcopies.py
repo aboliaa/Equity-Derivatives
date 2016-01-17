@@ -59,6 +59,7 @@ def download_bhavcopy(date, path):
     month = get_month(date)
     url = "http://www.nseindia.com/content/historical/DERIVATIVES/%s/%s/fo%sbhav.csv.zip" %(year, month, date)
 
+    path = os.path.expanduser(path)
     path = os.path.join(path, year, month+year)
     zippath = os.path.join(path, "fo%sbhav.csv.zip" %date)
     if not os.path.exists(path):

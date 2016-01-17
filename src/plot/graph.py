@@ -1,6 +1,7 @@
 import os
 
 from const import *
+from utils import remove_fileglob
 import matplotlib.pyplot as plt
 
 class Graph(object):
@@ -8,6 +9,7 @@ class Graph(object):
         self.path = path
 
     def plot_report1(self, data):
+        remove_fileglob(os.path.join(self.path, "report1*"))
 
         call_strike_prices = {}
         call_open_interests = {}
@@ -68,6 +70,7 @@ class Graph(object):
             i += 1
 
     def plot_report2(self, data):
+        remove_fileglob(os.path.join(self.path, "report2.png"))
         dates = []
         settlement_prices = []
         sum_of_OI = []
@@ -98,6 +101,8 @@ class Graph(object):
         plt.savefig(os.path.join(self.path, "report2.png"))
 
     def plot_report3(self, data):
+        remove_fileglob(os.path.join(self.path, "report3.png"))
+
         dates = []
         settlement_prices = []
         PCR_OI = []

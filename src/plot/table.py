@@ -1,6 +1,7 @@
 import os
-
 import matplotlib.pyplot as plt
+
+from utils import remove_fileglob
 
 class Table(object):
     def __init__(self, path):
@@ -14,7 +15,7 @@ class Table(object):
         plt.savefig(path)
 
     def plot_report4(self, data):
-        print 'data = ', data
+        remove_fileglob(os.path.join(self.path, "report3*"))
         for i in range(len(data)):
             self._plot_report4(data[i], i)
 
@@ -44,6 +45,7 @@ class Table(object):
         plt.savefig(os.path.join(self.path, name))
 
     def plot_report5(self, data):
+        remove_fileglob(os.path.join(self.path, "report5*"))
         self._plot_report5(data['highest'], ii=1)
         self._plot_report5(data['lowest'], ii=2)
 
@@ -80,6 +82,7 @@ class Table(object):
         plt.savefig(os.path.join(self.path, "report5_%d.png"%ii))
 
     def plot_report6(self, data):
+        remove_fileglob(os.path.join(self.path, "report6*"))
         self._plot_report6(data['calls'], ii=1)
         self._plot_report6(data['puts'], ii=2)
 
