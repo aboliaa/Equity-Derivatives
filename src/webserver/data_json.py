@@ -30,12 +30,14 @@ class WebDataJSON(object):
         time_str = "%s-%s-%s" %(dd,mm,yyyy)
         date = time.strptime(time_str, "%d-%m-%Y")
         data = self.reports.report1.generate_data(scrip, date)
-        self.reports.report1.plot_data(data)
+        data = self.reports.report1.transform_data(data, json=True)
+        return data
 
     def _get_data_report2(self, args):
         scrip = args["scrip"]
         data = self.reports.report2.generate_data(scrip)
-        self.reports.report2.plot_data(data)
+        data = self.reports.report2.transform_data(data, json=True)
+        return data
 
     def _get_data_report3(self, args):
         scrip = args["scrip"]

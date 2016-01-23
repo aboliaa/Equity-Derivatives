@@ -76,6 +76,7 @@ class Report3DataGetter(DataGetter):
         y2 = []
         i = 1
         for k,v in data.iteritems():
+            print k
             #x.append(k)
             x.append(i)
             i += 1

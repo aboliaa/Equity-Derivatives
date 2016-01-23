@@ -61,10 +61,22 @@ class Report2DataGetter(DataGetter):
         
         return data
 
-    # TODO
-    def propername_data(self, data, transform=True):
-        self.generate_data()
-        self.transform_data()
+    def transform_data(self, data, json=False):
+        x = []
+        y1 = []
+        y2 = []
+        i = 1
+        for d in sorted(data.iteritems()):
+            #x.append(d[0])
+            x.append(i)
+            i += 1
+            y1.append(d[1]['settlement_price'])
+            y2.append(d[1]['summation_of_OI'])
+
+        data = self.plot.plotly.form_plotargs_report2(x, y1, y2)
+        if json:
+            data = jsonify(data)
+        return data
 
     def plot_data(self, data):
         self.plot.graph.plot_report2(data)

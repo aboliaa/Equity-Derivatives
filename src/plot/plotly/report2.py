@@ -1,24 +1,5 @@
-def form_plotargs(x, y1, y2, y3):
+def form_plotargs(x, y1, y2):
     data = [
-            {
-                "x": x,             
-                "y": y3,
-                "line": {
-                    "width": 3
-                }, 
-                "marker": {
-                    "line": {
-                        "width": 2
-                    }, 
-                    "size": 12, 
-                    "symbol": "square"
-                }, 
-                "mode": "lines+markers", 
-                "name": "PCR of trade", 
-                "type": "scatter", 
-                "uid": "9023be", 
-                "yaxis": "y3"
-            }, 
             {
                 "x": x,
                 "y": y2,
@@ -115,7 +96,7 @@ def form_plotargs(x, y1, y2, y3):
             "width": 900, 
             "xaxis": {
                 "anchor": "y", 
-                "autorange": True, 
+                "autorange": False, 
                 "autotick": True, 
                 "domain": [
                     0.08, 
@@ -131,6 +112,10 @@ def form_plotargs(x, y1, y2, y3):
                 "nticks": 0, 
                 "overlaying": False, 
                 "position": 0, 
+                "range": [
+                    0, 
+                    6.409927053599747
+                ], 
                 "rangemode": "normal", 
                 "showexponent": "all", 
                 "showgrid": False, 
@@ -205,8 +190,7 @@ def form_plotargs(x, y1, y2, y3):
             }, 
             "yaxis2": {
                 "anchor": "x", 
-                "autorange": False, 
-                "range" : [0,1.5],
+                "autorange": True, 
                 "autotick": True, 
                 "domain": [
                     0, 
@@ -249,54 +233,7 @@ def form_plotargs(x, y1, y2, y3):
                 "zeroline": True, 
                 "zerolinecolor": "#444", 
                 "zerolinewidth": 1
-            }, 
-            "yaxis3": {
-                "anchor": "free", 
-                "autorange": False, 
-                "range" : [0,1.5],
-                "autotick": True, 
-                "domain": [
-                    0, 
-                    1
-                ], 
-                "dtick": 1, 
-                "exponentformat": "B", 
-                "gridcolor": "#eee", 
-                "gridwidth": 1, 
-                "linecolor": "#444", 
-                "linewidth": 1, 
-                "mirror": False, 
-                "nticks": 0, 
-                "overlaying": "y", 
-                "position": 1, 
-                "rangemode": "normal", 
-                "showexponent": "all", 
-                "showgrid": True, 
-                "showline": False, 
-                "showticklabels": True, 
-                "side": "right", 
-                "tick0": 0, 
-                "tickangle": "auto", 
-                "tickcolor": "#444", 
-                "tickfont": {
-                    "color": "", 
-                    "family": "", 
-                    "size": 0
-                }, 
-                "ticklen": 5, 
-                "ticks": "", 
-                "tickwidth": 1, 
-                "title": "PCR of trade", 
-                "titlefont": {
-                    "color": "", 
-                    "family": "", 
-                    "size": 0
-                }, 
-                "type": "linear", 
-                "zeroline": True, 
-                "zerolinecolor": "#444", 
-                "zerolinewidth": 1
-            }
+            } 
         }
 
     plotargs = {"data": data, "layout": layout}
