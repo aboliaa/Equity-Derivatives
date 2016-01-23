@@ -9,7 +9,13 @@ $def with(data)
             <option value=$scrip>$scrip</option>
         </select>
         <br><br><br>
-        <!--<input type="submit" value="Submit" onclick="javascript:done();">-->
+
+        <label>Date</label>
+        <input type="text" name="dd" id="dd" placeholder="dd" size=2 maxlength=2>/
+        <input type="text" name="mm" id="mm" placeholder="mm" size=2 maxlength=2>/
+        <input type="text" name="yyyy" id="yyyy" placeholder="yyyy" size=4 maxlength=4>
+        
+        <br><br><br>
         <input type="button" value="Submit" onclick="javascript:done();">
     </div>
 
@@ -24,8 +30,11 @@ $def with(data)
 <script type="text/javascript">
     function done(){
         var params = {};
-        params["report"] = 3;
+        params["report"] = 1;
         params["scrip"] = jQuery("#scrip").val();
+        params["dd"] = jQuery("#dd").val();
+        params["mm"] = jQuery("#mm").val();
+        params["yyyy"] = jQuery("#yyyy").val();
         console.log(params);
 
         jQuery("#input").hide()
@@ -48,3 +57,4 @@ $def with(data)
 
     }
 </script>
+
