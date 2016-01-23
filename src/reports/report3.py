@@ -75,10 +75,9 @@ class Report3DataGetter(DataGetter):
         y1 = []
         y2 = []
         i = 1
-        for k,v in data.iteritems():
-            print k
-            #x.append(k)
-            x.append(i)
+        for k in sorted(data):
+            v = data[k]
+            x.append(k)
             i += 1
             y.append(v['settlement_price'])
             y1.append(v['PCR_OI'])

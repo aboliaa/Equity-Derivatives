@@ -7,13 +7,6 @@ def form_plotargs(x, y1, y2):
                     "color": "rgb(44, 160, 44)", 
                     "width": 3
                 }, 
-                "marker": {
-                    "line": {
-                        "width": 2
-                    }, 
-                    "size": 12, 
-                    "symbol": "square"
-                }, 
                 "mode": "lines+markers", 
                 "name": "PCR of OI", 
                 "type": "scatter", 
@@ -27,13 +20,6 @@ def form_plotargs(x, y1, y2):
                     "color": "rgb(255, 127, 14)", 
                     "width": 3
                 }, 
-                "marker": {
-                    "line": {
-                        "width": 2
-                    }, 
-                    "size": 12, 
-                    "symbol": "square"
-                }, 
                 "mode": "lines+markers", 
                 "name": "Settlement price", 
                 "type": "scatter", 
@@ -44,12 +30,6 @@ def form_plotargs(x, y1, y2):
         
     layout = {
             "autosize": True, 
-            "bargap": 0.2, 
-            "bargroupgap": 0, 
-            "barmode": "group", 
-            "boxgap": 0.3, 
-            "boxgroupgap": 0.3, 
-            "boxmode": "overlay", 
             "dragmode": "zoom", 
             "font": {
                 "color": "#444", 
@@ -87,7 +67,7 @@ def form_plotargs(x, y1, y2):
             "separators": ".,", 
             "showlegend": True, 
             "smith": False, 
-            "title": "", 
+            "title": "Settlement price v/s Open interest", 
             "titlefont": {
                 "color": "", 
                 "family": "", 
@@ -95,50 +75,16 @@ def form_plotargs(x, y1, y2):
             }, 
             "width": 900, 
             "xaxis": {
-                "anchor": "y", 
-                "autorange": False, 
-                "autotick": True, 
+                "anchor": "y",
+                "type": "date",
                 "domain": [
                     0.08, 
                     0.8
                 ], 
-                "dtick": 2, 
                 "exponentformat": "B", 
-                "gridcolor": "#eee", 
-                "gridwidth": 1, 
-                "linecolor": "#444", 
-                "linewidth": 1, 
-                "mirror": False, 
-                "nticks": 0, 
                 "overlaying": False, 
                 "position": 0, 
-                "range": [
-                    0, 
-                    6.409927053599747
-                ], 
-                "rangemode": "normal", 
-                "showexponent": "all", 
-                "showgrid": False, 
-                "showline": False, 
-                "showticklabels": True, 
-                "tick0": 0, 
-                "tickangle": "auto", 
-                "tickcolor": "#444", 
-                "tickfont": {
-                    "color": "", 
-                    "family": "", 
-                    "size": 0
-                }, 
-                "ticklen": 5, 
-                "ticks": "", 
-                "tickwidth": 1, 
-                "title": "x-axis", 
-                "titlefont": {
-                    "color": "", 
-                    "family": "", 
-                    "size": 0
-                }, 
-                "type": "linear", 
+                "title": "Date", 
                 "zeroline": False, 
                 "zerolinecolor": "#444", 
                 "zerolinewidth": 1
@@ -223,7 +169,7 @@ def form_plotargs(x, y1, y2):
                 "ticklen": 5, 
                 "ticks": "", 
                 "tickwidth": 1, 
-                "title": "PCR of OI", 
+                "title": "Summation of OI", 
                 "titlefont": {
                     "color": "", 
                     "family": "", 

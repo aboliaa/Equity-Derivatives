@@ -6,13 +6,6 @@ def form_plotargs(x, y1, y2, y3):
                 "line": {
                     "width": 3
                 }, 
-                "marker": {
-                    "line": {
-                        "width": 2
-                    }, 
-                    "size": 12, 
-                    "symbol": "square"
-                }, 
                 "mode": "lines+markers", 
                 "name": "PCR of trade", 
                 "type": "scatter", 
@@ -26,13 +19,6 @@ def form_plotargs(x, y1, y2, y3):
                     "color": "rgb(44, 160, 44)", 
                     "width": 3
                 }, 
-                "marker": {
-                    "line": {
-                        "width": 2
-                    }, 
-                    "size": 12, 
-                    "symbol": "square"
-                }, 
                 "mode": "lines+markers", 
                 "name": "PCR of OI", 
                 "type": "scatter", 
@@ -45,13 +31,6 @@ def form_plotargs(x, y1, y2, y3):
                 "line": {
                     "color": "rgb(255, 127, 14)", 
                     "width": 3
-                }, 
-                "marker": {
-                    "line": {
-                        "width": 2
-                    }, 
-                    "size": 12, 
-                    "symbol": "square"
                 }, 
                 "mode": "lines+markers", 
                 "name": "Settlement price", 
@@ -114,49 +93,18 @@ def form_plotargs(x, y1, y2, y3):
             }, 
             "width": 900, 
             "xaxis": {
-                "anchor": "y", 
-                "autorange": True, 
-                "autotick": True, 
-                "domain": [
-                    0.08, 
-                    0.8
-                ], 
-                "dtick": 2, 
-                "exponentformat": "B", 
-                "gridcolor": "#eee", 
-                "gridwidth": 1, 
-                "linecolor": "#444", 
-                "linewidth": 1, 
-                "mirror": False, 
-                "nticks": 0, 
-                "overlaying": False, 
-                "position": 0, 
-                "rangemode": "normal", 
-                "showexponent": "all", 
-                "showgrid": False, 
-                "showline": False, 
-                "showticklabels": True, 
-                "tick0": 0, 
-                "tickangle": "auto", 
-                "tickcolor": "#444", 
-                "tickfont": {
-                    "color": "", 
-                    "family": "", 
-                    "size": 0
-                }, 
-                "ticklen": 5, 
-                "ticks": "", 
-                "tickwidth": 1, 
-                "title": "x-axis", 
-                "titlefont": {
-                    "color": "", 
-                    "family": "", 
-                    "size": 0
-                }, 
-                "type": "linear", 
-                "zeroline": False, 
-                "zerolinecolor": "#444", 
-                "zerolinewidth": 1
+                "type": "date",
+                "anchor": "y",
+                "overlaying": False,                                            
+                "position": 0,
+                "zeroline": False,                                              
+                "zerolinecolor": "#444",                                        
+                "zerolinewidth": 1,
+                "domain": [                                                     
+                    0.08,                                                       
+                    0.8                                                         
+                ],
+                "title": "Date" 
             }, 
             "yaxis": {
                 "anchor": "x", 

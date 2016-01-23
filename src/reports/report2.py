@@ -67,8 +67,7 @@ class Report2DataGetter(DataGetter):
         y2 = []
         i = 1
         for d in sorted(data.iteritems()):
-            #x.append(d[0])
-            x.append(i)
+            x.append(d[0])
             i += 1
             y1.append(d[1]['settlement_price'])
             y2.append(d[1]['summation_of_OI'])

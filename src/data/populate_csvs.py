@@ -1,3 +1,4 @@
+import os
 import time
 import traceback
 
@@ -72,7 +73,7 @@ class DailyUpdate:
         dlog.info('csvs_db = %s' % (csvs_db,))
         for csv in csvs_store:
             dlog.info("CSV %s found." % (csv,))
-            csvname = csv.split("/")[-1].split(".")[0]
+            csvname = csv.split(os.path.sep)[-1].split(".")[0]
             csvdate = csvname[2:11]
             timestamp = time.strptime(csvdate, "%d%b%Y")
             tsname = from_pytime_to_str(timestamp)
@@ -96,6 +97,6 @@ if __name__ == "__main__":
     # __builtins__.rlog = log.Logger(NULLLOG)
 
     dbname = "/Users/amitkulkarni/temp_Derivatives/daily_update_1.db"
-    updater = DailyUpdate(dbname, CSVSTORE)
+    updater = DailyUpdate(DBPATH, CSVSTORE)
     updater.start()
 

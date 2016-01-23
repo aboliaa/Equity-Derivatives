@@ -14,8 +14,9 @@ class SQLite_DBOps(dbops.DBOps):
  
     def init_db_conn(self):
         self.conn = sqlite3.connect(self.dbname, check_same_thread=False)
-        rc = self.conn.execute("PRAGMA journal_mode=WAL;")
         self.cur = self.conn.cursor()
+        rc = self.cur.execute("PRAGMA journal_mode=WAL;")
+        print "journal_mode = ", self.cur.fetchall()
     
     def _process_put_vals(self, vals):
         _vals = []
