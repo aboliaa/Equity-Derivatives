@@ -1,3 +1,4 @@
+from utils import *
 from const import *
 from data import DataGetter
 
@@ -147,7 +148,14 @@ class Report4DataGetter(DataGetter):
         ]
 
         return data
-    
+
+    def transform_data(self, data, json=False):
+        data = self.plot.plotly.form_plotargs_report6()
+        if json:
+            data = jsonify(data)
+
+        return data
+
     def plot_data(self, data):
         self.plot.table.plot_report4(data)
 

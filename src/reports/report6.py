@@ -1,5 +1,6 @@
 import traceback
 from const import *
+from utils import *
 from data import DataGetter
 
 class Report6DataGetter(DataGetter):
@@ -24,6 +25,7 @@ class Report6DataGetter(DataGetter):
             except:
                 # traceback.print_exc()
                 dlog.error("Exception in getting calls for scrip %s" % (scrip,))
+                continue
 
             try: 
                 clauses = [ [('timestamp', '=', date), ('opt_type', '=', PE)] ]
@@ -32,6 +34,7 @@ class Report6DataGetter(DataGetter):
             except:
                 # traceback.print_exc()
                 dlog.error("Exception in getting puts for scrip %s" % (scrip,))
+                continue
 
 
         data['calls'] = sorted(data['calls'].values(), key=lambda k:k['max_contracts'], reverse=True)
@@ -58,7 +61,13 @@ class Report6DataGetter(DataGetter):
         dlog.info("DATA = %s" % (data,))
 
         return data
-    
+
+    def transform_data(self, data, json=False):
+        data = self.plot.plotly.form_plotargs_report6()
+        if json:
+            data = jsonify(data)
+        return 
+
     def plot_data(self, data):
         self.plot.table.plot_report6(data)
 

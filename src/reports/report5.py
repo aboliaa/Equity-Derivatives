@@ -35,6 +35,7 @@ class Report5DataGetter(DataGetter):
         scrips = self.get_all_scrips()
 
         data = {'lowest': [], 'highest': []}
+        #scrips = scrips[:10]
         for scrip in scrips:
             try:
                 min_date = self.get_min_value(scrip, FUTURE, 'timestamp')
@@ -57,14 +58,31 @@ class Report5DataGetter(DataGetter):
             date_for_max_sum_of_OI = max(OI_sums, key=OI_sums.get)
           
             if date_for_min_sum_of_OI == max_date:
-                data['lowest'].append(scrip)
+                data['lowest'].append((scrip, OI_sums[date_for_min_sum_of_OI]))
             elif date_for_max_sum_of_OI == max_date:
-                data['highest'].append(scrip)
+                data['highest'].append((scrip, OI_sums[date_for_max_sum_of_OI]))
 
         dlog.info("HIGHEST DATA = %s" % (data['highest'],))
         dlog.info("LOWEST DATA = %s" % (data['lowest'],))
         return data
-   
+    
+    def transform_data(self, data, json=False):
+       
+        x = []
+        y = []
+        i = 0                                                                   
+        for d in data['highest']:                                                          
+            i += 1
+            #x.append(d[0])
+            x.append(i)
+            y.append(d[1])
+
+        data = self.plot.plotly.form_plotargs_report5(x, y)                
+        
+        if json:                                                                
+            data = jsonify(data)
+        return data
+
     def plot_data(self, data):
         self.plot.table.plot_report5(data)
 

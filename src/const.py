@@ -78,7 +78,7 @@ DBPATH = os.path.join(HOMEDIR, "Derivatives.db")
 CSVSTORE = os.path.join(HOMEDIR, "bhavcopies")
 
 # TODO: remove DBNAME and PLOT_PATH
-DBNAME = "/Users/amitkulkarni/temp_Derivatives/populate_test.db"
+DBNAME = "/Users/amitkulkarni/temp_Derivatives/Derivatives.db"
 PLOT_PATH = "./static/reports/"
 
 

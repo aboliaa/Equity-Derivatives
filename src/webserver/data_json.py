@@ -53,7 +53,8 @@ class WebDataJSON(object):
         date = time.strptime(time_str, "%d-%m-%Y")
         n = int(args["n"])
         data = self.reports.report4.generate_data(n, date)
-        self.reports.report4.plot_data(data)
+        data = self.reports.report4.transform_data(data)
+        return data
 
     def _get_data_report5(self, args):
         dd = args["dd"]
@@ -62,7 +63,8 @@ class WebDataJSON(object):
         time_str = "%s-%s-%s" %(dd,mm,yyyy)
         date = time.strptime(time_str, "%d-%m-%Y")
         data = self.reports.report5.generate_data(date)
-        self.reports.report5.plot_data(data)
+        data = self.reports.report5.transform_data(data, json=True)
+        return data
 
     def _get_data_report6(self, args):
         dd = args["dd"]
@@ -72,4 +74,5 @@ class WebDataJSON(object):
         date = time.strptime(time_str, "%d-%m-%Y")
         n = int(args["n"])
         data = self.reports.report6.generate_data(n, date)
-        self.reports.report6.plot_data(data)
+        data = self.reports.report6.transform_data(data)
+        return data
