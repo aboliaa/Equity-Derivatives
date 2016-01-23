@@ -61,16 +61,16 @@ class Report1DataGetter(DataGetter):
         put_open_interests = data['put_open_interests']                         
         expiry_series = data['expiry_series']
 
+        data = []
         for e in expiry_series:
             x1 = call_strike_prices[e]                                   
             y1 = call_open_interests[e]
             
             x2 = put_strike_prices[e]                                   
             y2 = put_open_interests[e]
-            
-            break
 
-        data = self.plot.plotly.form_plotargs_report1(x1, y1, x2, y2)
+            data.append(self.plot.plotly.form_plotargs_report1(x1, y1, x2, y2))
+
         if json:
             data = jsonify(data)
         return data
