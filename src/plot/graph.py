@@ -11,32 +11,11 @@ class Graph(object):
     def plot_report1(self, data):
         remove_fileglob(os.path.join(self.path, "report1*"))
 
-        call_strike_prices = {}
-        call_open_interests = {}
-        put_strike_prices = {}
-        put_open_interests = {}
-        
-        for d in data:
-            if d['opt_type'] == CE:
-                if d['exp_dt'] not in call_strike_prices:
-                    call_strike_prices[d['exp_dt']] = []
-                if d['exp_dt'] not in call_open_interests:
-                    call_open_interests[d['exp_dt']] = []
-                call_strike_prices[d['exp_dt']].append(d['strike_pr'])
-                call_open_interests[d['exp_dt']].append(d['open_int'])
-            elif d['opt_type'] == PE:
-                if d['exp_dt'] not in put_strike_prices:
-                    put_strike_prices[d['exp_dt']] = []
-                if d['exp_dt'] not in put_open_interests:
-                    put_open_interests[d['exp_dt']] = []
-                put_strike_prices[d['exp_dt']].append(d['strike_pr'])
-                put_open_interests[d['exp_dt']].append(d['open_int'])
-            
-        expiry_series = call_strike_prices.keys()
-        expiry_series.sort()
-
-        # Ignore expiry series after 3
-        expiry_series = expiry_series[:3]
+        call_strike_prices = data['call_strike_prices']
+        call_open_interests = data['call_open_interests']
+        put_strike_prices = data['put_strike_prices']
+        put_open_interests = data['put_open_interests']
+        expiry_series = data['expiry_series']
 
         i = 1
         for e in expiry_series:
