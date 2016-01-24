@@ -3,22 +3,28 @@ def form_plotargs(x, y):
             {
                 "x": x,
                 "y": y,
-                "mode": "markers"
-                # "marker": {
-                            # "color": ["rgb(93, 164, 214)", 
-                                      # "rgb(255, 144, 14)",
-                                      # "rgb(44, 160, 101)", 
-                                      # "rgb(255, 65, 54)"],
-                            # "opacity": [1, 0.8, 0.6, 0.4],
-                            # "size": [40, 60, 80, 100]
-                          # }
+                "type": "bar",
+                "orientation": "h"
             }
         ] 
         
     layout = {
-              "showlegend": False,
-                "height": 600,
-                  "width": 600}   
+                "title": "High/Low Open interest",
+                "width": 1000,
+                "margin": {
+                            "autoexpand": True,
+                            "l": 120
+                          },
+                "xaxis": {
+                            "showline": True,
+                            "title": "Open interest"
+                         },
+                "yaxis": {
+                            "showline": True,
+                            "title": "Scrip"
+                         }
+
+             }   
 
     plotargs = {"data": data, "layout": layout}
     print plotargs

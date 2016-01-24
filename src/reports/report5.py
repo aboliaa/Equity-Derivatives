@@ -35,7 +35,7 @@ class Report5DataGetter(DataGetter):
         scrips = self.get_all_scrips()
 
         data = {'lowest': [], 'highest': []}
-        #scrips = scrips[:10]
+        
         for scrip in scrips:
             try:
                 min_date = self.get_min_value(scrip, FUTURE, 'timestamp')
@@ -71,11 +71,10 @@ class Report5DataGetter(DataGetter):
         x = []
         y = []
         i = 0                                                                   
-        for d in data['highest']:                                                          
+        for d in sorted(data['highest'], key=lambda x:x[1]):                                                          
             i += 1
-            #x.append(d[0])
-            x.append(i)
-            y.append(d[1])
+            y.append(d[0])
+            x.append(d[1])
 
         data = self.plot.plotly.form_plotargs_report5(x, y)                
         

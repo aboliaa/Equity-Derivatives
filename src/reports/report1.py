@@ -68,7 +68,7 @@ class Report1DataGetter(DataGetter):
             
             x2 = put_strike_prices[e]                                   
             y2 = put_open_interests[e]
-
+            
             data.append(self.plot.plotly.form_plotargs_report1(x1, y1, x2, y2))
 
         if json:

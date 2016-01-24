@@ -17,6 +17,10 @@ class Report6DataGetter(DataGetter):
         scrips = self.get_all_scrips()
        
         data = {'calls': {}, 'puts': {}}
+
+        #TODO: he kadhun takane
+        scrips = scrips[:10]
+
         for scrip in scrips:
             try:
                 clauses = [ [('timestamp', '=', date), ('opt_type', '=', CE)] ]
@@ -63,7 +67,8 @@ class Report6DataGetter(DataGetter):
         return data
 
     def transform_data(self, data, json=False):
-        data = self.plot.plotly.form_plotargs_report6()
+        x = y = text = []
+        data = self.plot.plotly.form_plotargs_report6(x, y, text)
         if json:
             data = jsonify(data)
         return 
