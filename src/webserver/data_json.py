@@ -51,7 +51,7 @@ class WebDataJSON(object):
         date = time.strptime(time_str, "%d-%m-%Y")
         n = int(args["n"])
         data = self.reports.report4.generate_data(n, date)
-        data = self.reports.report4.transform_data(data)
+        data = self.reports.report4.transform_data(data, json=True)
         return data
 
     def _get_data_report5(self, args):
@@ -72,5 +72,5 @@ class WebDataJSON(object):
         date = time.strptime(time_str, "%d-%m-%Y")
         n = int(args["n"])
         data = self.reports.report6.generate_data(n, date)
-        data = self.reports.report6.transform_data(data)
+        data = self.reports.report6.transform_data(data, json=True)
         return data

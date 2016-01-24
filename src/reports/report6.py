@@ -18,9 +18,6 @@ class Report6DataGetter(DataGetter):
        
         data = {'calls': {}, 'puts': {}}
 
-        #TODO: he kadhun takane
-        scrips = scrips[:10]
-
         for scrip in scrips:
             try:
                 clauses = [ [('timestamp', '=', date), ('opt_type', '=', CE)] ]
@@ -67,11 +64,32 @@ class Report6DataGetter(DataGetter):
         return data
 
     def transform_data(self, data, json=False):
-        x = y = text = []
-        data = self.plot.plotly.form_plotargs_report6(x, y, text)
+        x1 = []
+        y1 = []
+        text1 = []
+        size1 = []
+        for d in sorted(data["calls"], key=lambda x:x["max_contracts"]):
+            print d["exp_dt"]
+            x1.append(d["scrip"])
+            y1.append(d["strike_pr"])
+            text1.append("Contracts: %s" %d["max_contracts"])
+            size1.append(d["max_contracts"] * 30)
+        
+        x2 = []
+        y2 = []
+        text2 = []
+        size2 = []
+        for d in sorted(data["puts"], key=lambda x:x["max_contracts"], reverse=True):
+            x2.append(d["scrip"])
+            y2.append(d["strike_pr"])
+            text2.append("Contracts: %s" %d["max_contracts"])
+            size2.append(d["max_contracts"] * 30)
+
+        data = self.plot.plotly.form_plotargs_report6(x1, y1, text1, size1, 
+                                                      x2, y2, text2, size2)
         if json:
             data = jsonify(data)
-        return 
+        return data 
 
     def plot_data(self, data):
         self.plot.table.plot_report6(data)

@@ -37,6 +37,9 @@ class Report4DataGetter(DataGetter):
         scrips = self.get_all_scrips()
         prev_date = get_prev_date(date)
 
+        #TODO: he kadhun takane
+        scrips = scrips[:10]
+
         for scrip in scrips:
             try:
                 _series = self.get_all_series(scrip, FUTURE)
@@ -94,7 +97,7 @@ class Report4DataGetter(DataGetter):
 
                 move_percent = move * 100.0 / sum2
                 movements[_s][scrip] = {'scrip': scrip, 'movement': move,
-                        'move_percent': move_percent}
+                        'move_percent': move_percent, 'open_int': sum1}
 
                 i += 1
 
@@ -119,26 +122,37 @@ class Report4DataGetter(DataGetter):
 
             move_percent = move * 100.0 / sum2
             movements['cumulative'][scrip] = {'scrip': scrip, 'movement': move,
-                    'move_percent': move_percent}
+                    'move_percent': move_percent, 'open_int': sum1}
             
 
         movements_cumulative = sorted(movements['cumulative'].values(), key=lambda k: k['move_percent'])
 
         # TODO: What if nth and n+1th values are same ?
-        near_incr = movements_near[-n:]
-        next_incr = movements_next[-n:]
-        far_incr = movements_far[-n:]
-        cumulative_incr = movements_cumulative[-n:]
+        #near_incr = movements_near[-n:]
+        #next_incr = movements_next[-n:]
+        #far_incr = movements_far[-n:]
+        #cumulative_incr = movements_cumulative[-n:]
+        
+        near_incr = [e for e in movements_near if e['move_percent'] > 0][-n:]
+        next_incr = [e for e in movements_next if e['move_percent'] > 0][-n:]
+        far_incr = [e for e in movements_far if e['move_percent'] > 0][-n:]
+        cumulative_incr = [e for e in movements_cumulative if e['move_percent'] > 0][-n:]
+        
 
         near_incr.reverse()
         next_incr.reverse()
         far_incr.reverse()
         cumulative_incr.reverse()
 
-        near_decr = movements_near[:n]
-        next_decr = movements_next[:n]
-        far_decr = movements_far[:n]
-        cumulative_decr = movements_cumulative[:n]
+        near_decr = [e for e in movements_near if e['move_percent'] < 0][:n]
+        next_decr = [e for e in movements_next if e['move_percent'] < 0][:n]
+        far_decr = [e for e in movements_far if e['move_percent'] < 0][:n]
+        cumulative_decr = [e for e in movements_cumulative if e['move_percent'] < 0][:n]
+        
+        #near_decr = movements_near[:n]
+        #next_decr = movements_next[:n]
+        #far_decr = movements_far[:n]
+        #cumulative_decr = movements_cumulative[:n]
         
         data = [
             (near_incr, near_decr),
@@ -150,7 +164,42 @@ class Report4DataGetter(DataGetter):
         return data
 
     def transform_data(self, data, json=False):
-        data = self.plot.plotly.form_plotargs_report6()
+        ix = []
+        iy = []
+        itext = []
+        isize = []
+        for d in data:
+            x = []
+            y = []
+            text = []
+            size = []
+            for i in d[0]:
+                x.append(i["scrip"])
+                y.append(i["move_percent"])
+                text.append("Open interest: %s" %i["open_int"])
+                size.append(int(i["move_percent"] * 50))
+            ix.append(x)
+            iy.append(y)
+            itext.append(text)
+            isize.append(size)
+            
+            x = []
+            y = []
+            text = []
+            size = []
+
+            for i in d[1]:
+                x.append(i["scrip"])
+                y.append(i["move_percent"])
+                text.append("Open interest: %s" %i["open_int"])
+                size.append(int(i["move_percent"] * 50))
+            ix.append(x)
+            iy.append(y)
+            itext.append(text)
+            isize.append(size)
+
+        
+        data = self.plot.plotly.form_plotargs_report4(ix, iy, itext, isize)
         if json:
             data = jsonify(data)
 
