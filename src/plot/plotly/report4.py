@@ -1,7 +1,7 @@
 def form_plotargs(x, y, text, size):
     data = [
             {
-                "name": "Near series",
+                "name": "Near series -",
                 "x": x[0],
                 "y": y[0],
                 "text": text[0],
@@ -12,7 +12,7 @@ def form_plotargs(x, y, text, size):
                           }
             },
             {
-                "name": "Next series",
+                "name": "Next series -",
                 "x": x[1],
                 "y": y[1],
                 "text": text[1],
@@ -23,7 +23,7 @@ def form_plotargs(x, y, text, size):
                           }
             },
             {
-                "name": "Far series",
+                "name": "Far series -",
                 "x": x[2],
                 "y": y[2],
                 "text": text[2],
@@ -34,7 +34,7 @@ def form_plotargs(x, y, text, size):
                           }
             },
             {
-                "name": "Cumulative",
+                "name": "Cumulative -",
                 "x": x[3],
                 "y": y[3],
                 "text": text[3],
@@ -45,7 +45,7 @@ def form_plotargs(x, y, text, size):
                           }
             },
             {
-                "name": "Near series",
+                "name": "Near series +",
                 "x": x[4],
                 "y": y[4],
                 "text": text[4],
@@ -56,7 +56,7 @@ def form_plotargs(x, y, text, size):
                           }
             },
             {
-                "name": "Next series",
+                "name": "Next series +",
                 "x": x[5],
                 "y": y[5],
                 "text": text[5],
@@ -67,7 +67,7 @@ def form_plotargs(x, y, text, size):
                           }
             },
             {
-                "name": "Far series",
+                "name": "Far series +",
                 "x": x[6],
                 "y": y[6],
                 "text": text[6],
@@ -78,7 +78,7 @@ def form_plotargs(x, y, text, size):
                           }
             },
             {
-                "name": "Cumulative",
+                "name": "Cumulative +",
                 "x": x[7],
                 "y": y[7],
                 "text": text[7],
@@ -101,7 +101,6 @@ def form_plotargs(x, y, text, size):
                          },
                 "yaxis": {
                             "title": "Change (in %)",
-                            "position": 0,
                             "showline": True
                          }
     }
