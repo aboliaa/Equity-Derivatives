@@ -1,4 +1,9 @@
-import sqlite3
+
+try:
+    from pysqlite2 import dbapi2 as sqlite3
+except ImportError:
+    import sqlite3
+
 import time
 
 from db import dbops
@@ -17,6 +22,8 @@ class SQLite_DBOps(dbops.DBOps):
         self.cur = self.conn.cursor()
         rc = self.cur.execute("PRAGMA journal_mode=WAL;")
         print "journal_mode = ", self.cur.fetchall()
+        self.cur.execute("PRAGMA wal_autocheckpoint=10000;")
+        self.cur.execute("PRAGMA synchronous=OFF;")
     
     def _process_put_vals(self, vals):
         _vals = []
