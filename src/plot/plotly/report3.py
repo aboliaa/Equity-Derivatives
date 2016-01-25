@@ -1,4 +1,4 @@
-def form_plotargs(x, y1, y2, y3):
+def form_plotargs(x, y1, y2, y3, title):
     data = [
             {
                 "x": x,             
@@ -85,7 +85,7 @@ def form_plotargs(x, y1, y2, y3):
             "separators": ".,", 
             "showlegend": True, 
             "smith": False, 
-            "title": "", 
+            "title": title, 
             "titlefont": {
                 "color": "", 
                 "family": "", 

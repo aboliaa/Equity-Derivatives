@@ -1,4 +1,4 @@
-def form_plotargs(x, y):
+def form_plotargs(x, y, title):
     data = [
             {
                 "x": x,
@@ -9,8 +9,9 @@ def form_plotargs(x, y):
         ] 
         
     layout = {
-                "title": "High/Low Open interest",
+                "title": title,
                 "width": 1000,
+                "height": 1200,
                 "margin": {
                             "autoexpand": True,
                             "l": 120

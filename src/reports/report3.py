@@ -15,6 +15,8 @@ class Report3DataGetter(DataGetter):
         return data
 
     def generate_data(self, scrip):
+        self.input = {"scrip": scrip}
+
         # TODO: Ideally, min_date and max_date for a scrip
         # (including informations about mergers and de-mergers),
         # can be stored in M_SCRIP_INFO table.
@@ -82,8 +84,11 @@ class Report3DataGetter(DataGetter):
             y.append(v['settlement_price'])
             y1.append(v['PCR_OI'])
             y2.append(v['PCR_trade'])
+        
+        title = "Settlement Price v/s PCR"
+        title += " (For scrip %s)" %(self.input["scrip"])
 
-        data = self.plot.plotly.form_plotargs_report3(x, y, y1, y2)
+        data = self.plot.plotly.form_plotargs_report3(x, y, y1, y2, title)
         if json:
             data = jsonify(data)
         return data

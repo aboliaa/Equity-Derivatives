@@ -14,6 +14,7 @@ class Report6DataGetter(DataGetter):
         return data
 
     def generate_data(self, n, date):
+        self.input = {"n": n, "date": date}
         scrips = self.get_all_scrips()
        
         data = {'calls': {}, 'puts': {}}
@@ -73,7 +74,7 @@ class Report6DataGetter(DataGetter):
             x1.append(d["scrip"])
             y1.append(d["strike_pr"])
             text1.append("Contracts: %s" %d["max_contracts"])
-            size1.append(d["max_contracts"] * 30)
+            size1.append(d["max_contracts"] / 30)
         
         x2 = []
         y2 = []
@@ -83,10 +84,14 @@ class Report6DataGetter(DataGetter):
             x2.append(d["scrip"])
             y2.append(d["strike_pr"])
             text2.append("Contracts: %s" %d["max_contracts"])
-            size2.append(d["max_contracts"] * 30)
+            size2.append(d["max_contracts"] / 30)
+
+        title = "Most active CALLs and PUTs"
+        title += " (Top %s scrips on date %s)" %(self.input["n"],
+                                                from_pytime_to_str(self.input["date"]))
 
         data = self.plot.plotly.form_plotargs_report6(x1, y1, text1, size1, 
-                                                      x2, y2, text2, size2)
+                                                      x2, y2, text2, size2, title)
         if json:
             data = jsonify(data)
         return data 

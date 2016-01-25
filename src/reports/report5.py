@@ -32,6 +32,7 @@ class Report5DataGetter(DataGetter):
         return sum_of_OI
 
     def generate_data(self, date):
+        self.input = {"date": date}
         scrips = self.get_all_scrips()
 
         data = {'lowest': [], 'highest': []}
@@ -76,7 +77,10 @@ class Report5DataGetter(DataGetter):
             y.append(d[0])
             x.append(d[1])
 
-        data = self.plot.plotly.form_plotargs_report5(x, y)                
+        title = "High/Low Open interest"
+        title += " (On date %s)" %(from_pytime_to_str(self.input["date"]))
+
+        data = self.plot.plotly.form_plotargs_report5(x, y, title)                
         
         if json:                                                                
             data = jsonify(data)

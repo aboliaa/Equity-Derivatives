@@ -1,4 +1,4 @@
-def form_plotargs(x1, y1, x2, y2):
+def form_plotargs(x1, y1, x2, y2, title):
     data = [
             {
                 "x": x1,
@@ -23,8 +23,9 @@ def form_plotargs(x1, y1, x2, y2):
             "boxgroupgap": 0.3, 
             "boxmode": "overlay", 
             "height": 700, 
+            "width": 1000, 
             "showlegend": True, 
-            "title": "Distribution of PUTs and CALLs",
+            "title": title,
             "xaxis": {
                         "title": "Strike price",
                         "showline": True

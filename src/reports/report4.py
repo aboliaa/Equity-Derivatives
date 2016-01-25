@@ -37,9 +37,6 @@ class Report4DataGetter(DataGetter):
         scrips = self.get_all_scrips()
         prev_date = get_prev_date(date)
 
-        #TODO: he kadhun takane
-        scrips = scrips[:10]
-
         for scrip in scrips:
             try:
                 _series = self.get_all_series(scrip, FUTURE)
@@ -177,7 +174,7 @@ class Report4DataGetter(DataGetter):
                 x.append(i["scrip"])
                 y.append(i["move_percent"])
                 text.append("Open interest: %s" %i["open_int"])
-                size.append(int(i["move_percent"] * 50))
+                size.append(int(i["move_percent"] * 10))
             ix.append(x)
             iy.append(y)
             itext.append(text)
@@ -192,7 +189,7 @@ class Report4DataGetter(DataGetter):
                 x.append(i["scrip"])
                 y.append(i["move_percent"])
                 text.append("Open interest: %s" %i["open_int"])
-                size.append(int(i["move_percent"] * 50))
+                size.append(int(i["move_percent"] * 10))
             ix.append(x)
             iy.append(y)
             itext.append(text)

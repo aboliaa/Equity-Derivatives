@@ -14,6 +14,8 @@ class Report1DataGetter(DataGetter):
         return data
 
     def generate_data(self, scrip, date):
+        self.input = {'scrip': scrip, 'date': date}
+
         cols = ['open_int', 'exp_dt', 'strike_pr', 'opt_type']
         clauses = [ [('timestamp', '=', date)] ]
         data = self.get_scrip_data(scrip, OPTION, cols=cols, clauses=clauses)
@@ -61,15 +63,26 @@ class Report1DataGetter(DataGetter):
         put_open_interests = data['put_open_interests']                         
         expiry_series = data['expiry_series']
 
+        series_map = {
+                        0: "Near series",
+                        1: "Next series",
+                        2: "Far series",
+                     }
         data = []
+        i = 0
         for e in expiry_series:
             x1 = call_strike_prices[e]                                   
             y1 = call_open_interests[e]
             
             x2 = put_strike_prices[e]                                   
             y2 = put_open_interests[e]
+        
             
-            data.append(self.plot.plotly.form_plotargs_report1(x1, y1, x2, y2))
+            title = "Distribution of PUTs and CALLs: %s" %(series_map[i])
+            title += " (For scrip %s on date %s)" %(self.input["scrip"], from_pytime_to_str(self.input["date"]))
+            
+            data.append(self.plot.plotly.form_plotargs_report1(x1, y1, x2, y2, title))
+            i += 1
 
         if json:
             data = jsonify(data)

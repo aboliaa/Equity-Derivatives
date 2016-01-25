@@ -1,4 +1,4 @@
-def form_plotargs(x, y1, y2):
+def form_plotargs(x, y1, y2, title):
     data = [
             {
                 "x": x,
@@ -67,7 +67,7 @@ def form_plotargs(x, y1, y2):
             "separators": ".,", 
             "showlegend": True, 
             "smith": False, 
-            "title": "Settlement price v/s Open interest", 
+            "title": title, 
             "titlefont": {
                 "color": "", 
                 "family": "", 

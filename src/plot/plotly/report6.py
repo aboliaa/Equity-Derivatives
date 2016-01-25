@@ -1,4 +1,4 @@
-def form_plotargs(x1, y1, text1, size1, x2, y2, text2, size2):
+def form_plotargs(x1, y1, text1, size1, x2, y2, text2, size2, title):
     data = [
             {
                 "name": "CALLs",
@@ -25,10 +25,8 @@ def form_plotargs(x1, y1, text1, size1, x2, y2, text2, size2):
     ]
     
     layout = {
-                "title": "Most active CALLs and PUTs",
+                "title": title,
                 "showlegend": True,
-                "width": 1000,
-                "height": 800,
                 "xaxis": {
                             "title": "Scrip"
                          },
