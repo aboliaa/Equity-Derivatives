@@ -1,5 +1,9 @@
+import traceback
+
 from utils import *
 from const import *
+from error import *                                                             
+from db.dberror import *
 from data import DataGetter
 
 from utils import get_prev_date
@@ -31,7 +35,15 @@ class Report4DataGetter(DataGetter):
 
         return s
 
-    def generate_data(self, n, date):
+    def validate_input(self, n, date):
+        # TODO: Ideally db layer should raise this exception 
+        clauses = [ [('timestamp', '=', date)] ]
+        data = self.get_scrip_data("NIFTY", OPTION, cols=None, clauses=clauses)
+        if not data:
+            raise DBError(ENOTFOUND)
+
+    def _generate_data(self, n, date):
+        self.validate_input(n, date)
         sums = {'near': {}, 'next': {}, 'far': {}}
         movements = {'near': {}, 'next': {}, 'far': {}, 'cumulative': {}}
         scrips = self.get_all_scrips()
@@ -160,6 +172,18 @@ class Report4DataGetter(DataGetter):
 
         return data
 
+    def generate_data(self, n, date):
+        try:
+            data = self._generate_data(n, date)
+            error = None
+        except DBError as fault:
+            traceback.print_exc()
+            if fault.errno <> ENOTFOUND:
+                raise fault
+            data = None
+            error = EINVALIDINPUT
+        return data, error
+
     def transform_data(self, data, json=False):
         ix = []
         iy = []
@@ -197,6 +221,7 @@ class Report4DataGetter(DataGetter):
 
         
         data = self.plot.plotly.form_plotargs_report4(ix, iy, itext, isize)
+        data = [data]
         if json:
             data = jsonify(data)
 

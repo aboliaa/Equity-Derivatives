@@ -1,4 +1,5 @@
 import time
+import traceback
 
 from const import *
 from utils import *
@@ -14,7 +15,7 @@ class Report3DataGetter(DataGetter):
         data["scrips"] = self.get_all_scrips()
         return data
 
-    def generate_data(self, scrip):
+    def _generate_data(self, scrip):
         self.input = {"scrip": scrip}
 
         # TODO: Ideally, min_date and max_date for a scrip
@@ -71,6 +72,19 @@ class Report3DataGetter(DataGetter):
         
         return data
 
+    def generate_data(self, scrip):
+        try:
+            data = self._generate_data(scrip)
+            error = None
+        except DBError as fault:
+            traceback.print_exc()
+            if fault.errno <> ENOTFOUND:
+                raise fault
+            data = None
+            error = EINVALIDINPUT
+        return data, error
+
+
     def transform_data(self, data, json=False):
         x = []
         y = []
@@ -89,6 +103,7 @@ class Report3DataGetter(DataGetter):
         title += " (For scrip %s)" %(self.input["scrip"])
 
         data = self.plot.plotly.form_plotargs_report3(x, y, y1, y2, title)
+        data = [data]
         if json:
             data = jsonify(data)
         return data

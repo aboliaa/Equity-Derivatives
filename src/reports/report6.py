@@ -1,6 +1,8 @@
 import traceback
 from const import *
 from utils import *
+from error import *                                                             
+from db.dberror import *
 from data import DataGetter
 
 class Report6DataGetter(DataGetter):
@@ -13,7 +15,15 @@ class Report6DataGetter(DataGetter):
         data["day_zero"] = self.get_day_zero()
         return data
 
-    def generate_data(self, n, date):
+    def validate_input(self, date):
+        # TODO: Ideally db layer should raise this exception 
+        clauses = [ [('timestamp', '=', date)] ]
+        data = self.get_scrip_data("NIFTY", OPTION, cols=None, clauses=clauses)
+        if not data:
+            raise DBError(ENOTFOUND)
+
+    def _generate_data(self, n, date):
+        self.validate_input(date)
         self.input = {"n": n, "date": date}
         scrips = self.get_all_scrips()
        
@@ -64,6 +74,20 @@ class Report6DataGetter(DataGetter):
 
         return data
 
+    def generate_data(self, n, date):
+        try:
+            data = self._generate_data(n, date)
+            error = None
+        except DBError as fault:
+            traceback.print_exc()
+            if fault.errno <> ENOTFOUND:
+                raise fault
+            data = None
+            error = EINVALIDINPUT
+        return data, error
+
+
+
     def transform_data(self, data, json=False):
         x1 = []
         y1 = []
@@ -92,6 +116,7 @@ class Report6DataGetter(DataGetter):
 
         data = self.plot.plotly.form_plotargs_report6(x1, y1, text1, size1, 
                                                       x2, y2, text2, size2, title)
+        data = [data]
         if json:
             data = jsonify(data)
         return data 

@@ -1,6 +1,8 @@
 import traceback
 from const import *
 from utils import *
+from error import *                                                             
+from db.dberror import *
 from data import DataGetter
 
 class Report5DataGetter(DataGetter):
@@ -31,7 +33,15 @@ class Report5DataGetter(DataGetter):
 
         return sum_of_OI
 
-    def generate_data(self, date):
+    def validate_input(self, date):
+        # TODO: Ideally db layer should raise this exception 
+        clauses = [ [('timestamp', '=', date)] ]
+        data = self.get_scrip_data("NIFTY", OPTION, cols=None, clauses=clauses)
+        if not data:
+            raise DBError(ENOTFOUND)
+
+    def _generate_data(self, date):
+        self.validate_input(date)
         self.input = {"date": date}
         scrips = self.get_all_scrips()
 
@@ -66,7 +76,19 @@ class Report5DataGetter(DataGetter):
         dlog.info("HIGHEST DATA = %s" % (data['highest'],))
         dlog.info("LOWEST DATA = %s" % (data['lowest'],))
         return data
-    
+   
+    def generate_data(self, date):
+        try:
+            data = self._generate_data(date)
+            error = None
+        except DBError as fault:
+            traceback.print_exc()
+            if fault.errno <> ENOTFOUND:
+                raise fault
+            data = None
+            error = EINVALIDINPUT
+        return data, error
+
     def transform_data(self, data, json=False):
        
         x = []
@@ -77,10 +99,25 @@ class Report5DataGetter(DataGetter):
             y.append(d[0])
             x.append(d[1])
 
-        title = "High/Low Open interest"
+        title = "Highest Open interest"
         title += " (On date %s)" %(from_pytime_to_str(self.input["date"]))
+        height = max(len(y)*25, 500)
+        data1 = self.plot.plotly.form_plotargs_report5(x, y, height, title)                
+       
+        x = []
+        y = []
+        i = 0
+        for d in sorted(data['lowest'], key=lambda x:x[1]):                                                          
+            i += 1
+            y.append(d[0])
+            x.append(d[1])
 
-        data = self.plot.plotly.form_plotargs_report5(x, y, title)                
+        title = "Lowest Open interest"
+        title += " (On date %s)" %(from_pytime_to_str(self.input["date"]))
+        height = max(len(y)*25, 500)
+        data2 = self.plot.plotly.form_plotargs_report5(x, y, height, title)
+
+        data = [data1, data2]
         
         if json:                                                                
             data = jsonify(data)

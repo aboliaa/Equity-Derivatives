@@ -30,4 +30,3 @@ if __name__ == "__main__":
     srv = WebServer()
     srv.make_app()
     srv.run_app()
-

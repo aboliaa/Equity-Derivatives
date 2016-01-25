@@ -1,5 +1,9 @@
+import traceback
+
 from utils import *
 from const import *
+from error import *
+from db.dberror import *
 from data import DataGetter
 
 class Report1DataGetter(DataGetter):
@@ -13,7 +17,15 @@ class Report1DataGetter(DataGetter):
         data["day_zero"] = self.get_day_zero()
         return data
 
-    def generate_data(self, scrip, date):
+    def validate_input(self, scrip, date):
+        # TODO: Ideally db layer should raise this exception 
+        clauses = [ [('timestamp', '=', date)] ]
+        data = self.get_scrip_data(scrip, OPTION, cols=['*'], clauses=clauses)
+        if not data:
+            raise DBError(ENOTFOUND)
+
+    def _generate_data(self, scrip, date):
+        self.validate_input(scrip, date)
         self.input = {'scrip': scrip, 'date': date}
 
         cols = ['open_int', 'exp_dt', 'strike_pr', 'opt_type']
@@ -54,6 +66,18 @@ class Report1DataGetter(DataGetter):
         data['put_open_interests'] = put_open_interests
         data['expiry_series'] = expiry_series
         return data
+
+    def generate_data(self, scrip, date):
+        try:
+            data = self._generate_data(scrip, date)
+            error = None
+        except DBError as fault:
+            traceback.print_exc()
+            if fault.errno <> ENOTFOUND:
+                raise fault
+            data = None
+            error = EINVALIDINPUT
+        return data, error
 
     def transform_data(self, data, json=False):
 

@@ -1,13 +1,147 @@
+$def with(data)
+
 <html>
 <head>
 </head>
 
 <body>
-    <a href="/reports?report=1">Distribution of PUTS and CALLS</a><br><br>
-    <a href="/reports?report=2">Settlement price v/s Open interest</a><br><br>
-    <a href="/reports?report=3">Settlement price v/s PCR</a><br><br>
-    <a href="/reports?report=4">Open interest movement</a><br><br>
-    <a href="/reports?report=5">High/Low Open interest</a><br><br>
-    <a href="/reports?report=6">Most active CALLs and PUTs</a><br><br>
+
+    <br>
+    <div id="input" style="width:100%;height:10%;">
+        <div id="reportdiv" style="float:left;width:25%;">
+            <select name="report" id="report" onchange="changeReport();">
+                <option>Select report --</option>
+                <option id="1" value="1">Distribution of PUTS and CALLS</option>
+                <option id="2" value="2">Settlement price v/s Open interest</option>
+                <option id="3" value="3">Settlement price v/s PCR</option>
+                <option id="4" value="4">Open interest movement</option>
+                <option id="5" value="5">High/Low Open interest</option>
+                <option id="6" value="6">Most active CALLs and PUTs</option>
+            </select>
+        </div>
+
+        <div id="args">
+            <div id="scripdiv" style="float:left;width:15%;display:none;">
+                <label>Scrip</label>
+                <select name="scrip" id="scrip">
+                    $for scrip in data['scrips']:                                           
+                        <option value=$scrip>$scrip</option>
+                </select>
+            </div>
+
+            <div id="datediv" style="float:left;width:20%;display:none;">
+                <label>Date</label>
+                <input type="text" name="dd" id="dd" placeholder="dd" size=2 maxlength=2>
+                <input type="text" name="mm" id="mm" placeholder="mm" size=2 maxlength=2>
+                <input type="text" name="yyyy" id="yyyy" placeholder="yyyy" size=4 maxlength=4>
+            </div>
+         
+            <div id="ndiv" style="float:left;width:20%;display:none;">
+                <label>Number of scrips</label>
+                <select name="n" id="n">
+                    $for i in range(1,16):
+                        <option value=$i>$i</option>
+                </select>
+            </div>
+
+            <div style="float:left;width:20%;">
+                <input type="button" value="Submit" onclick="plot();">
+            </div>
+        </div>
+    </div>
+
+    <div id="error"></div>
+    
+    <div id="plotters">
+        <div id="plotter0"</div>
+        <div id="plotter1"></div>
+        <div id="plotter2"></div>
+    </div>
+
 </body>
 </html>
+
+<script type="text/javascript" src="/static/js/jquery-1.12.0.min.js"></script>  
+<script type="text/javascript" src="/static/js/plotly-latest.min.js"></script>
+
+<script type="text/javascript">
+
+    function changeReport(){
+        var report = document.getElementById("report").value;
+        if (report == "1"){
+            jQuery("#scripdiv").show();
+            jQuery("#datediv").show();
+            jQuery("#ndiv").hide();
+        }
+        else if (report == "2"){
+            jQuery("#scripdiv").show();
+            jQuery("#datediv").hide();
+            jQuery("#ndiv").hide();
+        }
+        else if (report == "3"){
+            jQuery("#scripdiv").show();
+            jQuery("#datediv").hide();
+            jQuery("#ndiv").hide();
+        }
+        else if (report == "4"){
+            jQuery("#scripdiv").hide();
+            jQuery("#datediv").show();
+            jQuery("#ndiv").show();
+        }
+        else if (report == "5"){
+            jQuery("#scripdiv").hide();
+            jQuery("#datediv").show();
+            jQuery("#ndiv").hide();
+        }
+        else if (report == "6"){
+            jQuery("#scripdiv").hide();
+            jQuery("#datediv").show();
+            jQuery("#ndiv").show();
+        }
+
+    }
+
+    function plot(){
+        var params = {};
+        params["report"] = jQuery("#report").val();
+        params["scrip"] = jQuery("#scrip").val();
+        params["dd"] = jQuery("#dd").val();
+        params["mm"] = jQuery("#mm").val();
+        params["yyyy"] = jQuery("#yyyy").val();
+        params["n"] = jQuery("#n").val();
+        console.log(params);
+
+        var plotargs = {};
+        jQuery.ajax({                                                                   
+                    url: '/getdata/',                                                    
+                    type: 'GET',       
+                    data: params,
+                    dataType: 'json',                                                  
+                    async: false,
+                    success: function (plotargs){                                             
+                    },
+                    error: function (jqXHR, exception){
+                        var err = jqXHR.responseText;
+                        console.log(err);
+                        jQuery("#plotters").hide();
+                        jQuery("#error").show();
+                        jQuery("#error").text(err);
+                    }
+                    }).done(function (plotargs){
+                        console.log(plotargs);
+                        jQuery("#plotters").show();
+                        jQuery("#error").hide();
+
+                        for(i=0; i<3; i++){
+                            Plotter = document.getElementById("plotter"+i);                
+                            if (i < plotargs.length){
+                                Plotly.newPlot(Plotter, plotargs[i]["data"], plotargs[i]["layout"], {showLink:false});
+                            }
+                            else{
+                                Plotter.style.display = "none";
+                            }
+                        }
+                });
+
+    }
+</script>  

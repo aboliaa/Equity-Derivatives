@@ -23,7 +23,8 @@ def get_input(func):
 
 class IndexHandler():
     def GET(self):
-        return render.index()
+        data = wdata_json.get_render_data()
+        return render.index(data=data)
 
     def POST(self):
         return "IN POST INDEX FUNCTION"
@@ -46,7 +47,7 @@ class ReportHandler():
 class ReportJSONHandler():
     def GET(self, args):
         params = web.input()
-        reportseq = params["report"]
+        reportseq = int(params["report"])
         return wdata_json.get_data(reportseq, params)
 
 def get_input_from_query_string():

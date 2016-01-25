@@ -19,6 +19,8 @@ $def with(data)
         <input type="button" value="Submit" onclick="javascript:done();">
     </div>
 
+    <div id="error"></div>
+
     <div id="plotter0"></div>
     <div id="plotter1"></div>
     <div id="plotter2"></div>
@@ -49,7 +51,12 @@ $def with(data)
                     async: false,
                     success: function (plotargs){                                             
                         //console.log(plotargs);
-                        }
+                    },
+                    error: function (jqXHR, exception){
+                        var err = jqXHR.responseText;
+                        console.log(err);
+                        jQuery("#error").text(err);
+                    }
                     }).done(function (plotargs){
                         console.log(plotargs);
                         //plotargs[0]["layout"]["title"] += ": Near series";

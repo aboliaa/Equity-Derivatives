@@ -1,4 +1,4 @@
-def form_plotargs(x, y, title):
+def form_plotargs(x, y, height, title):
     data = [
             {
                 "x": x,
@@ -11,7 +11,7 @@ def form_plotargs(x, y, title):
     layout = {
                 "title": title,
                 "width": 1000,
-                "height": 1200,
+                "height": height,
                 "margin": {
                             "autoexpand": True,
                             "l": 120
