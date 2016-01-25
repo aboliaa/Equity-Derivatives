@@ -1,4 +1,4 @@
-def form_plotargs(x, y, text, size):
+def form_plotargs(x, y, text, size, color, symbol, title):
     data = [
             {
                 "name": "Near series -",
@@ -8,7 +8,9 @@ def form_plotargs(x, y, text, size):
                 "mode": "markers",
                 "marker": {
                             "sizemode": "area",
-                            "size": size[0]
+                            "color": color[0],
+                            "size": size[0],
+                            "symbol": symbol[0]
                           }
             },
             {
@@ -19,7 +21,9 @@ def form_plotargs(x, y, text, size):
                 "mode": "markers",
                 "marker": {
                             "sizemode": "area",
-                            "size": size[1]
+                            "color": color[1],
+                            "size": size[1],
+                            "symbol": symbol[1]
                           }
             },
             {
@@ -30,7 +34,9 @@ def form_plotargs(x, y, text, size):
                 "mode": "markers",
                 "marker": {
                             "sizemode": "area",
-                            "size": size[2]
+                            "color": color[2],
+                            "size": size[2],
+                            "symbol": symbol[2]
                           }
             },
             {
@@ -41,7 +47,9 @@ def form_plotargs(x, y, text, size):
                 "mode": "markers",
                 "marker": {
                             "sizemode": "area",
-                            "size": size[3]
+                            "color": color[3],
+                            "size": size[3],
+                            "symbol": symbol[3]
                           }
             },
             {
@@ -52,7 +60,9 @@ def form_plotargs(x, y, text, size):
                 "mode": "markers",
                 "marker": {
                             "sizemode": "area",
-                            "size": size[4]
+                            "color": color[4],
+                            "size": size[4],
+                            "symbol": symbol[4]
                           }
             },
             {
@@ -63,7 +73,9 @@ def form_plotargs(x, y, text, size):
                 "mode": "markers",
                 "marker": {
                             "sizemode": "area",
-                            "size": size[5]
+                            "color": color[5],
+                            "size": size[5],
+                            "symbol": symbol[5]
                           }
             },
             {
@@ -74,7 +86,9 @@ def form_plotargs(x, y, text, size):
                 "mode": "markers",
                 "marker": {
                             "sizemode": "area",
-                            "size": size[6]
+                            "color": color[6],
+                            "size": size[6],
+                            "symbol": symbol[6]
                           }
             },
             {
@@ -85,14 +99,16 @@ def form_plotargs(x, y, text, size):
                 "mode": "markers",
                 "marker": {
                             "sizemode": "area",
-                            "size": size[7]
+                            "color": color[7],
+                            "size": size[7],
+                            "symbol": symbol[7]
                           }
             }
 
     ]
     
     layout = {
-                "title": "OI movements",
+                "title": title,
                 "showlegend": True,
                 "width": 1000,
                 "height": 800,

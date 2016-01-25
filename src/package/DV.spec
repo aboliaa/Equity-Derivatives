@@ -2,7 +2,6 @@
 
 block_cipher = None
 
-
 m_a = Analysis(['webserver\\main.py'],
              pathex=['.', 'C:\\DV\\src'],
              binaries=None,
@@ -27,14 +26,14 @@ p_a = Analysis(['data\\populate_csvs.py'],
              win_private_assemblies=False,
              cipher=block_cipher)
 
-MERGE( (m_a, 'DVServer', 'DVServer.exe'), (p_a, 'DVServer', 'PopulateCSVs.exe') )
+MERGE( (m_a, 'Server', 'Server.exe'), (p_a, 'DBUpdater', 'DBUpdater.exe') )
 
 m_pyz = PYZ(m_a.pure, m_a.zipped_data,
              cipher=block_cipher)
 m_exe = EXE(m_pyz,
           m_a.scripts,
           exclude_binaries=True,
-          name='DVServer',
+          name='Server',
           debug=False,
           strip=False,
           upx=True,
@@ -46,7 +45,7 @@ p_pyz = PYZ(p_a.pure, p_a.zipped_data,
 p_exe = EXE(p_pyz,
           p_a.scripts,
           exclude_binaries=True,
-          name='PopulateCSVs',
+          name='DBUpdater',
           debug=False,
           strip=False,
           upx=True,
@@ -60,7 +59,7 @@ m_coll = COLLECT(m_exe,
 			   Tree("static", prefix="static", excludes=["*.png", ".DS_Store", "*.swp"]),
                strip=False,
                upx=True,
-               name='DVServer')
+               name='Server')
 
 p_coll = COLLECT(p_exe,
                p_a.binaries,
@@ -68,5 +67,5 @@ p_coll = COLLECT(p_exe,
                p_a.datas,
                strip=False,
                upx=True,
-               name='PopulateCSVs')
+               name='DBUpdater')
 

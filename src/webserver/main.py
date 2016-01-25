@@ -1,3 +1,9 @@
+import webbrowser
+import platform
+import time
+import threading
+import subprocess
+
 from const import *
 
 from utils import log
@@ -17,6 +23,14 @@ class WebServer():
     def run_app(self):
         self.webserver.run_app()
 
+def spawn_chrome():
+    time.sleep(2)
+    if platform.system() == 'Windows':
+        subprocess.Popen(["start", "chrome", "http://localhost:8080"], shell=True)
+    elif platform.system() == 'Darwin':
+        # webbrowser.geit('macosx').open("http://localhost:8080")
+        pass
+
 if __name__ == "__main__":
     debuglogger = log.Logger(DEBUGLOG)
     __builtins__.dlog = debuglogger
@@ -26,6 +40,9 @@ if __name__ == "__main__":
     # TODO: Ideally request logs should go in DB.
     requestlogger = log.Logger(REQUESTLOG)
     __builtins__.rlog = requestlogger
+
+    t = threading.Thread(target=spawn_chrome)
+    t.start()
 
     srv = WebServer()
     srv.make_app()

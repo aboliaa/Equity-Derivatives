@@ -61,9 +61,17 @@ class Report5DataGetter(DataGetter):
 
             OI_sums = {}
             for dt in datetimeIterator(min_date, max_date):
-                OI_sums[dt] = self.get_sum_of_OI_for_date(scrip, dt)
+                oi_sum = self.get_sum_of_OI_for_date(scrip, dt)
+                if not oi_sum:
+                    dlog.info("No OI_sum for scrip %s, for date %s" % (scrip, dt))
+                    continue
+                OI_sums[dt] = oi_sum
             
             dlog.info("for scrip %s OI_sums = %s" % (scrip, OI_sums))
+
+            if not OI_sums:
+                dlog.info("No OI_sums for scrip %s" % (scrip))
+                continue
 
             date_for_min_sum_of_OI = min(OI_sums, key=OI_sums.get)
             date_for_max_sum_of_OI = max(OI_sums, key=OI_sums.get)

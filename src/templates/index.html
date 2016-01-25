@@ -7,7 +7,7 @@ $def with(data)
 <body>
 
     <br>
-    <div id="input" style="width:100%;height:10%;">
+    <div id="input" style="width:100%;">
         <div id="reportdiv" style="float:left;width:25%;">
             <select name="report" id="report" onchange="changeReport();">
                 <option>Select report --</option>
@@ -48,6 +48,11 @@ $def with(data)
                 <input type="button" value="Submit" onclick="plot();">
             </div>
         </div>
+    </div>
+    
+    <br><br>
+    <div id="loader" align="center" style="display:none;">
+        <img src="/static/images/loader.gif" height="25" width="25">
     </div>
 
     <div id="error"></div>
@@ -110,6 +115,7 @@ $def with(data)
         params["yyyy"] = jQuery("#yyyy").val();
         params["n"] = jQuery("#n").val();
         console.log(params);
+        jQuery("#loader").show();
 
         var plotargs = {};
         jQuery.ajax({                                                                   
@@ -124,6 +130,7 @@ $def with(data)
                         var err = jqXHR.responseText;
                         console.log(err);
                         jQuery("#plotters").hide();
+                        jQuery("#loader").hide();
                         jQuery("#error").show();
                         jQuery("#error").text(err);
                     }
@@ -131,6 +138,7 @@ $def with(data)
                         console.log(plotargs);
                         jQuery("#plotters").show();
                         jQuery("#error").hide();
+                        jQuery("#loader").hide();
 
                         for(i=0; i<3; i++){
                             Plotter = document.getElementById("plotter"+i);                
