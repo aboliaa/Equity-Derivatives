@@ -86,8 +86,6 @@ class Report6DataGetter(DataGetter):
             error = EINVALIDINPUT
         return data, error
 
-
-
     def transform_data(self, data, json=False):
         x1 = []
         y1 = []

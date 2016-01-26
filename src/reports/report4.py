@@ -44,14 +44,17 @@ class Report4DataGetter(DataGetter):
 
     def _generate_data(self, n, date):
         self.validate_input(n, date)
+        self.input = {"n": n, "date": date}
+
         sums = {'near': {}, 'next': {}, 'far': {}}
         movements = {'near': {}, 'next': {}, 'far': {}, 'cumulative': {}}
         scrips = self.get_all_scrips()
         prev_date = get_prev_date(date)
+        print "PREV DATE =", prev_date
 
         for scrip in scrips:
             try:
-                _series = self.get_all_series(scrip, FUTURE)
+                _series = self.get_all_series(scrip, FUTURE, date)
             except:
                 dlog.error("Nothing found for scrip, derivative_type = %s:%s" % (scrip, FUTURE))
                 series_future = set()
@@ -60,7 +63,7 @@ class Report4DataGetter(DataGetter):
             
             
             try:
-                _series = self.get_all_series(scrip, OPTION)
+                _series = self.get_all_series(scrip, OPTION, date)
             except:
                 dlog.error("Nothing found for scrip, derivative_type = %s:%s " % (scrip, OPTION))
                 series_option = set()

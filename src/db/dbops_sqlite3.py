@@ -146,9 +146,10 @@ class SQLite_DBOps(dbops.DBOps):
                 cls. append(cl)
             clause = " OR ".join(cls)
             query += " WHERE " + clause
-        # dlog.info('sqlite select query is %s' % (query,))
+        #dlog.info('sqlite select query is %s' % (query,))
         rc = self.cur.execute(query)
         l = self.cur.fetchall()
+        #dlog.info('l = %s' %l)
         # TODO: ideally, this method should be an iterator
         ll = self._process_select_output(l)
         return ll

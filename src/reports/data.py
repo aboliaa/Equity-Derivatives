@@ -26,11 +26,12 @@ class DataGetter(object):
 
     # TODO: Many of the functions in this class accept scripname as input. 
     # Should we define a class for 'scrip'?
-    def get_all_series(self, scrip, derivative_type):
+    def get_all_series(self, scrip, derivative_type, date):
         tablename = self.get_tablename_from_scrip(scrip, derivative_type)
         _spec = {
                 'tablename' : tablename,
-                'cols'      : [ 'exp_dt' ]
+                'cols'      : [ 'exp_dt' ],
+                'clauses'   : [ [('timestamp', '=', date)] ]
                 }
         return self.dbobj.select(_spec)
 

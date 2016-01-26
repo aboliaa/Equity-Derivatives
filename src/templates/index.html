@@ -47,13 +47,14 @@ $def with(data)
             <div style="float:left;width:20%;">
                 <input type="button" value="Submit" onclick="plot();">
             </div>
+
+            <div id="loader" style="display:none;" style="float:left;width:10%;">
+                <img src="/static/images/loader.gif" height="25" width="25">
+            </div>
         </div>
     </div>
     
     <br><br>
-    <div id="loader" align="center" style="display:none;">
-        <img src="/static/images/loader.gif" height="25" width="25">
-    </div>
 
     <div id="error"></div>
     
@@ -106,7 +107,16 @@ $def with(data)
 
     }
 
+    function hideLoader(){
+        document.getElementById("loader").style.display = "none";
+    }
+    
+    function showLoader(){
+        document.getElementById("loader").style.display = "display";
+    }
+
     function plot(){
+        showLoader();
         var params = {};
         params["report"] = jQuery("#report").val();
         params["scrip"] = jQuery("#scrip").val();
@@ -115,7 +125,6 @@ $def with(data)
         params["yyyy"] = jQuery("#yyyy").val();
         params["n"] = jQuery("#n").val();
         console.log(params);
-        jQuery("#loader").show();
 
         var plotargs = {};
         jQuery.ajax({                                                                   
@@ -130,19 +139,20 @@ $def with(data)
                         var err = jqXHR.responseText;
                         console.log(err);
                         jQuery("#plotters").hide();
-                        jQuery("#loader").hide();
                         jQuery("#error").show();
                         jQuery("#error").text(err);
+                        hideLoader();
                     }
                     }).done(function (plotargs){
                         console.log(plotargs);
                         jQuery("#plotters").show();
                         jQuery("#error").hide();
-                        jQuery("#loader").hide();
+                        hideLoader();
 
                         for(i=0; i<3; i++){
                             Plotter = document.getElementById("plotter"+i);                
                             if (i < plotargs.length){
+                                Plotter.style.display = "block";
                                 Plotly.newPlot(Plotter, plotargs[i]["data"], plotargs[i]["layout"], {showLink:false});
                             }
                             else{
