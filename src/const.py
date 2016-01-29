@@ -63,11 +63,11 @@ DAY_ZERO = '01-01-1980'
 
 if sys.platform == 'win32':
     # TODO: Change this to app data
-    HOMEDIR = "C:\\DerivativesHome"
+    HOMEDIR = "C:\\AppHome"
     NULLLOG = "NUL"
 else:
     USER_HOME = os.path.expanduser('~')
-    HOMEDIR = os.path.join(USER_HOME, "DerivativesHome")
+    HOMEDIR = os.path.join(USER_HOME, "AppHome")
     NULLLOG = "/dev/null"
 
 DEBUGLOG = os.path.join(HOMEDIR, "debug.log")

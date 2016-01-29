@@ -9,8 +9,9 @@ $def with(data)
     <br>
     <div id="input" style="width:100%;">
         <div id="reportdiv" style="float:left;width:25%;">
+            <label>Report</label>
             <select name="report" id="report" onchange="changeReport();">
-                <option>Select report --</option>
+                <option>Select report</option>
                 <option id="1" value="1">Distribution of PUTS and CALLS</option>
                 <option id="2" value="2">Settlement price v/s Open interest</option>
                 <option id="3" value="3">Settlement price v/s PCR</option>
@@ -39,6 +40,7 @@ $def with(data)
             <div id="ndiv" style="float:left;width:20%;display:none;">
                 <label>Number of scrips</label>
                 <select name="n" id="n">
+                    <option>Select number</option>
                     $for i in range(1,16):
                         <option value=$i>$i</option>
                 </select>

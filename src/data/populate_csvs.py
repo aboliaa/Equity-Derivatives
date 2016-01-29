@@ -3,7 +3,7 @@ import time
 import traceback
 
 from utils import log
-from utils import from_pytime_to_str
+from utils.helper import from_pytime_to_str
 from data.populate_one_csv import Populator
 from data.populate_one_csv import unzip_csv
 from db import dbops_sqlite3

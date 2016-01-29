@@ -1,6 +1,6 @@
 import traceback
 from const import *
-from utils import *
+from utils.helper import *
 from error import *                                                             
 from db.dberror import *
 from data import DataGetter
@@ -23,6 +23,9 @@ class Report6DataGetter(DataGetter):
             raise DBError(ENOTFOUND)
 
     def _generate_data(self, n, date):
+        strdate = from_pytime_to_str(date)
+        dlog.info("Rport6, n=%s, Date=%s" % (n, strdate,))
+        rlog.info("Rport6,%s,%s" % (n, strdate,))
         self.validate_input(date)
         self.input = {"n": n, "date": date}
         scrips = self.get_all_scrips()
@@ -108,8 +111,8 @@ class Report6DataGetter(DataGetter):
             text2.append("Contracts: %s" %d["max_contracts"])
             size2.append(d["max_contracts"] / 30)
 
-        title = "Most active CALLs and PUTs"
-        title += " (Top %s scrips on date %s)" %(self.input["n"],
+        title = "Most Active CALLs and PUTs"
+        title += " (Top %s Scrips on Date %s)" %(self.input["n"],
                                                 from_pytime_to_str(self.input["date"]))
 
         data = self.plot.plotly.form_plotargs_report6(x1, y1, text1, size1, 

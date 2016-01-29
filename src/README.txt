@@ -19,7 +19,7 @@ This will create 2 files on the Desktop
 =============================================================
 How to Use the Server:
 1. Copy the Derivatives.db file in Home folder 
-   (C:\DerivativesHome)
+   (C:\AppHome)
 2. Start the server by double-clicking Server file located on
    Desktop
       - This will open 2 windows
@@ -41,7 +41,7 @@ application again.
 How to update new Bhavcopies:
 1. Download the bhavcopy and copy-paste the downloaded 
    bhavcopy to "bhavcopies" folder in Home folder 
-   (C:\DerivativesHome).
+   (C:\AppHome).
 2. Once you copy-paste the new bhavcopy to home folder,
    you can start Updater by double-clicking Updater file 
    located on the Desktop

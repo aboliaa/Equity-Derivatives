@@ -7,7 +7,7 @@ def form_plotargs(x, y1, y2, y3, title):
                     "width": 3
                 }, 
                 "mode": "lines+markers", 
-                "name": "PCR of trade", 
+                "name": "PCR of Trade", 
                 "type": "scatter", 
                 "uid": "9023be", 
                 "yaxis": "y3"
@@ -33,7 +33,7 @@ def form_plotargs(x, y1, y2, y3, title):
                     "width": 3
                 }, 
                 "mode": "lines+markers", 
-                "name": "Settlement price", 
+                "name": "Settlement Price", 
                 "type": "scatter", 
                 "uid": "784d8d"
             }
@@ -141,7 +141,7 @@ def form_plotargs(x, y1, y2, y3, title):
                 "ticklen": 5, 
                 "ticks": "", 
                 "tickwidth": 1, 
-                "title": "Settlement price", 
+                "title": "Settlement Price", 
                 "titlefont": {
                     "color": "", 
                     "family": "", 
@@ -235,7 +235,7 @@ def form_plotargs(x, y1, y2, y3, title):
                 "ticklen": 5, 
                 "ticks": "", 
                 "tickwidth": 1, 
-                "title": "PCR of trade", 
+                "title": "PCR of Trade", 
                 "titlefont": {
                     "color": "", 
                     "family": "", 

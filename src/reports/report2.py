@@ -2,7 +2,8 @@ import time
 import traceback
 
 from const import *
-from utils import *
+from utils.helper import *
+from db.dberror import *
 from data import DataGetter
 
 class Report2DataGetter(DataGetter):
@@ -16,6 +17,9 @@ class Report2DataGetter(DataGetter):
         return data
 
     def _generate_data(self, scrip):
+        dlog.info("Rport2, Scrip=%s" % (scrip,))
+        rlog.info("Rport2,%s" % (scrip,))
+
         self.input = {"scrip": scrip}
 
         # TODO: Ideally, min_date and max_date for a scrip
@@ -23,10 +27,8 @@ class Report2DataGetter(DataGetter):
         # can be stored in M_SCRIP_INFO table.
 
         min_date = self.get_min_value(scrip, FUTURE, 'timestamp')
-        min_date = from_str_to_pytime(min_date)
        
         max_date = self.get_max_value(scrip, FUTURE, 'timestamp')
-        max_date = from_str_to_pytime(max_date)
 
         data = {}
         for dt in datetimeIterator(min_date, max_date):
@@ -40,8 +42,6 @@ class Report2DataGetter(DataGetter):
             if near_series_date is None:
                 continue
 
-            near_series_date = from_str_to_pytime(near_series_date)
-       
             # TODO: Check if this can be reused in other reports (report 3)
             cols = ['settle_pr']
             clauses = [ [('timestamp', '=', dt), ('exp_dt', '=', near_series_date)] ]
@@ -87,8 +87,8 @@ class Report2DataGetter(DataGetter):
             y1.append(d[1]['settlement_price'])
             y2.append(d[1]['summation_of_OI'])
 
-        title = "Settlement price v/s Open interest"
-        title += " (For scrip %s)" %(self.input["scrip"])
+        title = "Settlement Price v/s Open Interest"
+        title += " (For Scrip %s)" %(self.input["scrip"])
 
         data = self.plot.plotly.form_plotargs_report2(x, y1, y2, title)
         data = [data]

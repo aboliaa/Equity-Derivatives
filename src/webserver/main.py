@@ -7,10 +7,11 @@ import subprocess
 from const import *
 
 from utils import log
+from db.dbops_sqlite3 import SQLite_DBOps
 
 WEBPY = "webpy"
 
-import webpy
+#import webpy
 
 class WebServer():
     def __init__(self, webserver_type=WEBPY):
@@ -34,6 +35,9 @@ def spawn_chrome():
 if __name__ == "__main__":
     debuglogger = log.Logger(DEBUGLOG)
     __builtins__.dlog = debuglogger
+
+    dbops = SQLite_DBOps(DBPATH)
+    __builtins__.dbops = dbops
 
     dlog.info("Starting server at port %s" % ("8080",))
 

@@ -4,13 +4,12 @@ from report3 import Report3DataGetter
 from report4 import Report4DataGetter
 from report5 import Report5DataGetter
 from report6 import Report6DataGetter
-from db.dbops_sqlite3 import SQLite_DBOps
 from plot import Plot
 from const import DBPATH
 
 class Reports():
     def __init__(self):
-        db = SQLite_DBOps(DBPATH)
+        db = dbops
         plot = Plot()
         self.report1 = Report1DataGetter(db, plot)
         self.report2 = Report2DataGetter(db, plot)

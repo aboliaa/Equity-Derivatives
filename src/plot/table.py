@@ -1,7 +1,7 @@
 import os
 import matplotlib.pyplot as plt
 
-from utils import remove_fileglob
+from utils.helper import remove_fileglob
 
 class Table(object):
     def __init__(self, path):

@@ -1,7 +1,7 @@
 import os
 
 from const import *
-from utils import remove_fileglob
+from utils.helper import remove_fileglob
 import matplotlib.pyplot as plt
 
 class Graph(object):

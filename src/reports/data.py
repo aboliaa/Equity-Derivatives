@@ -1,4 +1,4 @@
-from utils import *
+from utils.helper import *
 from const import *
 
 class DataGetter(object):

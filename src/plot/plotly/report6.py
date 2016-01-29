@@ -31,7 +31,7 @@ def form_plotargs(x1, y1, text1, size1, x2, y2, text2, size2, title):
                             "title": "Scrip"
                          },
                 "yaxis": {
-                            "title": "Strike price",
+                            "title": "Strike Price",
                             "showline": True
                          }
     }

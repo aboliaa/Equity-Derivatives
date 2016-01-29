@@ -7,7 +7,7 @@ except ImportError:
 import time
 
 from db import dbops
-from utils import from_pytime_to_str, from_str_to_pytime
+from utils.helper import from_pytime_to_str, from_str_to_pytime
 from const import *
 
 class SQLite_DBOps(dbops.DBOps):
@@ -78,10 +78,10 @@ class SQLite_DBOps(dbops.DBOps):
             for i in range(len(e)):
                 v = e[i]
                 new_v = v
-                if type(v) == str and len(v.split("-")) == 3:
-                    t = from_str_to_pytime()
+                if type(v) in [str, unicode] and len(v.split("-")) == 3:
+                    t = from_str_to_pytime(v)
                     new_v = t if t else v
-                lle.append(v)
+                lle.append(new_v)
             ll.append(tuple(lle))
         return ll
         

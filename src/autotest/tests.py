@@ -2,7 +2,7 @@
 
 from reports import reports
 
-from utils import from_str_to_pytime
+from utils.helper import from_str_to_pytime
 
 from autotest import verify
 

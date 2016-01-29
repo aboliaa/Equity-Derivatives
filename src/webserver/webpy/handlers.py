@@ -9,7 +9,6 @@ from const import *
 __all__ = ["IndexHandler", "ReportHandler", "ReportJSONHandler"]
 
 render = web.template.render("templates/")
-dbname = DBPATH
 wdata_html = WebDataHTML()
 wdata_json = WebDataJSON()
 

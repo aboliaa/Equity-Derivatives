@@ -1,6 +1,5 @@
-IF EXIST C:\DerivativesHome GOTO ERROR
-md C:\DerivativesHome\bhavcopies
-mklink 
+IF EXIST C:\AppHome GOTO ERROR
+md C:\AppHome\bhavcopies
 GOTO SUCCESS
 
 :ERROR

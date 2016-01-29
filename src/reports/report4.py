@@ -1,13 +1,10 @@
 import traceback
 
-from utils import *
+from utils.helper import *
 from const import *
 from error import *                                                             
 from db.dberror import *
 from data import DataGetter
-
-from utils import get_prev_date
-from utils import from_str_to_pytime
 
 class Report4DataGetter(DataGetter):
     def __init__(self, db, plot):
@@ -43,6 +40,10 @@ class Report4DataGetter(DataGetter):
             raise DBError(ENOTFOUND)
 
     def _generate_data(self, n, date):
+        strdate = from_pytime_to_str(date)
+        dlog.info("Rport4, n=%s, Date=%s" % (n, strdate))
+        rlog.info("Rport4,%s,%s" % (n, strdate))
+
         self.validate_input(n, date)
         self.input = {"n": n, "date": date}
 
@@ -50,7 +51,6 @@ class Report4DataGetter(DataGetter):
         movements = {'near': {}, 'next': {}, 'far': {}, 'cumulative': {}}
         scrips = self.get_all_scrips()
         prev_date = get_prev_date(date)
-        print "PREV DATE =", prev_date
 
         for scrip in scrips:
             try:
@@ -82,7 +82,7 @@ class Report4DataGetter(DataGetter):
 
             i = 0
             for _s in ['near', 'next', 'far']:
-                sdate = from_str_to_pytime(series[i])
+                sdate = series[i]
 
                 clauses = [ [('timestamp', '=', date), ('exp_dt', '=', sdate)] ]
                 s1 = self.get_sum_of_OI_for_scrip(scrip, FUTURE, clauses)
@@ -90,6 +90,8 @@ class Report4DataGetter(DataGetter):
                 s2 = self.get_sum_of_OI_for_scrip(scrip, OPTION, clauses)
 
                 sum1 = s1 + s2
+
+                # TODO: What if previous date series is different than date?
 
                 clauses = [ [('timestamp', '=', prev_date), ('exp_dt', '=', sdate)] ]
                 s1 = self.get_sum_of_OI_for_scrip(scrip, FUTURE, clauses)
@@ -223,8 +225,8 @@ class Report4DataGetter(DataGetter):
 
             cnt += 1
 
-        title = "OI movements"
-        title += " (Top %s scrips on date %s)" %(self.input["n"],               
+        title = "OI Movements"
+        title += " (Top %s Scrips on Date %s)" %(self.input["n"],               
                                                 from_pytime_to_str(self.input["date"]))
         
         data = self.plot.plotly.form_plotargs_report4(ix, iy, itext, isize, 

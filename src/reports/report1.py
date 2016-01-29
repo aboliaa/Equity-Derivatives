@@ -1,6 +1,6 @@
 import traceback
 
-from utils import *
+from utils.helper import *
 from const import *
 from error import *
 from db.dberror import *
@@ -25,6 +25,10 @@ class Report1DataGetter(DataGetter):
             raise DBError(ENOTFOUND)
 
     def _generate_data(self, scrip, date):
+        strdate = from_pytime_to_str(date)
+        dlog.info("Rport1, Scrip=%s, Date=%s" % (scrip, strdate))
+        rlog.info("Rport1,%s,%s" % (scrip, strdate))
+
         self.validate_input(scrip, date)
         self.input = {'scrip': scrip, 'date': date}
 
@@ -103,7 +107,7 @@ class Report1DataGetter(DataGetter):
         
             
             title = "Distribution of PUTs and CALLs: %s" %(series_map[i])
-            title += " (For scrip %s on date %s)" %(self.input["scrip"], from_pytime_to_str(self.input["date"]))
+            title += " (For Scrip %s on Date %s)" %(self.input["scrip"], from_pytime_to_str(self.input["date"]))
             
             data.append(self.plot.plotly.form_plotargs_report1(x1, y1, x2, y2, title))
             i += 1

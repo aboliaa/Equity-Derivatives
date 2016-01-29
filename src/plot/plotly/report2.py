@@ -3,13 +3,8 @@ def form_plotargs(x, y1, y2, title):
             {
                 "x": x,
                 "y": y2,
-                "line": {
-                    "color": "rgb(44, 160, 44)", 
-                    "width": 3
-                }, 
-                "mode": "lines+markers", 
-                "name": "PCR of OI", 
-                "type": "scatter", 
+                "name": "Total OI", 
+                "type": "bar", 
                 "uid": "7155f3", 
                 "yaxis": "y2"
             }, 
@@ -21,7 +16,7 @@ def form_plotargs(x, y1, y2, title):
                     "width": 3
                 }, 
                 "mode": "lines+markers", 
-                "name": "Settlement price", 
+                "name": "Settlement Price", 
                 "type": "scatter", 
                 "uid": "784d8d"
             }
@@ -54,14 +49,6 @@ def form_plotargs(x, y1, y2, title):
                 "xanchor": "left", 
                 "yanchor": "top"
             }, 
-            "margin": {
-                "r": 80, 
-                "t": 100, 
-                "autoexpand": True, 
-                "b": 80, 
-                "l": 80, 
-                "pad": 0
-            }, 
             "paper_bgcolor": "#fff", 
             "plot_bgcolor": "#fff", 
             "separators": ".,", 
@@ -73,7 +60,7 @@ def form_plotargs(x, y1, y2, title):
                 "family": "", 
                 "size": 0
             }, 
-            "width": 900, 
+            "width": 1500, 
             "xaxis": {
                 "anchor": "y",
                 "type": "date",
@@ -124,7 +111,7 @@ def form_plotargs(x, y1, y2, title):
                 "ticklen": 5, 
                 "ticks": "", 
                 "tickwidth": 1, 
-                "title": "Settlement price", 
+                "title": "Settlement Price", 
                 "titlefont": {
                     "color": "", 
                     "family": "", 

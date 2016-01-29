@@ -1,6 +1,6 @@
 import traceback
 from const import *
-from utils import *
+from utils.helper import *
 from error import *                                                             
 from db.dberror import *
 from data import DataGetter
@@ -41,6 +41,9 @@ class Report5DataGetter(DataGetter):
             raise DBError(ENOTFOUND)
 
     def _generate_data(self, date):
+        strdate = from_pytime_to_str(date)
+        dlog.info("Rport5, Date=%s" % (strdate,))
+        rlog.info("Rport5,%s" % (strdate,))
         self.validate_input(date)
         self.input = {"date": date}
         scrips = self.get_all_scrips()
@@ -54,8 +57,6 @@ class Report5DataGetter(DataGetter):
                 traceback.print_exc()
                 dlog.error("Exception in scrip %s" % (scrip,))
                 continue
-
-            min_date = from_str_to_pytime(min_date)
 
             max_date = date
 
@@ -107,8 +108,8 @@ class Report5DataGetter(DataGetter):
             y.append(d[0])
             x.append(d[1])
 
-        title = "Highest Open interest"
-        title += " (On date %s)" %(from_pytime_to_str(self.input["date"]))
+        title = "Highest Open Interest"
+        title += " (On Date %s)" %(from_pytime_to_str(self.input["date"]))
         height = max(len(y)*25, 500)
         data1 = self.plot.plotly.form_plotargs_report5(x, y, height, title)                
        
@@ -120,8 +121,8 @@ class Report5DataGetter(DataGetter):
             y.append(d[0])
             x.append(d[1])
 
-        title = "Lowest Open interest"
-        title += " (On date %s)" %(from_pytime_to_str(self.input["date"]))
+        title = "Lowest Open Interest"
+        title += " (On Date %s)" %(from_pytime_to_str(self.input["date"]))
         height = max(len(y)*25, 500)
         data2 = self.plot.plotly.form_plotargs_report5(x, y, height, title)
 

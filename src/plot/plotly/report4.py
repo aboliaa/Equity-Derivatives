@@ -1,7 +1,7 @@
 def form_plotargs(x, y, text, size, color, symbol, title):
     data = [
             {
-                "name": "Near series -",
+                "name": "Near Series -",
                 "x": x[0],
                 "y": y[0],
                 "text": text[0],
@@ -14,7 +14,7 @@ def form_plotargs(x, y, text, size, color, symbol, title):
                           }
             },
             {
-                "name": "Next series -",
+                "name": "Next Series -",
                 "x": x[1],
                 "y": y[1],
                 "text": text[1],
@@ -27,7 +27,7 @@ def form_plotargs(x, y, text, size, color, symbol, title):
                           }
             },
             {
-                "name": "Far series -",
+                "name": "Far Series -",
                 "x": x[2],
                 "y": y[2],
                 "text": text[2],
@@ -53,7 +53,7 @@ def form_plotargs(x, y, text, size, color, symbol, title):
                           }
             },
             {
-                "name": "Near series +",
+                "name": "Near Series +",
                 "x": x[4],
                 "y": y[4],
                 "text": text[4],
@@ -66,7 +66,7 @@ def form_plotargs(x, y, text, size, color, symbol, title):
                           }
             },
             {
-                "name": "Next series +",
+                "name": "Next Series +",
                 "x": x[5],
                 "y": y[5],
                 "text": text[5],
@@ -79,7 +79,7 @@ def form_plotargs(x, y, text, size, color, symbol, title):
                           }
             },
             {
-                "name": "Far series +",
+                "name": "Far Series +",
                 "x": x[6],
                 "y": y[6],
                 "text": text[6],

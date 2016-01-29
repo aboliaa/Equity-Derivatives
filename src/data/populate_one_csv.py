@@ -18,10 +18,10 @@ from zipfile import ZipFile
 
 from data import read_one_csv
 
-from utils import get_tablename
-from utils import get_date
-from utils import tablename_to_symbol
-from utils import tablename_to_idx
+from utils.helper import get_tablename
+from utils.helper import get_date
+from utils.helper import tablename_to_symbol
+from utils.helper import tablename_to_idx
 
 from const import *
 
@@ -140,10 +140,10 @@ if __name__ == '__main__':
              '/Users/amitkulkarni/bhavcopies/fo24DEC2015bhav.csv',
            ]
     
-    path = '/Users/amitkulkarni/Downloaded_Bhavcopies/2015/DEC2015'
+    path = '/Users/amitkulkarni/NSE_Data/Downloaded_Bhavcopies/2015/DEC2015'
     csvs = walk_path(path)
 
-    dbname = '/Users/amitkulkarni/temp_Derivatives/populate_test.db'
+    dbname = '/Users/amitkulkarni/AppHome/Derivatives.db'
     
     populator = Populator(csvs, dbname)
     populator.start()

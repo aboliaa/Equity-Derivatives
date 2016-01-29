@@ -18,7 +18,7 @@ def form_plotargs(x, y, height, title):
                           },
                 "xaxis": {
                             "showline": True,
-                            "title": "Open interest"
+                            "title": "Open Interest"
                          },
                 "yaxis": {
                             "showline": True,

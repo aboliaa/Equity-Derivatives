@@ -27,11 +27,11 @@ def form_plotargs(x1, y1, x2, y2, title):
             "showlegend": True, 
             "title": title,
             "xaxis": {
-                        "title": "Strike price",
+                        "title": "Strike Price",
                         "showline": True
                      },
             "yaxis": {
-                        "title": "Open interest",
+                        "title": "Open Interest",
                         "showline": True
                      }
         }
