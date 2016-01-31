@@ -17,10 +17,12 @@ class Report3DataGetter(DataGetter):
         return data
 
     def _generate_data(self, scrip):
-        dlog.info("Rport3, Scrip=%s" % (scrip,))
-        rlog.info("Rport3,%s" % (scrip,))
+        dlog.info("Report3, Scrip=%s" % (scrip,))
+        rlog.info("Report3,%s" % (scrip,))
 
         self.input = {"scrip": scrip}
+
+        dlog.info("Starting to generate Report3")
 
         # TODO: Ideally, min_date and max_date for a scrip
         # (including informations about mergers and de-mergers),
@@ -76,7 +78,7 @@ class Report3DataGetter(DataGetter):
             data = self._generate_data(scrip)
             error = None
         except DBError as fault:
-            traceback.print_exc()
+            dlog.info(traceback.format_exc())
             if fault.errno <> ENOTFOUND:
                 raise fault
             data = None
@@ -105,6 +107,8 @@ class Report3DataGetter(DataGetter):
         data = [data]
         if json:
             data = jsonify(data)
+
+        dlog.info("Done generating Report3")
         return data
 
     def plot_data(self, data):

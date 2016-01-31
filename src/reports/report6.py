@@ -24,8 +24,11 @@ class Report6DataGetter(DataGetter):
 
     def _generate_data(self, n, date):
         strdate = from_pytime_to_str(date)
-        dlog.info("Rport6, n=%s, Date=%s" % (n, strdate,))
-        rlog.info("Rport6,%s,%s" % (n, strdate,))
+        dlog.info("Report6, n=%s, Date=%s" % (n, strdate,))
+        rlog.info("Reiport6,%s,%s" % (n, strdate,))
+
+        dlog.info("Starting to generate Report6")
+
         self.validate_input(date)
         self.input = {"n": n, "date": date}
         scrips = self.get_all_scrips()
@@ -38,7 +41,7 @@ class Report6DataGetter(DataGetter):
                 max_contracts = self.get_max_value(scrip, OPTION, 'contracts', clauses=clauses)
                 data['calls'][scrip] = {'scrip': scrip, 'max_contracts': max_contracts} 
             except:
-                # traceback.print_exc()
+                # dlog.info(traceback.format_exc())
                 dlog.error("Exception in getting calls for scrip %s" % (scrip,))
                 continue
 
@@ -47,7 +50,7 @@ class Report6DataGetter(DataGetter):
                 max_contracts = self.get_max_value(scrip, OPTION, 'contracts', clauses=clauses)
                 data['puts'][scrip] = {'scrip': scrip, 'max_contracts': max_contracts}
             except:
-                # traceback.print_exc()
+                # dlog.info(traceback.format_exc())
                 dlog.error("Exception in getting puts for scrip %s" % (scrip,))
                 continue
 
@@ -82,7 +85,7 @@ class Report6DataGetter(DataGetter):
             data = self._generate_data(n, date)
             error = None
         except DBError as fault:
-            traceback.print_exc()
+            dlog.info(traceback.format_exc())
             if fault.errno <> ENOTFOUND:
                 raise fault
             data = None
@@ -95,7 +98,7 @@ class Report6DataGetter(DataGetter):
         text1 = []
         size1 = []
         for d in sorted(data["calls"], key=lambda x:x["max_contracts"]):
-            print d["exp_dt"]
+            # print d["exp_dt"]
             x1.append(d["scrip"])
             y1.append(d["strike_pr"])
             text1.append("Contracts: %s" %d["max_contracts"])
@@ -120,6 +123,8 @@ class Report6DataGetter(DataGetter):
         data = [data]
         if json:
             data = jsonify(data)
+
+        dlog.info("Done generating Report6")
         return data 
 
     def plot_data(self, data):

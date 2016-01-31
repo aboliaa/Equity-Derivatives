@@ -26,8 +26,10 @@ class Report1DataGetter(DataGetter):
 
     def _generate_data(self, scrip, date):
         strdate = from_pytime_to_str(date)
-        dlog.info("Rport1, Scrip=%s, Date=%s" % (scrip, strdate))
-        rlog.info("Rport1,%s,%s" % (scrip, strdate))
+        dlog.info("Report1, Scrip=%s, Date=%s" % (scrip, strdate))
+        rlog.info("Report1,%s,%s" % (scrip, strdate))
+
+        dlog.info("Starting to generate Report1")
 
         self.validate_input(scrip, date)
         self.input = {'scrip': scrip, 'date': date}
@@ -69,6 +71,7 @@ class Report1DataGetter(DataGetter):
         data['put_strike_prices'] = put_strike_prices
         data['put_open_interests'] = put_open_interests
         data['expiry_series'] = expiry_series
+
         return data
 
     def generate_data(self, scrip, date):
@@ -76,7 +79,7 @@ class Report1DataGetter(DataGetter):
             data = self._generate_data(scrip, date)
             error = None
         except DBError as fault:
-            traceback.print_exc()
+            dlog.info(traceback.format_exc())
             if fault.errno <> ENOTFOUND:
                 raise fault
             data = None
@@ -114,6 +117,8 @@ class Report1DataGetter(DataGetter):
 
         if json:
             data = jsonify(data)
+
+        dlog.info("Done generating Report1")
         return data
 
     def plot_data(self, data):

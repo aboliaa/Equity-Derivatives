@@ -39,6 +39,7 @@ if __name__ == "__main__":
     dbops = SQLite_DBOps(DBPATH)
     __builtins__.dbops = dbops
 
+    dlog.info("====================== Version 0.1 =========================")
     dlog.info("Starting server at port %s" % ("8080",))
 
     # TODO: Ideally request logs should go in DB.

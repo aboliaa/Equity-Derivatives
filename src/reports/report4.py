@@ -24,8 +24,6 @@ class Report4DataGetter(DataGetter):
             dlog.error("Exception in getting data for %s:%s" % (scrip, derivative_type))
             s = 0
 
-        # There are no rows in db for holidays. Hence aggregate query will
-        # return output as None. Skip these dates.
         # TODO: Raise an proper exception from DB layer.
         if s is None:
             s = 0
@@ -41,8 +39,10 @@ class Report4DataGetter(DataGetter):
 
     def _generate_data(self, n, date):
         strdate = from_pytime_to_str(date)
-        dlog.info("Rport4, n=%s, Date=%s" % (n, strdate))
-        rlog.info("Rport4,%s,%s" % (n, strdate))
+        dlog.info("Report4, n=%s, Date=%s" % (n, strdate))
+        rlog.info("Report4,%s,%s" % (n, strdate))
+
+        dlog.info("Starting to generate Report4")
 
         self.validate_input(n, date)
         self.input = {"n": n, "date": date}
@@ -50,31 +50,14 @@ class Report4DataGetter(DataGetter):
         sums = {'near': {}, 'next': {}, 'far': {}}
         movements = {'near': {}, 'next': {}, 'far': {}, 'cumulative': {}}
         scrips = self.get_all_scrips()
+        dlog.info("date=%s" % date)
         prev_date = get_prev_date(date)
+        dlog.info("prev_date=%s" % prev_date)
 
         for scrip in scrips:
-            try:
-                _series = self.get_all_series(scrip, FUTURE, date)
-            except:
-                dlog.error("Nothing found for scrip, derivative_type = %s:%s" % (scrip, FUTURE))
-                series_future = set()
-            else:
-                series_future = set([x[0] for x in _series])
-            
-            
-            try:
-                _series = self.get_all_series(scrip, OPTION, date)
-            except:
-                dlog.error("Nothing found for scrip, derivative_type = %s:%s " % (scrip, OPTION))
-                series_option = set()
-            else:
-                series_option = set([x[0] for x in _series])
-    
-            _series = series_future.union(series_option)
-            series = sorted(list(_series))
+            series = self.get_all_series_for_date(scrip, date)
+            pseries = self.get_all_series_for_date(scrip, prev_date)
 
-            # dlog.info("For scrip %s series = %s:%s" % (scrip, series))
-        
             n_series = len(series)
             if n_series < 3:
                 dlog.error("For scrip %s there are less than 3 series" % (scrip,))
@@ -83,21 +66,16 @@ class Report4DataGetter(DataGetter):
             i = 0
             for _s in ['near', 'next', 'far']:
                 sdate = series[i]
+                psdate = pseries[i]
 
                 clauses = [ [('timestamp', '=', date), ('exp_dt', '=', sdate)] ]
                 s1 = self.get_sum_of_OI_for_scrip(scrip, FUTURE, clauses)
-
                 s2 = self.get_sum_of_OI_for_scrip(scrip, OPTION, clauses)
-
                 sum1 = s1 + s2
 
-                # TODO: What if previous date series is different than date?
-
-                clauses = [ [('timestamp', '=', prev_date), ('exp_dt', '=', sdate)] ]
+                clauses = [ [('timestamp', '=', prev_date), ('exp_dt', '=', psdate)] ]
                 s1 = self.get_sum_of_OI_for_scrip(scrip, FUTURE, clauses)
-
                 s2 = self.get_sum_of_OI_for_scrip(scrip, OPTION, clauses)
-
                 sum2 = s1 + s2
                 
                 # dlog.info("for scrip %s sum1 and sum2 for series %s are: %s, %s " % (scrip, _s, sum1, sum2))
@@ -173,7 +151,7 @@ class Report4DataGetter(DataGetter):
             data = self._generate_data(n, date)
             error = None
         except DBError as fault:
-            traceback.print_exc()
+            dlog.info(traceback.format_exc())
             if fault.errno <> ENOTFOUND:
                 raise fault
             data = None
@@ -235,6 +213,7 @@ class Report4DataGetter(DataGetter):
         if json:
             data = jsonify(data)
 
+        dlog.info("Done generating Report4")
         return data
 
     def plot_data(self, data):

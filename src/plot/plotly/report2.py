@@ -5,6 +5,7 @@ def form_plotargs(x, y1, y2, title):
                 "y": y2,
                 "name": "Total OI", 
                 "type": "bar", 
+                "opacity": 0.75,
                 "uid": "7155f3", 
                 "yaxis": "y2"
             }, 
@@ -17,26 +18,24 @@ def form_plotargs(x, y1, y2, title):
                 }, 
                 "mode": "lines+markers", 
                 "name": "Settlement Price", 
-                "type": "scatter", 
+                "type": "scatter",
                 "uid": "784d8d"
             }
         ] 
         
         
     layout = {
-            "autosize": True, 
-            "dragmode": "zoom", 
-            "font": {
-                "color": "#444", 
-                "family": "\"Open sans\", verdana, arial, sans-serif", 
-                "size": 12
-            }, 
-            "height": 700, 
-            "hidesources": True, 
-            "hovermode": "x", 
+            "autosize": True,
+            "boxgap": 0.3,
+            "boxgroupgap": 0.3,                                                 
+            "boxmode": "overlay",
+            "margin":{
+                "l": 50
+            },
+            "height": 550, 
             "legend": {
-                "x": 1.0476190476190477, 
-                "y": 0.9666666666666667, 
+                "x": 0.95, 
+                "y": 1, 
                 "bgcolor": "rgba(255, 255, 255, 0)", 
                 "bordercolor": "#444", 
                 "borderwidth": 0, 
@@ -49,24 +48,15 @@ def form_plotargs(x, y1, y2, title):
                 "xanchor": "left", 
                 "yanchor": "top"
             }, 
-            "paper_bgcolor": "#fff", 
-            "plot_bgcolor": "#fff", 
-            "separators": ".,", 
             "showlegend": True, 
-            "smith": False, 
             "title": title, 
-            "titlefont": {
-                "color": "", 
-                "family": "", 
-                "size": 0
-            }, 
-            "width": 1500, 
+            "width": 1200, 
             "xaxis": {
                 "anchor": "y",
                 "type": "date",
                 "domain": [
-                    0.08, 
-                    0.8
+                    0, 
+                    0.9
                 ], 
                 "exponentformat": "B", 
                 "overlaying": False, 

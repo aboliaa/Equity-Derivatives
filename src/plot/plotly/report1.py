@@ -22,9 +22,12 @@ def form_plotargs(x1, y1, x2, y2, title):
             "boxgap": 0.3, 
             "boxgroupgap": 0.3, 
             "boxmode": "overlay", 
-            "height": 700, 
+            "height": 550, 
             "width": 1000, 
-            "showlegend": True, 
+            "showlegend": True,
+            "margin": {
+                "t": 80
+            },
             "title": title,
             "xaxis": {
                         "title": "Strike Price",

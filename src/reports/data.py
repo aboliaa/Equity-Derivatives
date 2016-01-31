@@ -35,6 +35,32 @@ class DataGetter(object):
                 }
         return self.dbobj.select(_spec)
 
+    def get_all_series_for_date(self, scrip, date, limit=3):
+        # Get all series of FUTURE and OPTION and union them
+        try:
+            _series = self.get_all_series(scrip, FUTURE, date)
+        except:
+            dlog.error("Nothing found for scrip, derivative_type = %s:%s" % (scrip, FUTURE))
+            series_future = set()
+        else:
+            series_future = set([x[0] for x in _series])
+         
+        try:
+            _series = self.get_all_series(scrip, OPTION, date)
+        except:
+            dlog.error("Nothing found for scrip, derivative_type = %s:%s " % (scrip, OPTION))
+            series_option = set()
+        else:
+            series_option = set([x[0] for x in _series])
+
+        _series = series_future.union(series_option)
+        series = sorted(list(_series))
+
+        if limit:
+            return series[:limit]
+        else:
+            return series
+
     def get_tablename_from_scrip(self, scrip, derivative_type):
         _spec = {
                 'tablename' : 'M_SCRIP_INFO',

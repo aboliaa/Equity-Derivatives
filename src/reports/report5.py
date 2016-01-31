@@ -16,13 +16,14 @@ class Report5DataGetter(DataGetter):
         return data
 
     def get_sum_of_OI_for_date(self, scrip, date):
-        clauses = [ [('timestamp', '=', date)] ]
+        series = self.get_all_series_for_date(scrip, date)
+        clauses = [[('timestamp', '=', date), ('exp_dt', '=', sr)] for sr in series]
         try:
             sum_of_futures = self.get_sum(scrip, FUTURE, 'open_int', clauses=clauses)
             sum_of_options = self.get_sum(scrip, OPTION, 'open_int', clauses=clauses)
             sum_of_OI = sum_of_futures + sum_of_options
         except:
-            traceback.print_exc()
+            dlog.info(traceback.format_exc())
             return 0
         
         # There are no rows in db for holidays. Hence aggregate query will
@@ -42,19 +43,22 @@ class Report5DataGetter(DataGetter):
 
     def _generate_data(self, date):
         strdate = from_pytime_to_str(date)
-        dlog.info("Rport5, Date=%s" % (strdate,))
-        rlog.info("Rport5,%s" % (strdate,))
+        dlog.info("Report5, Date=%s" % (strdate,))
+        rlog.info("Report5,%s" % (strdate,))
+
+        dlog.info("Starting to generate Report5")
+
         self.validate_input(date)
         self.input = {"date": date}
         scrips = self.get_all_scrips()
 
         data = {'lowest': [], 'highest': []}
-        
+       
         for scrip in scrips:
             try:
                 min_date = self.get_min_value(scrip, FUTURE, 'timestamp')
             except:
-                traceback.print_exc()
+                dlog.info(traceback.format_exc())
                 dlog.error("Exception in scrip %s" % (scrip,))
                 continue
 
@@ -68,8 +72,6 @@ class Report5DataGetter(DataGetter):
                     continue
                 OI_sums[dt] = oi_sum
             
-            dlog.info("for scrip %s OI_sums = %s" % (scrip, OI_sums))
-
             if not OI_sums:
                 dlog.info("No OI_sums for scrip %s" % (scrip))
                 continue
@@ -91,7 +93,7 @@ class Report5DataGetter(DataGetter):
             data = self._generate_data(date)
             error = None
         except DBError as fault:
-            traceback.print_exc()
+            dlog.info(traceback.format_exc())
             if fault.errno <> ENOTFOUND:
                 raise fault
             data = None
@@ -130,6 +132,8 @@ class Report5DataGetter(DataGetter):
         
         if json:                                                                
             data = jsonify(data)
+
+        dlog.info("Done generating Report5")
         return data
 
     def plot_data(self, data):

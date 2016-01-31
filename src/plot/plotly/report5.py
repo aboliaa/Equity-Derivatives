@@ -10,7 +10,7 @@ def form_plotargs(x, y, height, title):
         
     layout = {
                 "title": title,
-                "width": 1000,
+                "width": 1200,
                 "height": height,
                 "margin": {
                             "autoexpand": True,

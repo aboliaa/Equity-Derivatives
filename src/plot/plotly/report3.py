@@ -48,50 +48,24 @@ def form_plotargs(x, y1, y2, y3, title):
             "boxgap": 0.3, 
             "boxgroupgap": 0.3, 
             "boxmode": "overlay", 
-            "dragmode": "zoom", 
-            "font": {
-                "color": "#444", 
-                "family": "\"Open sans\", verdana, arial, sans-serif", 
-                "size": 12
-            }, 
-            "height": 700, 
+            "height": 550, 
             "hidesources": True, 
-            "hovermode": "x", 
             "legend": {
-                "x": 1.0476190476190477, 
-                "y": 0.9666666666666667, 
+                "x": 1.05, 
+                "y": 1, 
                 "bgcolor": "rgba(255, 255, 255, 0)", 
                 "bordercolor": "#444", 
                 "borderwidth": 0, 
-                "font": {
-                    "color": "", 
-                    "family": "", 
-                    "size": 0
-                }, 
                 "traceorder": "normal", 
                 "xanchor": "left", 
                 "yanchor": "top"
             }, 
             "margin": {
-                "r": 80, 
-                "t": 100, 
-                "autoexpand": True, 
-                "b": 80, 
-                "l": 80, 
-                "pad": 0
+                "l": 50 
             }, 
-            "paper_bgcolor": "#fff", 
-            "plot_bgcolor": "#fff", 
-            "separators": ".,", 
             "showlegend": True, 
-            "smith": False, 
             "title": title, 
-            "titlefont": {
-                "color": "", 
-                "family": "", 
-                "size": 0
-            }, 
-            "width": 900, 
+            "width": 1200, 
             "xaxis": {
                 "type": "date",
                 "anchor": "y",
@@ -102,8 +76,8 @@ def form_plotargs(x, y1, y2, y3, title):
                 "showline": True, 
                 "zerolinewidth": 1,
                 "domain": [                                                     
-                    0.08,                                                       
-                    0.8                                                         
+                    0.0,                                                       
+                    0.9                                                         
                 ],
                 "title": "Date" 
             }, 

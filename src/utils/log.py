@@ -1,4 +1,5 @@
 import logging
+import logging.handlers as handlers
 import sys
 
 class Logger(object):
@@ -8,7 +9,8 @@ class Logger(object):
         if logname == 'stdout':
             handler = logging.StreamHandler(sys.stdout)
         else:
-            handler = logging.FileHandler(filepath)
+            handler = handlers.TimedRotatingFileHandler(filepath, when='d', interval=1)
+            # handler = logging.FileHandler(filepath)
         formatter = logging.Formatter('[%(asctime)s] [%(levelname)s] %(message)s')
         handler.setFormatter(formatter)
         logger.addHandler(handler)

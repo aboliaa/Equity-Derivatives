@@ -110,8 +110,8 @@ def form_plotargs(x, y, text, size, color, symbol, title):
     layout = {
                 "title": title,
                 "showlegend": True,
-                "width": 1000,
-                "height": 800,
+                "width": 1200,
+                "height": 550,
                 "xaxis": {
                             "title": "Scrip"
                          },

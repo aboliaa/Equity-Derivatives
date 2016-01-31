@@ -21,7 +21,7 @@ class SQLite_DBOps(dbops.DBOps):
         self.conn = sqlite3.connect(self.dbname, check_same_thread=False)
         self.cur = self.conn.cursor()
         rc = self.cur.execute("PRAGMA journal_mode=WAL;")
-        print "journal_mode = ", self.cur.fetchall()
+        dlog.info("Setting journal_mode = %s" % (self.cur.fetchall(),))
         self.cur.execute("PRAGMA wal_autocheckpoint=10000;")
         self.cur.execute("PRAGMA synchronous=OFF;")
     

@@ -8,7 +8,8 @@ def form_plotargs(x1, y1, text1, size1, x2, y2, text2, size2, title):
                 "mode": "markers",
                 "marker": {
                             "sizemode": "area",
-                            "size": size1
+                            "size": size1,
+                            "symbol": "circle"
                           }
             },
             {
@@ -19,13 +20,16 @@ def form_plotargs(x1, y1, text1, size1, x2, y2, text2, size2, title):
                 "mode": "markers",
                 "marker": {
                             "sizemode": "area",
-                            "size": size2
+                            "size": size2,
+                            "symbol": "cross"
                           }
             } 
     ]
     
     layout = {
                 "title": title,
+                "width": 1200,
+                "height": 550,
                 "showlegend": True,
                 "xaxis": {
                             "title": "Scrip"
