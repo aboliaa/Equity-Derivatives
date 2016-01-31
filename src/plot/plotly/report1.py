@@ -1,3 +1,5 @@
+from defaults import *
+
 def form_plotargs(x1, y1, x2, y2, title):
     data = [
             {
@@ -39,6 +41,10 @@ def form_plotargs(x1, y1, x2, y2, title):
                      }
         }
 
+    if any(y1) or any(y2):
+        isempty = 0
+    else:
+        isempty = 1
 
-    plotargs = {"data": data, "layout": layout}
+    plotargs = {"data": data, "layout": layout, "empty": isempty}
     return plotargs

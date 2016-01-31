@@ -39,6 +39,8 @@ def form_plotargs(x1, y1, text1, size1, x2, y2, text2, size2, title):
                             "showline": True
                          }
     }
+    
+    isempty = 0
 
-    plotargs = {"data": data, "layout":layout}
+    plotargs = {"data": data, "layout": layout, "empty": isempty}
     return plotargs

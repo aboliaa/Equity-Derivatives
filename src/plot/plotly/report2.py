@@ -1,3 +1,5 @@
+from defaults import *
+
 def form_plotargs(x, y1, y2, title):
     data = [
             {
@@ -32,18 +34,13 @@ def form_plotargs(x, y1, y2, title):
             "margin":{
                 "l": 50
             },
-            "height": 550, 
+            "height": 550,
             "legend": {
                 "x": 0.95, 
                 "y": 1, 
                 "bgcolor": "rgba(255, 255, 255, 0)", 
                 "bordercolor": "#444", 
                 "borderwidth": 0, 
-                "font": {
-                    "color": "", 
-                    "family": "", 
-                    "size": 0
-                }, 
                 "traceorder": "normal", 
                 "xanchor": "left", 
                 "yanchor": "top"
@@ -102,11 +99,6 @@ def form_plotargs(x, y1, y2, title):
                 "ticks": "", 
                 "tickwidth": 1, 
                 "title": "Settlement Price", 
-                "titlefont": {
-                    "color": "", 
-                    "family": "", 
-                    "size": 0
-                }, 
                 "type": "linear", 
                 "zeroline": True, 
                 "zerolinecolor": "#444", 
@@ -148,11 +140,6 @@ def form_plotargs(x, y1, y2, title):
                 "ticks": "", 
                 "tickwidth": 1, 
                 "title": "Summation of OI", 
-                "titlefont": {
-                    "color": "", 
-                    "family": "", 
-                    "size": 0
-                }, 
                 "type": "linear", 
                 "zeroline": True, 
                 "zerolinecolor": "#444", 
@@ -160,5 +147,11 @@ def form_plotargs(x, y1, y2, title):
             } 
         }
 
-    plotargs = {"data": data, "layout": layout}
+    if any(y1) or any(y2):
+        isempty = 0
+    else:
+        isempty = 1
+
+
+    plotargs = {"data": data, "layout": layout, "empty": isempty}
     return plotargs

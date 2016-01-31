@@ -221,6 +221,11 @@ def form_plotargs(x, y1, y2, y3, title):
                 "zerolinewidth": 1
             }
         }
+    
+    if any(y1) or any(y2) or any(y3):
+        isempty = 0
+    else:
+        isempty = 1
 
-    plotargs = {"data": data, "layout": layout}
+    plotargs = {"data": data, "layout": layout, "empty": isempty}
     return plotargs

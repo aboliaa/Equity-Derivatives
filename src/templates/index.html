@@ -163,7 +163,13 @@ $def with(data)
                             Plotter = document.getElementById("plotter"+i);                
                             if (i < plotargs.length){
                                 Plotter.style.display = "block";
-                                Plotly.newPlot(Plotter, plotargs[i]["data"], plotargs[i]["layout"], {showLink:false});
+                                if (plotargs[i]["empty"]){
+                                    jQuery("#plotter"+i).html("No data found.<hr>");
+                                }
+                                else{
+                                    jQuery("#plotter"+i).html("<hr>");
+                                    Plotly.newPlot(Plotter, plotargs[i]["data"], plotargs[i]["layout"], {showLink:false});
+                                }
                             }
                             else{
                                 Plotter.style.display = "none";

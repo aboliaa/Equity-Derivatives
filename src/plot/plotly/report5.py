@@ -27,6 +27,11 @@ def form_plotargs(x, y, height, title):
 
              }   
 
-    plotargs = {"data": data, "layout": layout}
+    if any(x):
+        isempty = 0
+    else:
+        isempty = 1
+
+    plotargs = {"data": data, "layout": layout, "empty": isempty}
     print plotargs
     return plotargs
