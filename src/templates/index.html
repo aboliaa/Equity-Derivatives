@@ -53,7 +53,7 @@ $def with(data)
                 <input type="button" value="Submit" onclick="plot();">
             </div>
 
-            <div id="loader" style="display:none;" style="float:left;width:10%;">
+            <div id="loader" style="float:left;width:10%;display:none;">
                 <img src="/static/images/loader.gif" height="25" width="25">
             </div>
         </div>
@@ -124,16 +124,7 @@ $def with(data)
 
     }
 
-    function hideLoader(){
-        document.getElementById("loader").style.display = "none";
-    }
-    
-    function showLoader(){
-        document.getElementById("loader").style.display = "display";
-    }
-
     function plot(){
-        showLoader();
         var params = {};
         params["report"] = jQuery("#report").val();
         params["scrip"] = jQuery("#scrip").val();
@@ -144,12 +135,15 @@ $def with(data)
         console.log(params);
 
         var plotargs = {};
+        jQuery("#loader").show();
         jQuery.ajax({                                                                   
                     url: '/getdata/',                                                    
                     type: 'GET',       
                     data: params,
                     dataType: 'json',                                                  
-                    async: false,
+                    //async: false,
+                    beforeSend: function (){
+                    },
                     success: function (plotargs){                                             
                     },
                     error: function (jqXHR, exception){
@@ -158,13 +152,12 @@ $def with(data)
                         jQuery("#plotters").hide();
                         jQuery("#error").show();
                         jQuery("#error").text(err);
-                        hideLoader();
                     }
                     }).done(function (plotargs){
                         console.log(plotargs);
                         jQuery("#plotters").show();
                         jQuery("#error").hide();
-                        hideLoader();
+                        jQuery("#loader").hide();
 
                         for(i=0; i<3; i++){
                             Plotter = document.getElementById("plotter"+i);                
