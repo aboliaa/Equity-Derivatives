@@ -11,10 +11,10 @@ from db.dbops_sqlite3 import SQLite_DBOps
 
 WEBPY = "webpy"
 
-#import webpy
 
 class WebServer():
     def __init__(self, webserver_type=WEBPY):
+        import webpy
         module = __import__(webserver_type)
         self.webserver = module.WServer()
 

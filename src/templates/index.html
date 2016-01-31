@@ -68,6 +68,7 @@ $def with(data)
         <div id="plotter0"><hr></div>
         <div id="plotter1"><hr></div>
         <div id="plotter2"><hr></div>
+        <div id="plotter3"><hr></div>
     </div>
 
 </body>
@@ -152,6 +153,7 @@ $def with(data)
                         jQuery("#plotters").hide();
                         jQuery("#error").show();
                         jQuery("#error").text(err);
+                        jQuery("#loader").hide();
                     }
                     }).done(function (plotargs){
                         console.log(plotargs);
@@ -159,7 +161,7 @@ $def with(data)
                         jQuery("#error").hide();
                         jQuery("#loader").hide();
 
-                        for(i=0; i<3; i++){
+                        for(i=0; i<4; i++){
                             Plotter = document.getElementById("plotter"+i);                
                             if (i < plotargs.length){
                                 Plotter.style.display = "block";
