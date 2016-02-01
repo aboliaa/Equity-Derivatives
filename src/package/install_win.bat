@@ -1,10 +1,8 @@
-IF EXIST C:\AppHome GOTO ERROR
+IF EXIST C:\AppHome GOTO X
 md C:\AppHome\bhavcopies
-GOTO SUCCESS
 
-:ERROR
-echo Error in installation
-GOTO :end
+:X
+copy package\Server\static\holidays.txt C:\AppHome
 
 :SUCCESS
 echo Installtion successful
