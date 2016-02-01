@@ -1,0 +1,62 @@
+27-Mar-2013 Holi
+29-Mar-2013 Good Friday
+19-Apr-2013 Ram Navmi
+24-Apr-2013 Mahavir Jayanti
+01-May-2013 May Day
+09-Aug-2013 Ramzan ID
+15-Aug-2013 Independence Day
+09-Sep-2013 Ganesh Chaturthi
+02-Oct-2013 Gandhi Jayanti
+16-Oct-2013 Bakri ID
+04-Nov-2013 Diwali-Balipratipada
+15-Nov-2013 Moharram
+25-Dec-2013 Christmas
+27-Feb-2014 Mahashivratri
+17-Mar-2014 Holi
+08-Apr-2014 Ram Navami
+14-Apr-2014 Dr. Baba Saheb Ambedkar Jayanti
+18-Apr-2014 Good Friday
+24-Apr-2014 General Elections (Lok Sabha)
+01-May-2014 Maharashtra Day
+29-Jul-2014 Id-Ul-Fitr (Ramzan Id)
+15-Aug-2014 Independence Day
+29-Aug-2014 Ganesh Chaturthi
+02-Oct-2014 Mahatma Gandhi Jayanthi
+03-Oct-2014 Dussehra
+06-Oct-2014 Bakri Id (Idul Zuha)
+15-Oct-2014 Assembly Elections in Maharashtra
+23-Oct-2014 Diwali - Laxmi Pujan
+24-Oct-2014 Diwali Balipratipada
+04-Nov-2014 Muharram
+06-Nov-2014 Gurunanak Jayanti
+25-Dec-2014 Christmas
+26-Jan-2015 Republic Day
+17-Feb-2015 Mahashivratri
+06-Mar-2015 Holi
+02-Apr-2015 Mahavir Jayanti
+03-Apr-2015 Good Friday
+14-Apr-2015 Dr.Baba Saheb Ambedkar Jayanti
+01-May-2015 Maharashtra Day
+17-Sep-2015 Ganesh Chaturthi
+25-Sep-2015 Bakri Id
+02-Oct-2015 Mahatma Gandhi Jayanti
+22-Oct-2015 Dussehra
+11-Nov-2015 Diwali Laxmi Pujan
+12-Nov-2015 Diwali Balipratipada
+25-Nov-2015 Gurunanak Jayanti
+25-Dec-2015 Christmas
+26-Jan-2016 Republic Day
+07-Mar-2016 Mahashivratri
+24-Mar-2016 Holi
+25-Mar-2016 Good Friday
+14-Apr-2016 Dr. Baba Saheb Ambedkar Jayanti
+15-Apr-2016 Ram Navami
+19-Apr-2016 Mahavir Jayanti
+06-Jul-2016 Id-ul-Fitar (Ramzan ID)
+15-Aug-2016 Independence Day
+05-Sep-2016 Ganesh Chaturthi
+13-Sep-2016 Bakri ID
+11-Oct-2016 Dasera
+12-Oct-2016 Moharram
+31-Oct-2016 Diwali-Balipratipada
+14-Nov-2016 Gurunanak Jayanti
