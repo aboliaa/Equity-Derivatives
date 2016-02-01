@@ -1,4 +1,7 @@
-from const import DBPATH
+import os
+import time
+
+from const import DBPATH, HOMEDIR
 
 class Singleton(type):
     _instances = {}
@@ -11,7 +14,8 @@ class Holidays(object):
     __metaclass__ = Singleton
 
     def __init__(self):
-        self.holidays = self._get_from_db()
+        # self.holidays = self._get_from_db()
+        self.holidays = self._get_from_file()
 
     def __contains__(self, k):
         if k in self.holidays:
@@ -25,6 +29,20 @@ class Holidays(object):
                 'cols': ['day'],                                                    
                }                                                                       
         holidays = dbops.select(spec)
+        return holidays
+
+    def _get_from_file(self):
+        holidays = []
+        f = open(os.path.join(HOMEDIR, "holidays.txt"), "r")
+        while True:
+            l = f.readline()
+            if not l:
+                break
+
+            ll = l.split()
+            h = time.strptime(ll[0], "%d-%b-%Y")
+            holidays.append(h)
+        f.close()
         return holidays
 
 def is_holiday(date):
