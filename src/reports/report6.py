@@ -3,17 +3,12 @@ from const import *
 from utils.helper import *
 from error import *                                                             
 from db.dberror import *
-from data import DataGetter
+from data import *
 
 class Report6DataGetter(DataGetter):
     def __init__(self, db, plot):
         super(Report6DataGetter, self).__init__(db)
         self.plot = plot
-
-    def get_data_for_input(self):
-        data = {}
-        data["day_zero"] = self.get_day_zero()
-        return data
 
     def validate_input(self, date):
         # TODO: Ideally db layer should raise this exception 
@@ -31,7 +26,7 @@ class Report6DataGetter(DataGetter):
 
         self.validate_input(date)
         self.input = {"n": n, "date": date}
-        scrips = self.get_all_scrips()
+        scrips = get_all_scrips()
        
         data = {'calls': {}, 'puts': {}}
 

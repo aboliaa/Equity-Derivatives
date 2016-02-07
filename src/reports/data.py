@@ -1,5 +1,9 @@
+from bisect import bisect
+
 from utils.helper import *
 from const import *
+
+__all__ = ["DataGetter", "get_all_scrips", "get_render_data"]
 
 class DataGetter(object):
     def __init__(self, db):
@@ -35,7 +39,7 @@ class DataGetter(object):
                 }
         return self.dbobj.select(_spec)
 
-    def get_all_series_for_date(self, scrip, date, limit=3):
+    def get_all_series_for_date(self, scrip, date, limit=NUM_SERIES):
         # Get all series of FUTURE and OPTION and union them
         try:
             _series = self.get_all_series(scrip, FUTURE, date)
@@ -116,3 +120,39 @@ class DataGetter(object):
         data = self.get_aggregate_value(scrip, derivative_type, op='sum', col=col, clauses=clauses)
         return data
 
+def get_all_scrips():
+    if cache.has_key('scrips') and len(cache['scrips']) > 0:
+        scrips = cache['scrips']
+    else:
+        rd = DataGetter(dbops)
+        scrips = rd.get_all_scrips()
+        cache['scrips'] = scrips
+
+    return scrips
+
+def get_render_data():
+    data = {}                                                               
+    data["scrips"] = get_all_scrips()                                  
+    data["day_zero"] = DAY_ZERO                       
+    return data
+
+def get_expiry_series_for_date(scrip, date, limit=NUM_SERIES):
+    if cache.has_key('expiry_series') and len(cache['expiry_series']) > 0:
+        datestr = from_pytime_to_str(date)
+        index = bisect(cache['expiry_series'], datestr)
+        if len(cache['expiry_series']) >= (index-1 + NUM_SERIES):
+            series = cache['expiry_series'][index:index+NUM_SERIES]
+            series = [from_str_to_pytime(s) for s in series]
+            return series
+
+    cache['expiry_series'] = []
+
+    rd = DataGetter(dbops)
+    series = rd.get_all_series_for_date(scrip, date, limit)
+
+    for s in series:
+        sdate = from_pytime_to_str(s)
+        index = bisect(cache['expiry_series'], sdate)
+        cache['expiry_series'].insert(index, sdate)
+
+    return series

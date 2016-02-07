@@ -4,17 +4,12 @@ import traceback
 from const import *
 from utils.helper import *
 from db.dberror import *
-from data import DataGetter
+from data import *
 
 class Report2DataGetter(DataGetter):
     def __init__(self, db, plot):
         super(Report2DataGetter, self).__init__(db)
         self.plot = plot
-
-    def get_data_for_input(self):
-        data = {}
-        data["scrips"] = self.get_all_scrips()
-        return data
 
     def _generate_data(self, scrip):
         dlog.info("Report2, Scrip=%s" % (scrip,))
@@ -35,7 +30,7 @@ class Report2DataGetter(DataGetter):
         for dt in datetimeIterator(min_date, max_date):
 
             clauses = [ [('timestamp', '=', dt)] ]
-            series = self.get_all_series_for_date(scrip, dt)
+            series = get_expiry_series_for_date(scrip, dt)
             # near_series_date = self.get_min_value(scrip, FUTURE, 'exp_dt', clauses=clauses)
 
             # There are no rows in db for holidays. Hence aggregate query will

@@ -2,6 +2,7 @@ import web
 import time
 
 from reports import reports
+from reports.data import get_render_data
 
 FUNC_MAP = {
             1: "_get_data_report1",
@@ -17,7 +18,7 @@ class WebDataJSON(object):
         self.reports = reports
         
     def get_render_data(self):
-        data = self.reports.get_render_data()
+        data = get_render_data()
         return data
 
     def get_data(self, reportseq, args):

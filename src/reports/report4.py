@@ -4,18 +4,13 @@ from utils.helper import *
 from const import *
 from error import *                                                             
 from db.dberror import *
-from data import DataGetter
+from data import *
 
 class Report4DataGetter(DataGetter):
     def __init__(self, db, plot):
         super(Report4DataGetter, self).__init__(db)
         self.plot = plot
 
-    def get_data_for_input(self):
-        data = {}
-        data["day_zero"] = self.get_day_zero()
-        return data
-    
     def get_sum_of_OI_for_scrip(self, scrip, derivative_type, clauses):
         try:
             s = self.get_sum(scrip, derivative_type, 'open_int', clauses=clauses)
@@ -49,13 +44,13 @@ class Report4DataGetter(DataGetter):
 
         sums = {'near': {}, 'next': {}, 'far': {}}
         movements = {'near': {}, 'next': {}, 'far': {}, 'cumulative': {}}
-        scrips = self.get_all_scrips()
+        scrips = get_all_scrips()
         dlog.info("date=%s" % date)
         prev_date = get_prev_date(date)
         dlog.info("prev_date=%s" % prev_date)
 
         for scrip in scrips:
-            series = self.get_all_series_for_date(scrip, date)
+            series = get_expiry_series_for_date(scrip, date)
             pseries = self.get_all_series_for_date(scrip, prev_date)
 
             if len(series) < 3:

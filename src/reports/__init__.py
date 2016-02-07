@@ -17,8 +17,5 @@ class Reports():
         self.report4 = Report4DataGetter(db, plot)
         self.report5 = Report5DataGetter(db, plot)
         self.report6 = Report6DataGetter(db, plot)
-    
-    def get_render_data(self):
-        return self.report1.get_data_for_input()
 
 reports = Reports()
