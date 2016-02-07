@@ -100,8 +100,7 @@ class DailyUpdate:
             csvname = csv.split(os.path.sep)[-1].split(".")[0]
             csvdate = csvname[2:11]
             timestamp = time.strptime(csvdate, "%d%b%Y")
-            tsname = from_pytime_to_str(timestamp)
-            if tsname in csvs_db:
+            if timestamp in csvs_db:
                 continue
 
             try:
