@@ -4,7 +4,7 @@ import traceback
 from const import *
 from utils.helper import *
 from db.dberror import *
-from data import *
+from reports.data import *
 
 class Report2DataGetter(DataGetter):
     def __init__(self, db, plot):

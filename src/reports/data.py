@@ -3,7 +3,7 @@ from bisect import bisect
 from utils.helper import *
 from const import *
 
-__all__ = ["DataGetter", "get_all_scrips", "get_render_data"]
+__all__ = ["DataGetter", "get_all_scrips", "get_render_data", "get_expiry_series_for_date"]
 
 class DataGetter(object):
     def __init__(self, db):

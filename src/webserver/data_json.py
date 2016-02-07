@@ -27,10 +27,11 @@ class WebDataJSON(object):
         func = getattr(self, FUNC_MAP[reportseq])
         try:
             ret = func(args)
+            return ret
         except Exception, fault:
+            traceback.print_exc()
             msg = traceback.format_exc() + "%s" % args
             dlog.info(msg)
-        return ret
      
     def _get_data_report1(self, args):
         scrip = args["scrip"]
