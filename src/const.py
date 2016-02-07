@@ -59,7 +59,8 @@ INDEX_TABLE_PREFIX = "I_"
 METADATA_TABLE_PREFIX = "M_"
 PERIPHERAL_TABLE_PREFIX = "P_"
 
-DAY_ZERO = '01-01-1980'
+DAY_ZERO = '01-01-2000'
+NUM_SERIES = 3
 
 if sys.platform == 'win32':
     # TODO: Change this to app data

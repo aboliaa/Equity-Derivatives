@@ -4,18 +4,12 @@ from utils.helper import *
 from const import *
 from error import *
 from db.dberror import *
-from data import DataGetter
+from data import *
 
 class Report1DataGetter(DataGetter):
     def __init__(self, db, plot):
         super(Report1DataGetter, self).__init__(db)
         self.plot = plot
-
-    def get_data_for_input(self):
-        data = {}
-        data["scrips"] = self.get_all_scrips()
-        data["day_zero"] = self.get_day_zero()
-        return data
 
     def validate_input(self, scrip, date):
         # TODO: Ideally db layer should raise this exception 

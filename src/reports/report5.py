@@ -3,20 +3,15 @@ from const import *
 from utils.helper import *
 from error import *                                                             
 from db.dberror import *
-from data import DataGetter
+from data import *
 
 class Report5DataGetter(DataGetter):
     def __init__(self, db, plot):
         super(Report5DataGetter, self).__init__(db)
         self.plot = plot
 
-    def get_data_for_input(self):
-        data = {}
-        data["day_zero"] = self.get_day_zero()
-        return data
-
     def get_sum_of_OI_for_date(self, scrip, date):
-        series = self.get_all_series_for_date(scrip, date)
+        series = get_expiry_series_for_date(scrip, date)
         clauses = [[('timestamp', '=', date), ('exp_dt', '=', sr)] for sr in series]
         try:
             sum_of_futures = self.get_sum(scrip, FUTURE, 'open_int', clauses=clauses)
@@ -50,7 +45,7 @@ class Report5DataGetter(DataGetter):
 
         self.validate_input(date)
         self.input = {"date": date}
-        scrips = self.get_all_scrips()
+        scrips = get_all_scrips()
 
         data = {'lowest': [], 'highest': []}
        

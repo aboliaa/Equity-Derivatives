@@ -39,6 +39,8 @@ if __name__ == "__main__":
     dbops = SQLite_DBOps(DBPATH)
     __builtins__.dbops = dbops
 
+    __builtins__.cache = {}
+
     dlog.info("====================== Version 0.1 =========================")
     dlog.info("Starting server at port %s" % ("8080",))
 
