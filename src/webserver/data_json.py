@@ -1,4 +1,5 @@
 import web
+import traceback
 import time
 
 from reports import reports
@@ -23,7 +24,12 @@ class WebDataJSON(object):
     def get_data(self, reportseq, args):
         reportseq = int(reportseq)
         func = getattr(self, FUNC_MAP[reportseq])
-        return func(args)
+        try:
+            ret = func(args)
+        except Exception, fault:
+            msg = traceback.format_exc() + "%s" % args
+            dlog.info(msg)
+        return ret
      
     def _get_data_report1(self, args):
         scrip = args["scrip"]
