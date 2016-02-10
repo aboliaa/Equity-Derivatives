@@ -1,1 +1,5 @@
-*pyc
+*.pyc
+*.swp
+*.DS_Store
+*com.apple.timemachine.supported
+src/static/reports/*.png
