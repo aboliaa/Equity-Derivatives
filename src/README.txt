@@ -1,3 +1,5 @@
+This is version 0.1.
+
 =============================================================
 Package Contents:
 1. FILE install.bat
