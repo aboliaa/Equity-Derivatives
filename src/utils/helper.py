@@ -93,9 +93,9 @@ def get_exp_series(date, limit=const.NUM_SERIES):
     for i in range(limit):
         y, m = dt.tm_year, dt.tm_mon
         last = get_last_day_of_month(y, m, 3)
-        if last < date.tm_mday:
+        if last < dt.tm_mday:
             m = m + 1
-            if m+1 > 12:
+            if m > 12:
                 y = y + 1
                 m = 1
             last = get_last_day_of_month(y, m, 3)
@@ -120,10 +120,22 @@ def d3(value):
         if i%2 == 1 and i > 2:
             return True
 
+    splits = str(round(value,2)).split(".")
+    value = splits[0]
+    if len(splits) == 2:
+        fraction = splits[1]
+    else:
+        fraction = None
+
     r = []
-    for i,c in enumerate(str(value)[::-1]):
+    for i,c in enumerate(value[::-1]):
         if _add_comma(i):
             r.append(',')
         r.append(c)
+
+    d3val = "".join(r[::-1])
+    if fraction:
+        d3val += "." + fraction[:2]
+
     return "".join(r[::-1])
  

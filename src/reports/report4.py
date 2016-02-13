@@ -180,11 +180,11 @@ class Report4DataGetter(DataGetter):
 
             x1 = [i["scrip"] for i in d[0]]
             y1 = [i["move_percent"] for i in d[0]]
-            t1 = ["Change in OI: %s%% Open interest: %s" %(i["move_percent"], d3(i["open_int"])) for i in d[0]]
+            t1 = ["Change in OI: %s%% <br>Open interest: %s" %(d3(i["move_percent"]), d3(i["open_int"])) for i in d[0]]
             
             x2 = [i["scrip"] for i in d[1]]
             y2 = [i["move_percent"] for i in d[1]]
-            t2 = ["Change in OI: %s%% Open interest: %s" %(i["move_percent"], d3(i["open_int"])) for i in d[1]]
+            t2 = ["Change in OI: %s%% <br>Open interest: %s" %(d3(i["move_percent"]), d3(i["open_int"])) for i in d[1]]
 
             
             title = "OI Movements: %s" %series_map[cnt]

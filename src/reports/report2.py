@@ -30,7 +30,7 @@ class Report2DataGetter(DataGetter):
         for dt in datetimeIterator(min_date, max_date):
 
             clauses = [ [('timestamp', '=', dt)] ]
-            series = get_expiry_series_for_date(scrip, dt)
+            series = get_exp_series(dt)
             # near_series_date = self.get_min_value(scrip, FUTURE, 'exp_dt', clauses=clauses)
 
             # There are no rows in db for holidays. Hence aggregate query will
@@ -79,7 +79,9 @@ class Report2DataGetter(DataGetter):
         y2 = []
         i = 1
         for d in sorted(data.iteritems()):
-            x.append(d[0])
+            time_struct = time.strptime(d[0], "%Y-%m-%d")
+            day = time.strftime("%d %b %Y", time_struct)
+            x.append(day)
             i += 1
             y1.append(d[1]['settlement_price'])
             y2.append(d[1]['summation_of_OI'])

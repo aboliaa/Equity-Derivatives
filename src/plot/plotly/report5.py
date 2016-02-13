@@ -34,5 +34,4 @@ def form_plotargs(x, y, height, title):
         isempty = 1
 
     plotargs = {"data": data, "layout": layout, "empty": isempty}
-    print plotargs
     return plotargs

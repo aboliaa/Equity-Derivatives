@@ -17,7 +17,7 @@ def form_plotargs(x, y1, y2, title):
                 "y": y1,
                 "hoverinfo": "x+y",
                 "line": {
-                    "color": "rgb(255, 127, 14)", 
+                    "color": "rgb(255, 0, 0)", 
                     "width": 3
                 }, 
                 "mode": "lines+markers", 
@@ -52,12 +52,11 @@ def form_plotargs(x, y1, y2, title):
             "width": 1200, 
             "xaxis": {
                 "anchor": "y",
-                "type": "date",
                 "domain": [
                     0, 
                     0.9
                 ],
-                "tickformat": "%d-%b-%Y",
+                "nticks": 6,
                 "exponentformat": "B", 
                 "overlaying": False, 
                 "position": 0, 

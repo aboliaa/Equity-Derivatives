@@ -27,7 +27,7 @@ def form_plotargs(x, y, text, title):
                             "title": "Scrip"
                          },
                 "yaxis": {
-                            "title": "Change in OI (%)",
+                            "title": "OI movement (%)",
                             "showline": True
                          }
     }

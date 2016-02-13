@@ -70,8 +70,7 @@ def form_plotargs(x, y1, y2, y3, title):
             "title": title, 
             "width": 1200, 
             "xaxis": {
-                "type": "date",
-                "tickformat": "%d-%b-%Y",
+                "nticks": 6,
                 "anchor": "y",
                 "overlaying": False,                                            
                 "position": 0,

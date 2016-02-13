@@ -89,7 +89,9 @@ class Report3DataGetter(DataGetter):
         i = 1
         for k in sorted(data):
             v = data[k]
-            x.append(k)
+            time_struct = time.strptime(k, "%Y-%m-%d")                       
+            day = time.strftime("%d %b %Y", time_struct)
+            x.append(day)
             i += 1
             y.append(v['settlement_price'])
             y1.append(v['PCR_OI'])
