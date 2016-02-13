@@ -5,6 +5,7 @@ def form_plotargs(x, y1, y2, title):
             {
                 "x": x,
                 "y": y2,
+                "hoverinfo": "x+y",
                 "name": "Total OI", 
                 "type": "bar", 
                 "opacity": 0.75,
@@ -14,6 +15,7 @@ def form_plotargs(x, y1, y2, title):
             {
                 "x": x,
                 "y": y1,
+                "hoverinfo": "x+y",
                 "line": {
                     "color": "rgb(255, 127, 14)", 
                     "width": 3
@@ -54,11 +56,12 @@ def form_plotargs(x, y1, y2, title):
                 "domain": [
                     0, 
                     0.9
-                ], 
+                ],
+                "tickformat": "%d-%b-%Y",
                 "exponentformat": "B", 
                 "overlaying": False, 
                 "position": 0, 
-                "title": "Date", 
+                "title": "Trading Date", 
                 "showline": True, 
                 "zeroline": False, 
                 "zerolinecolor": "#444", 
@@ -139,7 +142,7 @@ def form_plotargs(x, y1, y2, title):
                 "ticklen": 5, 
                 "ticks": "", 
                 "tickwidth": 1, 
-                "title": "Summation of OI", 
+                "title": "Total OI", 
                 "type": "linear", 
                 "zeroline": True, 
                 "zerolinecolor": "#444", 

@@ -4,6 +4,7 @@ def form_plotargs(x, y, height, title):
                 "x": x,
                 "y": y,
                 "type": "bar",
+                "hoverinfo": "x+y",
                 "orientation": "h"
             }
         ] 

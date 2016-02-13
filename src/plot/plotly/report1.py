@@ -5,12 +5,14 @@ def form_plotargs(x1, y1, x2, y2, title):
             {
                 "x": x1,
                 "y": y1,
+                "hoverinfo": "x+y",
                 "name": "CALLs", 
                 "type": "bar" 
             },
             {
                 "x": x2,
                 "y": y2,
+                "hoverinfo": "x+y",
                 "name": "PUTs", 
                 "type": "bar" 
             }

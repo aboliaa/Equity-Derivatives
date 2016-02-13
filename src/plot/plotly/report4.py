@@ -4,6 +4,7 @@ def form_plotargs(x, y, text, title):
                 "name": "Increase in OI",
                 "x": x[0],
                 "y": y[0],
+                "hoverinfo": "x+text",
                 "text": text[0],
                 "type": "bar"
             },
@@ -11,6 +12,7 @@ def form_plotargs(x, y, text, title):
                 "name": "Decrease in OI",
                 "x": x[1],
                 "y": y[1],
+                "hoverinfo": "x+text",
                 "text": text[1],
                 "type": "bar"
             }
@@ -25,7 +27,7 @@ def form_plotargs(x, y, text, title):
                             "title": "Scrip"
                          },
                 "yaxis": {
-                            "title": "Change (in %)",
+                            "title": "Change in OI (%)",
                             "showline": True
                          }
     }

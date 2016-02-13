@@ -5,6 +5,7 @@ def form_plotargs(x1, y1, text1, size1, x2, y2, text2, size2, title):
                 "x": x1,
                 "y": y1,
                 "text": text1,
+                "hoverinfo": "x+y",
                 "mode": "markers",
                 "marker": {
                             "sizemode": "area",
@@ -17,6 +18,7 @@ def form_plotargs(x1, y1, text1, size1, x2, y2, text2, size2, title):
                 "x": x2,
                 "y": y2,
                 "text": text2,
+                "hoverinfo": "x+y",
                 "mode": "markers",
                 "marker": {
                             "sizemode": "area",

@@ -3,6 +3,7 @@ def form_plotargs(x, y1, y2, y3, title):
             {
                 "x": x,             
                 "y": y3,
+                "hoverinfo": "x+y",
                 "line": {
                     "width": 3
                 }, 
@@ -15,6 +16,7 @@ def form_plotargs(x, y1, y2, y3, title):
             {
                 "x": x,
                 "y": y2,
+                "hoverinfo": "x+y",
                 "line": {
                     "color": "rgb(44, 160, 44)", 
                     "width": 3
@@ -28,6 +30,7 @@ def form_plotargs(x, y1, y2, y3, title):
             {
                 "x": x,
                 "y": y1,
+                "hoverinfo": "x+y",
                 "line": {
                     "color": "rgb(255, 127, 14)", 
                     "width": 3
@@ -68,6 +71,7 @@ def form_plotargs(x, y1, y2, y3, title):
             "width": 1200, 
             "xaxis": {
                 "type": "date",
+                "tickformat": "%d-%b-%Y",
                 "anchor": "y",
                 "overlaying": False,                                            
                 "position": 0,
@@ -79,7 +83,7 @@ def form_plotargs(x, y1, y2, y3, title):
                     0.0,                                                       
                     0.9                                                         
                 ],
-                "title": "Date" 
+                "title": "Trading Date" 
             }, 
             "yaxis": {
                 "anchor": "x", 
