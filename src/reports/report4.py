@@ -49,10 +49,19 @@ class Report4DataGetter(DataGetter):
         prev_date = get_prev_date(date)
         dlog.info("prev_date=%s" % prev_date)
 
+        dlog.info("Ignoring the scrips %s" % (ignore_scrips,))
         for scrip in scrips:
-            series = get_expiry_series_for_date(scrip, date)
-            pseries = self.get_all_series_for_date(scrip, prev_date)
+            if scrip in ignore_scrips:
+                continue
 
+            """
+            series = get_expiry_series_for_date(scrip, date)
+            pseries = get_expiry_series_for_date(scrip, prev_date)
+            """
+
+            series = get_exp_series(date)
+            pseries = get_exp_series(prev_date)
+            
             if len(series) < 3:
                 dlog.error("For scrip %s there are less than 3 series" % (scrip,))
                 continue
@@ -81,7 +90,8 @@ class Report4DataGetter(DataGetter):
 
                 move = sum1 - sum2
                 if sum2 == 0:
-                    dlog.info('For scrip %s the OI_sum_prev_date is zero' % (scrip))
+                    if sum1 <> 0:
+                        dlog.info('For scrip %s the OI_sum_prev_date is zero' % (scrip))
                     continue
 
                 move_percent = move * 100.0 / sum2
@@ -170,15 +180,15 @@ class Report4DataGetter(DataGetter):
 
             x1 = [i["scrip"] for i in d[0]]
             y1 = [i["move_percent"] for i in d[0]]
-            t1 = ["Open interest: %s" %i["open_int"] for i in d[0]]
+            t1 = ["Change in OI: %s%% Open interest: %s" %(i["move_percent"], d3(i["open_int"])) for i in d[0]]
             
             x2 = [i["scrip"] for i in d[1]]
             y2 = [i["move_percent"] for i in d[1]]
-            t2 = ["Open interest: %s" %i["open_int"] for i in d[1]]
+            t2 = ["Change in OI: %s%% Open interest: %s" %(i["move_percent"], d3(i["open_int"])) for i in d[1]]
 
             
             title = "OI Movements: %s" %series_map[cnt]
-            title += " (Top %s Scrips on Date %s)" %(self.input["n"],               
+            title += " (Top %s Scrips on %s)" %(self.input["n"],               
                                                 from_pytime_to_str(self.input["date"]))
         
             plotdata.append(self.plot.plotly.form_plotargs_report4([x1,x2], [y1,y2], [t1,t2], title))
@@ -189,64 +199,6 @@ class Report4DataGetter(DataGetter):
 
         dlog.info("Done generating Report4")
         return plotdata
-
-    def transform_data1(self, data, json=False):
-        ix = []
-        iy = []
-        itext = []
-        isize = []
-        isymbol = []
-        icolor = []
-
-        symbols = ['circle', 'square', 'diamond', 'cross']
-        cnt = 0
-        for d in data:
-            x = []
-            y = []
-            text = []
-            size = []
-            for i in d[0]:
-                x.append(i["scrip"])
-                y.append(i["move_percent"])
-                text.append("Open interest: %s" %i["open_int"])
-                size.append(int(i["move_percent"] * 10))
-            ix.append(x)
-            iy.append(y)
-            itext.append(text)
-            isize.append(size)
-            isymbol.append(symbols[cnt])
-            icolor.append("rgb(93, 164, 214)")
-            
-            x = []
-            y = []
-            text = []
-            size = []
-            for i in d[1]:
-                x.append(i["scrip"])
-                y.append(i["move_percent"])
-                text.append("Open interest: %s" %i["open_int"])
-                size.append(int(i["move_percent"] * -10))
-            ix.append(x)
-            iy.append(y)
-            itext.append(text)
-            isize.append(size)
-            isymbol.append(symbols[cnt])
-            icolor.append("rgb(255, 144, 14)")
-
-            cnt += 1
-
-        title = "OI Movements"
-        title += " (Top %s Scrips on Date %s)" %(self.input["n"],               
-                                                from_pytime_to_str(self.input["date"]))
-        
-        data = self.plot.plotly.form_plotargs_report4(ix, iy, itext, isize, 
-                                                      icolor, isymbol, title)
-        data = [data]
-        if json:
-            data = jsonify(data)
-
-        dlog.info("Done generating Report4")
-        return data
 
     def plot_data(self, data):
         self.plot.table.plot_report4(data)

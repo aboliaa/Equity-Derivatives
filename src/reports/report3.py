@@ -96,7 +96,7 @@ class Report3DataGetter(DataGetter):
             y2.append(v['PCR_trade'])
         
         title = "Settlement Price v/s PCR"
-        title += " (For Scrip %s)" %(self.input["scrip"])
+        title += " (%s)" %(self.input["scrip"])
 
         data = self.plot.plotly.form_plotargs_report3(x, y, y1, y2, title)
         data = [data]

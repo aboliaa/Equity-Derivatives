@@ -11,11 +11,15 @@ class Report5DataGetter(DataGetter):
         self.plot = plot
 
     def get_sum_of_OI_for_date(self, scrip, date):
-        series = get_expiry_series_for_date(scrip, date)
+        # series = get_expiry_series_for_date(scrip, date)
+        series = get_exp_series(date)
         clauses = [[('timestamp', '=', date), ('exp_dt', '=', sr)] for sr in series]
+        # dlog.info("clauses = %s" % (clauses,))
         try:
             sum_of_futures = self.get_sum(scrip, FUTURE, 'open_int', clauses=clauses)
             sum_of_options = self.get_sum(scrip, OPTION, 'open_int', clauses=clauses)
+            if not sum_of_futures or not sum_of_options:
+                return 0
             sum_of_OI = sum_of_futures + sum_of_options
         except:
             dlog.info(traceback.format_exc())
@@ -49,7 +53,12 @@ class Report5DataGetter(DataGetter):
 
         data = {'lowest': [], 'highest': []}
        
+        dlog.info("Ignoring the scrips %s" % (ignore_scrips,))
         for scrip in scrips:
+            if scrip in ignore_scrips:
+                continue
+
+            skipped_dates = []
             try:
                 min_date = self.get_min_value(scrip, FUTURE, 'timestamp')
             except:
@@ -63,13 +72,16 @@ class Report5DataGetter(DataGetter):
             for dt in datetimeIterator(min_date, max_date):
                 oi_sum = self.get_sum_of_OI_for_date(scrip, dt)
                 if not oi_sum:
-                    dlog.info("No OI_sum for scrip %s, for date %s" % (scrip, dt))
+                    skipped_dates.append(from_pytime_to_str(dt))
                     continue
                 OI_sums[dt] = oi_sum
             
             if not OI_sums:
                 dlog.info("No OI_sums for scrip %s" % (scrip))
                 continue
+
+            if skipped_dates:
+                dlog.info("For scrip %s, skipped dates = %s" % (scrip, skipped_dates))
 
             date_for_min_sum_of_OI = min(OI_sums, key=OI_sums.get)
             date_for_max_sum_of_OI = max(OI_sums, key=OI_sums.get)
@@ -106,20 +118,20 @@ class Report5DataGetter(DataGetter):
             x.append(d[1])
 
         title = "Highest Open Interest"
-        title += " (On Date %s)" %(from_pytime_to_str(self.input["date"]))
+        title += " (On %s)" %(from_pytime_to_str(self.input["date"]))
         height = max(len(y)*25, 500)
         data1 = self.plot.plotly.form_plotargs_report5(x, y, height, title)                
        
         x = []
         y = []
         i = 0
-        for d in sorted(data['lowest'], key=lambda x:x[1]):                                                          
+        for d in sorted(data['lowest'], key=lambda x:x[1], reverse=True): 
             i += 1
             y.append(d[0])
             x.append(d[1])
 
         title = "Lowest Open Interest"
-        title += " (On Date %s)" %(from_pytime_to_str(self.input["date"]))
+        title += " (%s)" %(from_pytime_to_str(self.input["date"]))
         height = max(len(y)*25, 500)
         data2 = self.plot.plotly.form_plotargs_report5(x, y, height, title)
 

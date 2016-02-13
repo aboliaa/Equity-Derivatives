@@ -22,7 +22,18 @@ class Holidays(object):
             return True
         else:
             return False
+    
+    def __iter__(self):
+        self.i = 0
+        return self
 
+    def next(self):
+        if self.i >= len(self.holidays):
+            raise StopIteration
+        h = self.holidays[self.i]
+        self.i += 1
+        return h
+    
     def _get_from_db(self):
         spec = {                                                                
                 'tablename': 'P_HOLIDAYS',                                            
@@ -58,6 +69,13 @@ def is_holiday(date):
     if date in NSE_holidays:
         return True
 
-    return False
+    # Ideally all dates should Date class objects.
+    for d in NSE_holidays:
+        y = d.tm_year == date.tm_year
+        m = d.tm_mon == date.tm_mon
+        md = d.tm_mday == date.tm_mday
+        if y and m and md:
+            return True
 
+    return False
 

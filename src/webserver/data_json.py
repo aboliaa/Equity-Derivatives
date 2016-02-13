@@ -14,6 +14,9 @@ FUNC_MAP = {
             6: "_get_data_report6"
            }
 
+class UIException(Exception):
+    pass
+
 class WebDataJSON(object):
     def __init__(self):
         self.reports = reports
@@ -28,10 +31,11 @@ class WebDataJSON(object):
         try:
             ret = func(args)
             return ret
-        except Exception, fault:
+        except Exception as e:
             traceback.print_exc()
             msg = traceback.format_exc() + "%s" % args
             dlog.info(msg)
+            raise UIException(e)
      
     def _get_data_report1(self, args):
         scrip = args["scrip"]
@@ -42,7 +46,7 @@ class WebDataJSON(object):
         date = time.strptime(time_str, "%d-%m-%Y")
         data, error = self.reports.report1.generate_data(scrip, date)
         if error:
-            raise web.internalerror(error)
+            raise UIException(error)
         data = self.reports.report1.transform_data(data, json=True)
         return data
 
@@ -50,7 +54,7 @@ class WebDataJSON(object):
         scrip = args["scrip"]
         data, error = self.reports.report2.generate_data(scrip)
         if error:
-            raise web.internalerror(error)
+            raise UIException(error)
         data = self.reports.report2.transform_data(data, json=True)
         return data
 
@@ -58,6 +62,7 @@ class WebDataJSON(object):
         scrip = args["scrip"]
         data, error = self.reports.report3.generate_data(scrip)
         if error:
+            raise UIException(error)
             raise web.internalerror(error)
         data = self.reports.report3.transform_data(data, json=True)
         return data
@@ -71,7 +76,7 @@ class WebDataJSON(object):
         n = int(args["n"])
         data, error = self.reports.report4.generate_data(n, date)
         if error:
-            raise web.internalerror(error)
+            raise UIException(error)
         data = self.reports.report4.transform_data(data, json=True)
         return data
 
@@ -83,7 +88,7 @@ class WebDataJSON(object):
         date = time.strptime(time_str, "%d-%m-%Y")
         data, error = self.reports.report5.generate_data(date)
         if error:
-            raise web.internalerror(error)
+            raise UIException(error)
         data = self.reports.report5.transform_data(data, json=True)
         return data
 
@@ -96,6 +101,6 @@ class WebDataJSON(object):
         n = int(args["n"])
         data, error = self.reports.report6.generate_data(n, date)
         if error:
-            raise web.internalerror(error)
+            raise UIException(error)
         data = self.reports.report6.transform_data(data, json=True)
         return data

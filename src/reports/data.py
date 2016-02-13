@@ -144,7 +144,6 @@ def get_expiry_series_for_date(scrip, date, limit=NUM_SERIES):
             series = cache['expiry_series'][index:index+NUM_SERIES]
             series = [from_str_to_pytime(s) for s in series]
             return series
-
     cache['expiry_series'] = []
 
     rd = DataGetter(dbops)
@@ -156,3 +155,4 @@ def get_expiry_series_for_date(scrip, date, limit=NUM_SERIES):
         cache['expiry_series'].insert(index, sdate)
 
     return series
+

@@ -81,4 +81,6 @@ CSVSTORE = os.path.join(HOMEDIR, "bhavcopies")
 # TODO: remove PLOT_PATH
 PLOT_PATH = "./static/reports/"
 
+# May need to remove INDIAVIX later
+IGNORE_SCRIPS = ['DJIA', 'S&P500', 'FTSE100', 'INDIAVIX']
 

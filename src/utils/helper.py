@@ -4,6 +4,7 @@ import time
 import json
 from glob import glob
 from datetime import datetime,timedelta
+import calendar
 
 import const
 from holidays import is_holiday
@@ -81,3 +82,48 @@ def remove_fileglob(path):
     for p in glob(path):
         remove_path(p)
 
+def get_last_day_of_month(y, m, day):
+    month = calendar.monthcalendar(y, m)
+    days = [week[day] for week in month if week[day]>0]
+    return days[-1]
+
+def get_exp_series(date, limit=const.NUM_SERIES):
+    l = []
+    dt = date
+    for i in range(limit):
+        y, m = dt.tm_year, dt.tm_mon
+        last = get_last_day_of_month(y, m, 3)
+        if last < date.tm_mday:
+            m = m + 1
+            if m+1 > 12:
+                y = y + 1
+                m = 1
+            last = get_last_day_of_month(y, m, 3)
+        
+        exp = time.struct_time((y, m, last, 0, 0, 0, 3, 0, 0))
+        if is_holiday(exp):
+            exp = get_prev_date(exp)
+
+        # We need to dump-load pytime to ensure that it works fine
+        str_time = from_pytime_to_str(exp)
+        exp = from_str_to_pytime(str_time)
+
+        l.append(exp)
+        _dt = datetime.fromtimestamp(time.mktime(exp))
+        _dt = _dt - timedelta(days=1)
+        dt = _dt.date().timetuple()
+
+    return l
+
+def d3(value):
+    def _add_comma(i):
+        if i%2 == 1 and i > 2:
+            return True
+
+    r = []
+    for i,c in enumerate(str(value)[::-1]):
+        if _add_comma(i):
+            r.append(',')
+        r.append(c)
+    return "".join(r[::-1])
+ 

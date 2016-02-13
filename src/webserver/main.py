@@ -41,6 +41,8 @@ if __name__ == "__main__":
 
     __builtins__.cache = {}
 
+    __builtins__.ignore_scrips = IGNORE_SCRIPS
+
     dlog.info("====================== Version 0.1 =========================")
     dlog.info("Starting server at port %s" % ("8080",))
 

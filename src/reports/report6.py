@@ -20,7 +20,7 @@ class Report6DataGetter(DataGetter):
     def _generate_data(self, n, date):
         strdate = from_pytime_to_str(date)
         dlog.info("Report6, n=%s, Date=%s" % (n, strdate,))
-        rlog.info("Reiport6,%s,%s" % (n, strdate,))
+        rlog.info("Report6,%s,%s" % (n, strdate,))
 
         dlog.info("Starting to generate Report6")
 
@@ -30,7 +30,11 @@ class Report6DataGetter(DataGetter):
        
         data = {'calls': {}, 'puts': {}}
 
+        dlog.info("Ignoring the scrips %s" % (ignore_scrips,))
         for scrip in scrips:
+            if scrip in ignore_scrips:
+                continue
+
             try:
                 clauses = [ [('timestamp', '=', date), ('opt_type', '=', CE)] ]
                 max_contracts = self.get_max_value(scrip, OPTION, 'contracts', clauses=clauses)
@@ -110,7 +114,7 @@ class Report6DataGetter(DataGetter):
             size2.append(d["max_contracts"] / 30)
 
         title = "Most Active CALLs and PUTs"
-        title += " (Top %s Scrips on Date %s)" %(self.input["n"],
+        title += " (Top %s Scrips on %s)" %(self.input["n"],
                                                 from_pytime_to_str(self.input["date"]))
 
         data = self.plot.plotly.form_plotargs_report6(x1, y1, text1, size1, 

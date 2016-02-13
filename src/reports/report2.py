@@ -85,7 +85,7 @@ class Report2DataGetter(DataGetter):
             y2.append(d[1]['summation_of_OI'])
 
         title = "Settlement Price v/s Open Interest"
-        title += " (For Scrip %s)" %(self.input["scrip"])
+        title += " (%s)" %(self.input["scrip"])
 
         data = self.plot.plotly.form_plotargs_report2(x, y1, y2, title)
         data = [data]

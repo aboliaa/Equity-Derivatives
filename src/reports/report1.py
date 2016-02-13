@@ -104,7 +104,7 @@ class Report1DataGetter(DataGetter):
         
             
             title = "Distribution of PUTs and CALLs: %s" %(series_map[i])
-            title += " (For Scrip %s on Date %s)" %(self.input["scrip"], from_pytime_to_str(self.input["date"]))
+            title += " (%s on %s)" %(self.input["scrip"], from_pytime_to_str(self.input["date"]))
             
             data.append(self.plot.plotly.form_plotargs_report1(x1, y1, x2, y2, title))
             i += 1

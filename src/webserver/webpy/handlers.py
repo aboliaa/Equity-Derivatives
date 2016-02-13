@@ -28,6 +28,7 @@ class IndexHandler():
     def POST(self):
         return "IN POST INDEX FUNCTION"
 
+# ReportHandler is used only by matplotlib
 class ReportHandler():
     @get_input
     def GET(self, args):
@@ -53,3 +54,4 @@ def get_input_from_query_string():
     query = web.ctx.query
     input_from_url = dict(urlparse.parse_qsl(query[1:]))
     return input_from_url
+
