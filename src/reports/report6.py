@@ -1,4 +1,6 @@
+import time
 import traceback
+
 from const import *
 from utils.helper import *
 from error import *                                                             
@@ -100,7 +102,9 @@ class Report6DataGetter(DataGetter):
             x1.append(i)
             i += 1
             y1.append(d["max_contracts"])
-            text1.append("Contracts: %s <br>Strike Price: %s" %(d3(d["max_contracts"]), d3(d["strike_pr"])))
+            text1.append("Contracts: %s <br>Strike Price: %s <br>Expiry Series: %s" %(d3(d["max_contracts"]),
+                                                                d3(d["strike_pr"]),
+                                                                time.strftime("%d-%b-%Y", d["exp_dt"])))
         
         x2 = []
         y2 = []
@@ -109,7 +113,9 @@ class Report6DataGetter(DataGetter):
             x2.append(i)
             i += 1
             y2.append(d["max_contracts"])
-            text2.append("Contracts: %s <br>Strike Price: %s" %(d3(d["max_contracts"]), d3(d["strike_pr"])))
+            text2.append("Contracts: %s <br>Strike Price: %s <br>Expiry Series: %s" %(d3(d["max_contracts"]),
+                                                                d3(d["strike_pr"]),
+                                                                time.strftime("%d-%b-%Y", d["exp_dt"])))
 
         tickval = range(1,i)
         ticktext = [d["scrip"] for d in data["puts"]] + [d["scrip"] for d in data["calls"]]
