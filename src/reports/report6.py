@@ -95,30 +95,32 @@ class Report6DataGetter(DataGetter):
         x1 = []
         y1 = []
         text1 = []
-        size1 = []
-        for d in sorted(data["calls"], key=lambda x:x["max_contracts"]):
-            # print d["exp_dt"]
-            x1.append(d["scrip"])
-            y1.append(d["strike_pr"])
-            text1.append("Contracts: %s" %d["max_contracts"])
-            size1.append(d["max_contracts"] / 30)
+        i = 1
+        for d in sorted(data["calls"], key=lambda x:x["max_contracts"], reverse=True):
+            x1.append(i)
+            i += 1
+            y1.append(d["max_contracts"])
+            text1.append("Contracts: %s <br>Strike Price: %s" %(d3(d["max_contracts"]), d3(d["strike_pr"])))
         
         x2 = []
         y2 = []
         text2 = []
-        size2 = []
         for d in sorted(data["puts"], key=lambda x:x["max_contracts"], reverse=True):
-            x2.append(d["scrip"])
-            y2.append(d["strike_pr"])
-            text2.append("Contracts: %s" %d["max_contracts"])
-            size2.append(d["max_contracts"] / 30)
+            x2.append(i)
+            i += 1
+            y2.append(d["max_contracts"])
+            text2.append("Contracts: %s <br>Strike Price: %s" %(d3(d["max_contracts"]), d3(d["strike_pr"])))
+
+        tickval = range(1,i)
+        ticktext = [d["scrip"] for d in data["puts"]] + [d["scrip"] for d in data["calls"]]
 
         title = "Most Active CALLs and PUTs"
         title += " (Top %s Scrips on %s)" %(self.input["n"],
                                                 from_pytime_to_str(self.input["date"]))
 
-        data = self.plot.plotly.form_plotargs_report6(x1, y1, text1, size1, 
-                                                      x2, y2, text2, size2, title)
+        data = self.plot.plotly.form_plotargs_report6(x1, y1, text1, 
+                                                      x2, y2, text2,
+                                                      title, tickval, ticktext)
         data = [data]
         if json:
             data = jsonify(data)
