@@ -33,8 +33,11 @@ def spawn_chrome():
         pass
 
 if __name__ == "__main__":
+    __builtins__.profile = "--profile" in sys.argv
     debuglogger = log.Logger(DEBUGLOG)
     __builtins__.dlog = debuglogger
+    profilelogger = log.Logger(PROFILELOG)
+    __builtins__.plog = profilelogger
 
     dbops = SQLite_DBOps(DBPATH)
     __builtins__.dbops = dbops
@@ -56,3 +59,4 @@ if __name__ == "__main__":
     srv = WebServer()
     srv.make_app()
     srv.run_app()
+

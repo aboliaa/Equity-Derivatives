@@ -73,6 +73,7 @@ else:
 
 DEBUGLOG = os.path.join(HOMEDIR, "debug.log")
 REQUESTLOG = os.path.join(HOMEDIR, "request.log")
+PROFILELOG = os.path.join(HOMEDIR, "profile.log")
 
 DBPATH = os.path.join(HOMEDIR, "Derivatives.db")
 

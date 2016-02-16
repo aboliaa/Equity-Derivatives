@@ -1,6 +1,9 @@
 import web
 import itertools
 import threading
+import cProfile
+import pstats
+import StringIO                                               
 
 import handlers
 
@@ -10,7 +13,20 @@ URLS = {
         "/getdata(.*)" : handlers.ReportJSONHandler 
         }
 
- 
+def start_profiler():
+    pr = cProfile.Profile()                                                         
+    pr.enable()
+    return pr
+
+def collect_profiler(pr):
+    pr.disable()
+    s = StringIO.StringIO()                                                         
+    sortby = 'cumulative'                                                           
+    ps = pstats.Stats(pr, stream=s).sort_stats(sortby)                              
+    plog.info("\n\n")
+    plog.info(ps.print_stats())
+    plog.info(s.getvalue())
+
 class WServer():
     def __init__(self):
         self.lock = threading.Lock()
@@ -30,8 +46,12 @@ class WServer():
             self.inprogress = True
 
         try:
+            if profile:
+                pr = start_profiler()
             return handle()
         finally:
+            if profile:
+                collect_profiler(pr)
             self.inprogress = False
 
     def make_app(self):

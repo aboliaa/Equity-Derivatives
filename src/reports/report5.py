@@ -33,6 +33,9 @@ class Report5DataGetter(DataGetter):
 
         return sum_of_OI
 
+    def get_sum_of_OI_for_date_range(self, scrip, drange):
+        pass
+
     def validate_input(self, date):
         # TODO: Ideally db layer should raise this exception 
         clauses = [ [('timestamp', '=', date)] ]

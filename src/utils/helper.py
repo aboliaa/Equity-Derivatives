@@ -87,6 +87,11 @@ def get_last_day_of_month(y, m, day):
     days = [week[day] for week in month if week[day]>0]
     return days[-1]
 
+def next_day(date):
+    dt = datetime.fromtimestamp(time.mktime(date))
+    dt = dt + timedelta(days=1)
+    return dt.date().timetuple()
+
 def get_exp_series(date, limit=const.NUM_SERIES):
     l = []
     dt = date
@@ -109,10 +114,23 @@ def get_exp_series(date, limit=const.NUM_SERIES):
         exp = from_str_to_pytime(str_time)
 
         l.append(exp)
-        _dt = datetime.fromtimestamp(time.mktime(exp))
-        _dt = _dt - timedelta(days=1)
-        dt = _dt.date().timetuple()
+        dt = next_day(exp)
 
+    return l
+
+def get_date_range(date):
+    l = []
+    series = get_exp_series(date, limit=1)
+    expiry = series[0]
+    dt = date
+    l.append(dt)
+    while True:
+        dt = next_day(dt)
+        if dt > expiry:
+            break
+        if is_holiday(dt):
+            continue
+        l.append(dt)
     return l
 
 def d3(value):
