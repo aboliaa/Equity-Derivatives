@@ -1,3 +1,4 @@
+import sys
 import os
 import shutil
 import time
@@ -156,4 +157,14 @@ def d3(value):
         d3val += "." + fraction[:2]
 
     return "".join(r[::-1])
- 
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        basepath = sys._MEIPASS
+    except:
+        basepath = os.path.abspath(".")
+    return os.path.join(basepath, relative_path)
+
+

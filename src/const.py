@@ -85,3 +85,6 @@ PLOT_PATH = "./static/reports/"
 # May need to remove INDIAVIX later
 IGNORE_SCRIPS = ['DJIA', 'S&P500', 'FTSE100', 'INDIAVIX']
 
+CPU_THRESHOLD = 50
+MEMORY_THRESHOLD = 80
+

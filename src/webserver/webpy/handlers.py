@@ -3,12 +3,13 @@ import urlparse
 
 from data_html import WebDataHTML
 from data_json import WebDataJSON
-
+from utils.helper import resource_path
 from const import *
 
 __all__ = ["IndexHandler", "ReportHandler", "ReportJSONHandler"]
 
-render = web.template.render("templates/")
+templates_path = resource_path("templates")
+render = web.template.render(templates_path)
 wdata_html = WebDataHTML()
 wdata_json = WebDataJSON()
 
