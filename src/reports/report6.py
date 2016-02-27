@@ -86,7 +86,7 @@ class Report6DataGetter(DataGetter):
             data = self._generate_data(n, date)
             error = None
         except DBError as fault:
-            dlog.info(traceback.format_exc())
+            dlog.error(traceback.format_exc())
             if fault.errno <> ENOTFOUND:
                 raise fault
             data = None

@@ -22,7 +22,7 @@ class Report5DataGetter(DataGetter):
                 return 0
             sum_of_OI = sum_of_futures + sum_of_options
         except:
-            dlog.info(traceback.format_exc())
+            dlog.error(traceback.format_exc())
             return 0
         
         # There are no rows in db for holidays. Hence aggregate query will
@@ -65,7 +65,7 @@ class Report5DataGetter(DataGetter):
             try:
                 min_date = self.get_min_value(scrip, FUTURE, 'timestamp')
             except:
-                dlog.info(traceback.format_exc())
+                dlog.error(traceback.format_exc())
                 dlog.error("Exception in scrip %s" % (scrip,))
                 continue
 
@@ -103,7 +103,7 @@ class Report5DataGetter(DataGetter):
             data = self._generate_data(date)
             error = None
         except DBError as fault:
-            dlog.info(traceback.format_exc())
+            dlog.error(traceback.format_exc())
             if fault.errno <> ENOTFOUND:
                 raise fault
             data = None
