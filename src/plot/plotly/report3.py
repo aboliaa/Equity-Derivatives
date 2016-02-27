@@ -13,7 +13,7 @@ def form_plotargs(x, y1, t1, y2, t2, y3, t3, title):
                 "x": x,             
                 "y": y3,
                 "hoverinfo": "x+text",
-                "text": t1,
+                "text": t3,
                 "line": {
                     "color": "rgb(0, 128, 0)", 
                     "width": 3
@@ -43,7 +43,7 @@ def form_plotargs(x, y1, t1, y2, t2, y3, t3, title):
                 "x": x,
                 "y": y1,
                 "hoverinfo": "x+text",
-                "text": t3,
+                "text": t1,
                 "line": {
                     "color": "rgb(255, 0, 0)", 
                     "width": 3

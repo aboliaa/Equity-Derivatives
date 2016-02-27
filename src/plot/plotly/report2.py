@@ -6,7 +6,7 @@ def form_plotargs(x, y1, y2, t1, t2, title):
                 "x": x,
                 "y": y2,
                 "hoverinfo": "x+text",
-                "text": t1,
+                "text": t2,
                 "name": "Total OI", 
                 "type": "bar", 
                 "opacity": 0.75,
@@ -20,7 +20,7 @@ def form_plotargs(x, y1, y2, t1, t2, title):
                 "x": x,
                 "y": y1,
                 "hoverinfo": "x+text",
-                "text": t2,
+                "text": t1,
                 "line": {
                     "color": "rgb(255, 0, 0)", 
                     "width": 3
