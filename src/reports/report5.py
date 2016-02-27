@@ -123,7 +123,8 @@ class Report5DataGetter(DataGetter):
         title = "Highest Open Interest"
         title += " (On %s)" %(from_pytime_to_str(self.input["date"]))
         height = max(len(y)*25, 500)
-        data1 = self.plot.plotly.form_plotargs_report5(x, y, height, title)                
+        color = "rgb(155, 100, 30)"
+        data1 = self.plot.plotly.form_plotargs_report5(x, y, height, title, color)
        
         x = []
         y = []
@@ -136,7 +137,8 @@ class Report5DataGetter(DataGetter):
         title = "Lowest Open Interest"
         title += " (%s)" %(from_pytime_to_str(self.input["date"], "%d-%b-%Y"))
         height = max(len(y)*25, 500)
-        data2 = self.plot.plotly.form_plotargs_report5(x, y, height, title)
+        color = "rgb(180, 240, 180)"
+        data2 = self.plot.plotly.form_plotargs_report5(x, y, height, title, color)
 
         data = [data1, data2]
         

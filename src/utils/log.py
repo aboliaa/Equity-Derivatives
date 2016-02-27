@@ -20,13 +20,13 @@ class Logger(object):
         self.logger.info(msg)
 
     def error(self, msg):
-        self.logger.info(msg)
+        self.logger.error(msg)
 
     def debug(self, msg):
-        self.logger.info(msg)
+        self.logger.debug(msg)
 
     def warn(self, msg):
-        self.logger.info(msg)
+        self.logger.warn(msg)
 
 """
 def log(msg, msg_type=None, level=None):

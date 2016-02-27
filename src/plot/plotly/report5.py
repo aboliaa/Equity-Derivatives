@@ -1,11 +1,14 @@
-def form_plotargs(x, y, height, title):
+def form_plotargs(x, y, height, title, color):
     data = [
             {
                 "x": x,
                 "y": y,
                 "type": "bar",
                 "hoverinfo": "x+y",
-                "orientation": "h"
+                "orientation": "h",
+                "marker": {
+                    "color" : color 
+                    }
             }
         ] 
         
