@@ -156,7 +156,7 @@ def d3(value):
     if fraction:
         d3val += "." + fraction[:2]
 
-    return "".join(r[::-1])
+    return d3val 
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """

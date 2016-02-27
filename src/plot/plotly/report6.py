@@ -29,6 +29,7 @@ def form_plotargs(x1, y1, text1, x2, y2, text2, title, tickval, ticktext):
                             "tickvals": tickval
                          },
                 "yaxis": {
+                            "type": "log",
                             "title": "Contracts",
                             "showline": True
                          }

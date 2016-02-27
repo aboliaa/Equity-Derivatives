@@ -83,9 +83,12 @@ class Report3DataGetter(DataGetter):
 
     def transform_data(self, data, json=False):
         x = []
-        y = []
         y1 = []
         y2 = []
+        y3 = []
+        t1 = []
+        t2 = []
+        t3 = []
         i = 1
         for k in sorted(data):
             v = data[k]
@@ -93,14 +96,17 @@ class Report3DataGetter(DataGetter):
             day = time.strftime("%d %b %Y", time_struct)
             x.append(day)
             i += 1
-            y.append(v['settlement_price'])
-            y1.append(v['PCR_OI'])
-            y2.append(v['PCR_trade'])
+            y1.append(v['settlement_price'])
+            t1.append(d3(v['settlement_price']))
+            y2.append(v['PCR_OI'])
+            t2.append(d3(v['PCR_OI']))
+            y3.append(v['PCR_trade'])
+            t3.append(d3(v['PCR_trade']))
         
         title = "Settlement Price v/s PCR"
         title += " (%s)" %(self.input["scrip"])
 
-        data = self.plot.plotly.form_plotargs_report3(x, y, y1, y2, title)
+        data = self.plot.plotly.form_plotargs_report3(x, y1, t1, y2, t2, y3, d3, title)
         data = [data]
         if json:
             data = jsonify(data)

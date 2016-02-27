@@ -98,15 +98,16 @@ class Report1DataGetter(DataGetter):
         for e in expiry_series:
             x1 = call_strike_prices[e]                                   
             y1 = call_open_interests[e]
+            t1 = [d3(d) for d in call_open_interests[e]]
             
             x2 = put_strike_prices[e]                                   
-            y2 = put_open_interests[e]
+            y2 = put_open_interests[e]                                   
+            t2 = [d3(d) for d in put_open_interests[e]]
         
-            
             title = "Distribution of PUTs and CALLs: %s" %(series_map[i])
             title += " (%s on %s)" %(self.input["scrip"], from_pytime_to_str(self.input["date"], "%d-%b-%Y"))
             
-            data.append(self.plot.plotly.form_plotargs_report1(x1, y1, x2, y2, title))
+            data.append(self.plot.plotly.form_plotargs_report1(x1, y1, t1, x2, y2, t2, title))
             i += 1
 
         if json:

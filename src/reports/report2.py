@@ -77,6 +77,8 @@ class Report2DataGetter(DataGetter):
         x = []
         y1 = []
         y2 = []
+        t1 = []
+        t2 = []
         i = 1
         for d in sorted(data.iteritems()):
             time_struct = time.strptime(d[0], "%Y-%m-%d")
@@ -85,11 +87,13 @@ class Report2DataGetter(DataGetter):
             i += 1
             y1.append(d[1]['settlement_price'])
             y2.append(d[1]['summation_of_OI'])
+            t1.append(d3(d[1]['settlement_price']))
+            t2.append(d3(d[1]['summation_of_OI']))
 
         title = "Settlement Price v/s Open Interest"
         title += " (%s)" %(self.input["scrip"])
 
-        data = self.plot.plotly.form_plotargs_report2(x, y1, y2, title)
+        data = self.plot.plotly.form_plotargs_report2(x, y1, y2, t1, t2, title)
         data = [data]
         if json:
             data = jsonify(data)

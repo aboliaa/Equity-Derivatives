@@ -1,21 +1,26 @@
 from defaults import *
 
-def form_plotargs(x, y1, y2, title):
+def form_plotargs(x, y1, y2, t1, t2, title):
     data = [
             {
                 "x": x,
                 "y": y2,
-                "hoverinfo": "x+y",
+                "hoverinfo": "x+text",
+                "text": t1,
                 "name": "Total OI", 
                 "type": "bar", 
                 "opacity": 0.75,
                 "uid": "7155f3", 
-                "yaxis": "y2"
+                "yaxis": "y2",
+                "marker" : {
+                    "color": "rgb(128, 200, 255)"
+                }
             }, 
             {
                 "x": x,
                 "y": y1,
-                "hoverinfo": "x+y",
+                "hoverinfo": "x+text",
+                "text": t2,
                 "line": {
                     "color": "rgb(255, 0, 0)", 
                     "width": 3
@@ -49,7 +54,7 @@ def form_plotargs(x, y1, y2, title):
             }, 
             "showlegend": True, 
             "title": title, 
-            "width": 1200, 
+            "width": 1200,
             "xaxis": {
                 "anchor": "y",
                 "domain": [

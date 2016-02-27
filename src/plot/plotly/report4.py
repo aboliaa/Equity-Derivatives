@@ -6,7 +6,10 @@ def form_plotargs(x, y, text, title):
                 "y": y[0],
                 "hoverinfo": "x+text",
                 "text": text[0],
-                "type": "bar"
+                "type": "bar",
+                "marker" : {
+                    "color": "rgb(0, 100, 0)"
+                }
             },
             {
                 "name": "Decrease in OI",
@@ -14,7 +17,10 @@ def form_plotargs(x, y, text, title):
                 "y": y[1],
                 "hoverinfo": "x+text",
                 "text": text[1],
-                "type": "bar"
+                "type": "bar",
+                "marker" : {
+                    "color": "rgb(170, 40, 40)"
+                }
             }
     ]
     

@@ -1,19 +1,21 @@
 from defaults import *
 
-def form_plotargs(x1, y1, x2, y2, title):
+def form_plotargs(x1, y1, t1, x2, y2, t2, title):
     data = [
             {
                 "x": x1,
                 "y": y1,
-                "hoverinfo": "x+y",
-                "name": "CALLs", 
+                "hoverinfo": "x+text",
+                "name": "CALLs",
+                "text": t1,
                 "type": "bar" 
             },
             {
                 "x": x2,
                 "y": y2,
-                "hoverinfo": "x+y",
+                "hoverinfo": "x+text",
                 "name": "PUTs", 
+                "text": t2,
                 "type": "bar" 
             }
         ] 

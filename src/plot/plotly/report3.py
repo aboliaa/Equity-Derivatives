@@ -1,6 +1,6 @@
 from math import ceil
 
-def form_plotargs(x, y1, y2, y3, title):
+def form_plotargs(x, y1, t1, y2, t2, y3, t3, title):
     max_pcr = max(max(y2), max(y3))
     ceil_max_pcr = ceil(max_pcr)
     if ceil_max_pcr - max_pcr >= 0.5:
@@ -12,8 +12,10 @@ def form_plotargs(x, y1, y2, y3, title):
             {
                 "x": x,             
                 "y": y3,
-                "hoverinfo": "x+y",
+                "hoverinfo": "x+text",
+                "text": t1,
                 "line": {
+                    "color": "rgb(0, 128, 0)", 
                     "width": 3
                 }, 
                 "mode": "lines+markers", 
@@ -25,9 +27,10 @@ def form_plotargs(x, y1, y2, y3, title):
             {
                 "x": x,
                 "y": y2,
-                "hoverinfo": "x+y",
+                "hoverinfo": "x+text",
+                "text": t2,
                 "line": {
-                    "color": "rgb(44, 160, 44)", 
+                    "color": "rgb(128, 0, 128)", 
                     "width": 3
                 }, 
                 "mode": "lines+markers", 
@@ -39,9 +42,10 @@ def form_plotargs(x, y1, y2, y3, title):
             {
                 "x": x,
                 "y": y1,
-                "hoverinfo": "x+y",
+                "hoverinfo": "x+text",
+                "text": t3,
                 "line": {
-                    "color": "rgb(255, 127, 14)", 
+                    "color": "rgb(255, 0, 0)", 
                     "width": 3
                 }, 
                 "mode": "lines+markers", 

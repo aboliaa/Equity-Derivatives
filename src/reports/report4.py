@@ -94,7 +94,7 @@ class Report4DataGetter(DataGetter):
                         dlog.info('For scrip %s the OI_sum_prev_date is zero' % (scrip))
                     continue
 
-                move_percent = move * 100.0 / sum2
+                move_percent = move * 100.0 / float(sum2)
                 movements[_s][scrip] = {'scrip': scrip, 'movement': move,
                         'move_percent': move_percent, 'open_int': sum1}
 
@@ -119,7 +119,7 @@ class Report4DataGetter(DataGetter):
                 dlog.info('For scrip %s the OI_sum_prev_date is zero' % (scrip,))
                 continue
 
-            move_percent = move * 100.0 / sum2
+            move_percent = move * 100.0 / float(sum2)
             movements['cumulative'][scrip] = {'scrip': scrip, 'movement': move,
                     'move_percent': move_percent, 'open_int': sum1}
             
