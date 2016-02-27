@@ -32,9 +32,8 @@ class WebDataJSON(object):
             ret = func(args)
             return ret
         except Exception as e:
-            traceback.print_exc()
             msg = traceback.format_exc() + "%s" % args
-            dlog.info(msg)
+            dlog.error(msg)
             return str(e)
      
     def _get_data_report1(self, args):
