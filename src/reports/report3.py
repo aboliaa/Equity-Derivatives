@@ -106,7 +106,7 @@ class Report3DataGetter(DataGetter):
         title = "Settlement Price v/s PCR"
         title += " (%s)" %(self.input["scrip"])
 
-        data = self.plot.plotly.form_plotargs_report3(x, y1, t1, y2, t2, y3, d3, title)
+        data = self.plot.plotly.form_plotargs_report3(x, y1, t1, y2, t2, y3, t3, title)
         data = [data]
         if json:
             data = jsonify(data)
