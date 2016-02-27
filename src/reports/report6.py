@@ -122,7 +122,7 @@ class Report6DataGetter(DataGetter):
 
         title = "Most Active CALLs and PUTs"
         title += " (Top %s Scrips on %s)" %(self.input["n"],
-                                                from_pytime_to_str(self.input["date"]))
+                                                from_pytime_to_str(self.input["date"], "%d-%b-%Y"))
 
         data = self.plot.plotly.form_plotargs_report6(x1, y1, text1, 
                                                       x2, y2, text2,

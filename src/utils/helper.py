@@ -26,9 +26,9 @@ def tablename_to_symbol(tablename):
 def is_scripdata_tablename(tablename):
     return tablename.startswith(const.DATATABLE_PREFIX)
  
-def from_pytime_to_str(pytime):
+def from_pytime_to_str(pytime, fmt="%Y-%m-%d"):
     # TODO: move all time format strings to const
-    return time.strftime("%Y-%m-%d", pytime)
+    return time.strftime(fmt, pytime)
 
 def from_str_to_pytime(strtime):
     try:

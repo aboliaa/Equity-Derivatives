@@ -189,7 +189,7 @@ class Report4DataGetter(DataGetter):
             
             title = "OI Movements: %s" %series_map[cnt]
             title += " (Top %s Scrips on %s)" %(self.input["n"],               
-                                                from_pytime_to_str(self.input["date"]))
+                                                from_pytime_to_str(self.input["date"], "%d-%b-%Y"))
         
             plotdata.append(self.plot.plotly.form_plotargs_report4([x1,x2], [y1,y2], [t1,t2], title))
             cnt += 1

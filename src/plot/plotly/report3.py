@@ -1,4 +1,13 @@
+from math import ceil
+
 def form_plotargs(x, y1, y2, y3, title):
+    max_pcr = max(max(y2), max(y3))
+    ceil_max_pcr = ceil(max_pcr)
+    if ceil_max_pcr - max_pcr >= 0.5:
+        max_pcr = ceil_max_pcr - 0.5
+    else:
+        max_pcr = ceil_max_pcr
+
     data = [
             {
                 "x": x,             
@@ -132,7 +141,7 @@ def form_plotargs(x, y1, y2, y3, title):
             "yaxis2": {
                 "anchor": "x", 
                 "autorange": False, 
-                "range" : [0,1.5],
+                "range" : [0,max_pcr],
                 "autotick": True, 
                 "domain": [
                     0, 
@@ -179,7 +188,7 @@ def form_plotargs(x, y1, y2, y3, title):
             "yaxis3": {
                 "anchor": "free", 
                 "autorange": False, 
-                "range" : [0,1.5],
+                "range" : [0,max_pcr],
                 "autotick": True, 
                 "domain": [
                     0, 

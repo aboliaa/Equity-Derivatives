@@ -1,3 +1,5 @@
+import time
+
 from bisect import bisect
 
 from utils.helper import *
@@ -120,6 +122,9 @@ class DataGetter(object):
         data = self.get_aggregate_value(scrip, derivative_type, op='sum', col=col, clauses=clauses)
         return data
 
+    def get_latest_date(self):
+        return self.get_max_value("NIFTY", FUTURE, 'timestamp')
+
 def get_all_scrips():
     if cache.has_key('scrips') and len(cache['scrips']) > 0:
         scrips = cache['scrips']
@@ -130,10 +135,17 @@ def get_all_scrips():
 
     return scrips
 
+def get_latest_date():
+    rd = DataGetter(dbops)
+    return rd.get_latest_date()
+
 def get_render_data():
     data = {}                                                               
-    data["scrips"] = get_all_scrips()                                  
-    data["day_zero"] = DAY_ZERO                       
+    data["scrips"] = get_all_scrips()
+    data["day_zero"] = DAY_ZERO
+    ldate = get_latest_date()
+    _ldate = from_pytime_to_str(ldate, "%d-%b-%Y")
+    data['latest_date'] = _ldate
     return data
 
 def get_expiry_series_for_date(scrip, date, limit=NUM_SERIES):

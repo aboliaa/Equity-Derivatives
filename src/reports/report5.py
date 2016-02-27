@@ -134,7 +134,7 @@ class Report5DataGetter(DataGetter):
             x.append(d[1])
 
         title = "Lowest Open Interest"
-        title += " (%s)" %(from_pytime_to_str(self.input["date"]))
+        title += " (%s)" %(from_pytime_to_str(self.input["date"], "%d-%b-%Y"))
         height = max(len(y)*25, 500)
         data2 = self.plot.plotly.form_plotargs_report5(x, y, height, title)
 
