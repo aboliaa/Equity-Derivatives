@@ -6,60 +6,103 @@ $def with(data)
 
 <body>
     <div id="input" style="width:100%;">
-        <br>
-        <label> 
-            &nbsp;&nbsp;Data uploaded till:
-        </label> $data['latest_date']
-        <br><br>
-        <div id="reportdiv" style="float:left;width:25%;">
-            <label>&nbsp;&nbsp;Report</label>
-            <select name="report" id="report" onchange="changeReport();">
-                <option>Select report</option>
-                <option id="1" value="1">Distribution of PUTS and CALLS</option>
-                <option id="2" value="2">Settlement price v/s Open interest</option>
-                <option id="3" value="3">Settlement price v/s PCR</option>
-                <option id="4" value="4">Open interest movement</option>
-                <option id="5" value="5">High/Low Open interest</option>
-                <option id="6" value="6">Most active CALLs and PUTs</option>
-            </select>
-        </div>
 
-        <div id="args">
-            <div id="scripdiv" style="float:left;width:15%;display:none;">
-                <label>Scrip</label>
-                <select name="scrip" id="scrip">
-                    $for scrip in data['scrips']:                                           
-                        <option value=$scrip>$scrip</option>
-                </select>
-            </div>
+        <table style="width:100%;">
+            <tr>
+                <td style="width:20%;text-align:center;">
+                <div class="reportdiv">
+                    Report
+                </div>
+                </td>
 
-            <div id="datediv" style="float:left;width:20%;display:none;">
-                <label>Date</label>
-                <input type="text" name="dd" id="dd" placeholder="dd" size=2 maxlength=2>
-                <input type="text" name="mm" id="mm" placeholder="mm" size=2 maxlength=2>
-                <input type="text" name="yyyy" id="yyyy" placeholder="yyyy" size=4 maxlength=4>
-            </div>
-         
-            <div id="ndiv" style="float:left;width:20%;display:none;">
-                <label>Number of scrips</label>
-                <select name="n" id="n">
-                    <option>Select number</option>
-                    $for i in range(1,16):
-                        $if i == 5:
-                            <option selected value=$i>$i</option>
-                        $else:
-                            <option value=$i>$i</option>
-                </select>
-            </div>
+                <td style="width:15%;text-align:center;">
+                <div class="scripdiv" style="display:none;">
+                    <label>Scrip</label>
+                </div>
+                </td>
 
-            <div style="float:left;width:20%;">
-                <input type="button" value="Submit" onclick="plot();">
-            </div>
+                <td style="width:15%;text-align:center;">
+                <div class="datediv" style="display:none;">
+                    <label>Date</label>
+                </div>
+                </td>
+             
+                <td style="width:15%;text-align:center;">
+                <div class="ndiv" style="display:none;">
+                    <label>Number of scrips</label>
+                </div>
+                </td>
 
-            <div id="loader" style="float:left;width:10%;display:none;">
-                <img src="/static/images/loader.gif" height="25" width="25">
-            </div>
-        </div>
+                <td style="width:10%;">
+                </td>
+
+                <td style="width:10%;">
+                </td>
+
+                <td style="width:20%;">
+                    Data uploaded till:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;$data['latest_date'] 
+                </td>
+            </tr>
+
+            <tr>
+                <td style="width:20%;text-align:center;">
+                <div class="reportdiv">
+                    <select name="report" id="report" onchange="changeReport();">
+                        <option>Select report</option>
+                        <option id="1" value="1">Distribution of PUTS and CALLS</option>
+                        <option id="2" value="2">Settlement price v/s Open interest</option>
+                        <option id="3" value="3">Settlement price v/s PCR</option>
+                        <option id="4" value="4">Open interest movement</option>
+                        <option id="5" value="5">High/Low Open interest</option>
+                        <option id="6" value="6">Most active CALLs and PUTs</option>
+                    </select>
+                </div>
+                </td>
+
+                <td style="width:15%;text-align:center;">
+                <div class="scripdiv" style="display:none;">
+                    <select name="scrip" id="scrip">
+                        $for scrip in data['scrips']:                                           
+                            <option value=$scrip>$scrip</option>
+                    </select>
+                </div>
+                </td>
+
+                <td style="width:15%;text-align:center;">
+                <div class="datediv" style="display:none;">
+                    <input type="text" name="dd" id="dd" placeholder="dd" size=2 maxlength=2 style="float:left;">
+                    <input type="text" name="mm" id="mm" placeholder="mm" size=2 maxlength=2 style="float:left;">
+                    <input type="text" name="yyyy" id="yyyy" placeholder="yyyy" size=4 maxlength=4 style="float:left;">
+                </div>
+                </td>
+             
+                <td style="width:15%;text-align:center;">
+                <div class="ndiv" style="display:none;">
+                    <select name="n" id="n">
+                        <option>Select number</option>
+                        $for i in range(1,16):
+                            $if i == 5:
+                                <option selected value=$i>$i</option>
+                            $else:
+                                <option value=$i>$i</option>
+                    </select>
+                </div>
+                </td>
+
+                <td style="width:10%;">
+                <div>
+                    <input type="button" value="Submit" onclick="plot();">
+                </div>
+                </td>
+
+                <td style="width:10%;">
+                <div id="loader" style="display:none;">
+                    <img src="/static/images/loader.gif" height="25" width="25">
+                </div>
+                </td>
+            </tr>
+        </table>
 
         <br><br>
 
@@ -96,34 +139,34 @@ $def with(data)
     function changeReport(){
         var report = document.getElementById("report").value;
         if (report == "1"){
-            jQuery("#scripdiv").show();
-            jQuery("#datediv").show();
-            jQuery("#ndiv").hide();
+            jQuery(".scripdiv").show();
+            jQuery(".datediv").show();
+            jQuery(".ndiv").hide();
         }
         else if (report == "2"){
-            jQuery("#scripdiv").show();
-            jQuery("#datediv").hide();
-            jQuery("#ndiv").hide();
+            jQuery(".scripdiv").show();
+            jQuery(".datediv").hide();
+            jQuery(".ndiv").hide();
         }
         else if (report == "3"){
-            jQuery("#scripdiv").show();
-            jQuery("#datediv").hide();
-            jQuery("#ndiv").hide();
+            jQuery(".scripdiv").show();
+            jQuery(".datediv").hide();
+            jQuery(".ndiv").hide();
         }
         else if (report == "4"){
-            jQuery("#scripdiv").hide();
-            jQuery("#datediv").show();
-            jQuery("#ndiv").show();
+            jQuery(".scripdiv").hide();
+            jQuery(".datediv").show();
+            jQuery(".ndiv").show();
         }
         else if (report == "5"){
-            jQuery("#scripdiv").hide();
-            jQuery("#datediv").show();
-            jQuery("#ndiv").hide();
+            jQuery(".scripdiv").hide();
+            jQuery(".datediv").show();
+            jQuery(".ndiv").hide();
         }
         else if (report == "6"){
-            jQuery("#scripdiv").hide();
-            jQuery("#datediv").show();
-            jQuery("#ndiv").show();
+            jQuery(".scripdiv").hide();
+            jQuery(".datediv").show();
+            jQuery(".ndiv").show();
         }
 
     }

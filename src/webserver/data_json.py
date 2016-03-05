@@ -4,6 +4,7 @@ import time
 
 from reports import reports
 from reports.data import get_render_data
+from utils.helper import from_str_to_pytime
 
 FUNC_MAP = {
             1: "_get_data_report1",
@@ -35,14 +36,19 @@ class WebDataJSON(object):
             msg = traceback.format_exc() + "%s" % args
             dlog.error(msg)
             return str(e)
-     
+    
+    def _get_date(self, time_str):
+        date = from_str_to_pytime(time_str, fmt="%d-%m-%Y")
+        if not date:
+            raise UIException("Invalid date.")
+        return date
+
     def _get_data_report1(self, args):
         scrip = args["scrip"]
         dd = args["dd"]
         mm = args["mm"]
         yyyy = args["yyyy"]
-        time_str = "%s-%s-%s" %(dd,mm,yyyy)
-        date = time.strptime(time_str, "%d-%m-%Y")
+        date = self._get_date("%s-%s-%s" %(dd,mm,yyyy))
         data, error = self.reports.report1.generate_data(scrip, date)
         if error:
             raise UIException(error)
@@ -70,8 +76,7 @@ class WebDataJSON(object):
         dd = args["dd"]
         mm = args["mm"]
         yyyy = args["yyyy"]
-        time_str = "%s-%s-%s" %(dd,mm,yyyy)
-        date = time.strptime(time_str, "%d-%m-%Y")
+        date = self._get_date("%s-%s-%s" %(dd,mm,yyyy))
         n = int(args["n"])
         data, error = self.reports.report4.generate_data(n, date)
         if error:
@@ -83,8 +88,7 @@ class WebDataJSON(object):
         dd = args["dd"]
         mm = args["mm"]
         yyyy = args["yyyy"]
-        time_str = "%s-%s-%s" %(dd,mm,yyyy)
-        date = time.strptime(time_str, "%d-%m-%Y")
+        date = self._get_date("%s-%s-%s" %(dd,mm,yyyy))
         data, error = self.reports.report5.generate_data(date)
         if error:
             raise UIException(error)
@@ -95,8 +99,7 @@ class WebDataJSON(object):
         dd = args["dd"]
         mm = args["mm"]
         yyyy = args["yyyy"]
-        time_str = "%s-%s-%s" %(dd,mm,yyyy)
-        date = time.strptime(time_str, "%d-%m-%Y")
+        date = self._get_date("%s-%s-%s" %(dd,mm,yyyy))
         n = int(args["n"])
         data, error = self.reports.report6.generate_data(n, date)
         if error:

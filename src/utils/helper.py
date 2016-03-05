@@ -30,9 +30,9 @@ def from_pytime_to_str(pytime, fmt="%Y-%m-%d"):
     # TODO: move all time format strings to const
     return time.strftime(fmt, pytime)
 
-def from_str_to_pytime(strtime):
+def from_str_to_pytime(strtime, fmt="%Y-%m-%d"):
     try:
-        t = time.strptime(strtime, "%Y-%m-%d")
+        t = time.strptime(strtime, fmt)
     except ValueError:
         t = None
     return t
