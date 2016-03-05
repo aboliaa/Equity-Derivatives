@@ -83,11 +83,15 @@ class WServer():
                 if self.inprogress:
                     cpu = psutil.cpu_percent()
                     if cpu > CPU_THRESHOLD:
-                        dlog.warn("CPU consumed is %s" % (cpu,))
+                        ps = psutil.Process(os.getpid())
+                        pscpu = ps.cpu_percent()
+                        dlog.warn("CPU consumed is %s, CPU percentage of DVServer is %s" % (cpu,pscpu))
 
                     mem = psutil.virtual_memory().percent
                     if mem > MEMORY_THRESHOLD:
-                        dlog.warn("Memory consumed is %s" % (mem,))
+                        ps = psutil.Process(os.getpid())
+                        psmem = ps.memory_percent()
+                        dlog.warn("Memory consumed is %s, memory percentage of DVServer is %s" % (mem,psmem))
             except Exception, fault:
                 dlog.error(traceback.format_exc())
 

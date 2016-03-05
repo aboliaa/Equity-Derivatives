@@ -58,7 +58,6 @@ class Report3DataGetter(DataGetter):
             clauses = [ [('timestamp', '=', dt), ('opt_type', '=', PE)] ]
             sum_of_puts = self.get_sum(scrip, OPTION, 'contracts', clauses=clauses)
 
-            PCR_trade = sum_of_puts / sum_of_calls
             PCR_trade = float(sum_of_puts) / float(sum_of_calls)
 
             data[from_pytime_to_str(dt)] = {}

@@ -51,7 +51,7 @@ class Holidays(object):
                 break
 
             ll = l.split()
-            h = time.strptime(ll[0], "%d-%b-%Y")
+            h = time.strptime(ll[0].strip(), "%d-%b-%Y")
             holidays.append(h)
         f.close()
         return holidays
