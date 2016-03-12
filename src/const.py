@@ -1,6 +1,8 @@
 import sys
 import os
 
+VERSION = "0.2"
+
 # Types of derivatives
 OPTION = 1
 FUTURE = 2
@@ -87,4 +89,5 @@ IGNORE_SCRIPS = ['DJIA', 'S&P500', 'FTSE100', 'INDIAVIX']
 
 CPU_THRESHOLD = 50
 MEMORY_THRESHOLD = 80
+
 

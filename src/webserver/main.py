@@ -1,3 +1,4 @@
+import os
 import webbrowser
 import platform
 import time
@@ -10,7 +11,6 @@ from utils import log
 from db.dbops_sqlite3 import SQLite_DBOps
 
 WEBPY = "webpy"
-
 
 class WebServer():
     def __init__(self, webserver_type=WEBPY):
@@ -32,6 +32,26 @@ def spawn_chrome():
         # webbrowser.geit('macosx').open("http://localhost:8080")
         pass
 
+def verify_db_version(dbops, sver):
+    spec = {
+        'cols': ['name'],
+        'clauses': [[('type', '=', 'table'), ('name', '=', 'P_DB_VERSION')]]
+    }
+    table = dbops.select_meta(spec)
+    if not table:
+        dlog.error("DB Version information not found. Exiting...")
+        os._exit(1)
+
+    spec = {
+        'tablename': "P_DB_VERSION",
+        'cols': ['version'],
+    }
+    dver = dbops.select(spec)[0][0]
+    dlog.info("DB version %s" % dver)
+    if dver <> sver:
+        dlog.error("DB version does not match with server version. Exiting...")
+        os._exit(1)
+
 if __name__ == "__main__":
     __builtins__.profile = "--profile" in sys.argv
     debuglogger = log.Logger(DEBUGLOG)
@@ -46,8 +66,11 @@ if __name__ == "__main__":
 
     __builtins__.ignore_scrips = IGNORE_SCRIPS
 
-    dlog.info("====================== Version 0.1 =========================")
+    sver = VERSION
+    dlog.info("====================== Version %s =========================" % sver)
     dlog.info("Starting server at port %s" % ("8080",))
+
+    verify_db_version(dbops, sver)
 
     # TODO: Ideally request logs should go in DB.
     requestlogger = log.Logger(REQUESTLOG)
