@@ -79,7 +79,7 @@ class Populator(object):
             'primary_key': [ ('exp_dt', 'date'), ('timestamp', 'date'),
                              ('strike_pr', 'double'), ('opt_type', 'int') ],
             'non_key': [ ('contracts', 'long'), ('open_int', 'long'),
-                         ('settle_pr', 'double') ],
+                         ('settle_pr', 'double'), ('close', 'double') ],
             'tablename': tablename,
         }
         self.dbops.create(spec)
@@ -89,7 +89,7 @@ class Populator(object):
         open_int, strike_pr = e[12], e[3]
         contracts, opt_type = e[10], e[4]
         _exp_dt, _timestamp = e[2], e[14]
-        settle_pr = e[9]
+        close, settle_pr = e[8], e[9]
         # print "entries = ", open_int, strike_pr, contracts, opt_type, _exp_dt, _timestamp
         exp_dt = get_date(_exp_dt)
         timestamp = get_date(_timestamp)
@@ -98,7 +98,7 @@ class Populator(object):
             'values': [ ('open_int', open_int), ('exp_dt', exp_dt), 
                         ('timestamp', timestamp), ('strike_pr', strike_pr), 
                         ('opt_type',  opt_type), ('contracts', contracts),
-                        ('settle_pr', settle_pr)]
+                        ('settle_pr', settle_pr), ('close', close)]
         }
         return spec
 
