@@ -46,9 +46,9 @@ def verify_db_version(dbops, sver):
         'tablename': "P_DB_VERSION",
         'cols': ['version'],
     }
-    dver = dbops.select(spec)[0][0]
-    dlog.info("DB version %s" % dver)
-    if dver <> sver:
+    dbver = dbops.select(spec)[0][0]
+    dlog.info("DB version %s" % dbver)
+    if dbver <> sver:
         dlog.error("DB version does not match with server version. Exiting...")
         os._exit(1)
 

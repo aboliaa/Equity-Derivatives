@@ -39,6 +39,22 @@ class DailyUpdate:
             self.dbops.create(spec)
             dlog.info('P_CSVS table created')
 
+            # Add version information in DB.
+            # TODO: As such, no upgrade is handled
+            spec = {
+                'primary_key': [('version', 'varchar(32)')],
+                'non_key': [],
+                'tablename': 'P_DB_VERSION'
+            }
+            self.dbops.create(spec)
+
+            spec = {
+                'tablename': 'P_DB_VERSION',
+                'values': [('version', VERSION)]
+            }
+            self.dbops.put(spec)
+            dlog.info("DB version information updated")
+
     def get_csvs_in_store(self):
         """
         Assuming that all csvs in store will be at the top level
