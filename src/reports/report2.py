@@ -23,15 +23,15 @@ class Report2DataGetter(DataGetter):
         # (including informations about mergers and de-mergers),
         # can be stored in M_SCRIP_INFO table.
 
-        min_date = self.get_min_value(scrip, FUTURE, 'timestamp')
-        max_date = self.get_max_value(scrip, FUTURE, 'timestamp')
+        min_date = self.get_min_value(scrip, 'timestamp')
+        max_date = self.get_max_value(scrip, 'timestamp')
 
         data = {}
         for dt in datetimeIterator(min_date, max_date):
 
             clauses = [ [('timestamp', '=', dt)] ]
             series = get_exp_series(dt)
-            # near_series_date = self.get_min_value(scrip, FUTURE, 'exp_dt', clauses=clauses)
+            # near_series_date = self.get_min_value(scrip, 'exp_dt', clauses=clauses)
 
             # There are no rows in db for holidays. Hence aggregate query will
             # return output as None. Skip these dates.
@@ -43,17 +43,19 @@ class Report2DataGetter(DataGetter):
 
             # TODO: Check if this can be reused in other reports (report 3)
             cols = ['settle_pr']
-            clauses = [ [('timestamp', '=', dt), ('exp_dt', '=', near_series_date)] ]
-            settlement_price = self.get_scrip_data(scrip, FUTURE, cols=cols, clauses=clauses)
+            # TODO: CommonTable
+            clauses = [ [ 
+                          ('timestamp', '=', dt), 
+                          ('exp_dt', '=', near_series_date),
+                          ('opt_type', '=', XX)
+                       ] ]
+            settlement_price = self.get_scrip_data(scrip, cols=cols, clauses=clauses)
             settlement_price = settlement_price[0]['settle_pr']
 
             clauses = [[('timestamp', '=', dt), ('exp_dt', '=', sr)] for sr in series]
-            s1 = self.get_sum(scrip, OPTION, 'open_int', clauses=clauses)
-            s2 = self.get_sum(scrip, FUTURE, 'open_int', clauses=clauses)
-
+            OI_sum = self.get_sum(scrip, 'open_int', clauses=clauses)
             # TODO: Check if summation of OI can be reused in other reports (report 4),
             # so make it into a common function.
-            OI_sum = s1 + s2
 
             data[from_pytime_to_str(dt)] = {}
             data[from_pytime_to_str(dt)]['settlement_price'] = settlement_price

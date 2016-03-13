@@ -3,6 +3,7 @@ import os
 
 VERSION = "0.2"
 
+# TODO: CommonTable remove these
 # Types of derivatives
 OPTION = 1
 FUTURE = 2
@@ -47,11 +48,11 @@ REV_INSTRU_TYPE_MAP = {
 }
 
 REV_IDX_MAP = {
-    FUTIDX: "FUTIDX", 
-    FUTSTK: "FUTSTK", 
-    FUTIVX: "FUTIVX", 
-    OPTIDX: "OPTIDX", 
-    OPTSTK: "OPTSTK",
+    FUTIDX: "IDX", 
+    FUTSTK: "STK", 
+    FUTIVX: "IVX", 
+    OPTIDX: "IDX", 
+    OPTSTK: "STK",
 }
 
 OPT_TYPE_MAP = {"XX": XX, "CE": CE, "PE": PE}

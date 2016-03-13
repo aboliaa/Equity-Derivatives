@@ -23,14 +23,14 @@ class Report3DataGetter(DataGetter):
         # (including informations about mergers and de-mergers),
         # can be stored in M_SCRIP_INFO table.
 
-        min_date = self.get_min_value(scrip, OPTION, 'timestamp')
-        max_date = self.get_max_value(scrip, OPTION, 'timestamp')
+        min_date = self.get_min_value(scrip, 'timestamp')
+        max_date = self.get_max_value(scrip, 'timestamp')
 
         data = {}
         for dt in datetimeIterator(min_date, max_date):
 
             clauses = [ [('timestamp', '=', dt)] ]
-            near_series_date = self.get_min_value(scrip, FUTURE, 'exp_dt', clauses=clauses)
+            near_series_date = self.get_min_value(scrip, 'exp_dt', clauses=clauses)
 
             # There are no rows in db for holidays. Hence aggregate query will
             # return output as None. Skip these dates.
@@ -40,23 +40,28 @@ class Report3DataGetter(DataGetter):
 
             # TODO: Check if this can be reused in other reports (report 3)
             cols = ['settle_pr']
-            clauses = [ [('timestamp', '=', dt), ('exp_dt', '=', near_series_date)] ]
-            settlement_price = self.get_scrip_data(scrip, FUTURE, cols=cols, clauses=clauses)
+            # TODO: CommonTable
+            clauses = [ [ 
+                          ('timestamp', '=', dt), 
+                          ('exp_dt', '=', near_series_date),
+                          ('opt_type', '=', XX)
+                       ] ]
+            settlement_price = self.get_scrip_data(scrip, cols=cols, clauses=clauses)
             settlement_price = settlement_price[0]['settle_pr']
 
             clauses = [ [('timestamp', '=', dt), ('opt_type', '=', CE)] ]
-            sum_of_calls = self.get_sum(scrip, OPTION, 'open_int', clauses=clauses)
+            sum_of_calls = self.get_sum(scrip, 'open_int', clauses=clauses)
             
             clauses = [ [('timestamp', '=', dt), ('opt_type', '=', PE)] ]
-            sum_of_puts = self.get_sum(scrip, OPTION, 'open_int', clauses=clauses)
+            sum_of_puts = self.get_sum(scrip, 'open_int', clauses=clauses)
 
             PCR_OI = float(sum_of_puts) / float(sum_of_calls)
             
             clauses = [ [('timestamp', '=', dt), ('opt_type', '=', CE)] ]
-            sum_of_calls = self.get_sum(scrip, OPTION, 'contracts', clauses=clauses)
+            sum_of_calls = self.get_sum(scrip, 'contracts', clauses=clauses)
             
             clauses = [ [('timestamp', '=', dt), ('opt_type', '=', PE)] ]
-            sum_of_puts = self.get_sum(scrip, OPTION, 'contracts', clauses=clauses)
+            sum_of_puts = self.get_sum(scrip, 'contracts', clauses=clauses)
 
             PCR_trade = float(sum_of_puts) / float(sum_of_calls)
 

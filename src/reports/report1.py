@@ -14,7 +14,7 @@ class Report1DataGetter(DataGetter):
     def validate_input(self, scrip, date):
         # TODO: Ideally db layer should raise this exception 
         clauses = [ [('timestamp', '=', date)] ]
-        data = self.get_scrip_data(scrip, OPTION, cols=['*'], clauses=clauses)
+        data = self.get_scrip_data(scrip, cols=['*'], clauses=clauses)
         if not data:
             raise DBError(ENOTFOUND)
 
@@ -30,7 +30,7 @@ class Report1DataGetter(DataGetter):
 
         cols = ['open_int', 'exp_dt', 'strike_pr', 'opt_type']
         clauses = [ [('timestamp', '=', date)] ]
-        data = self.get_scrip_data(scrip, OPTION, cols=cols, clauses=clauses)
+        data = self.get_scrip_data(scrip, cols=cols, clauses=clauses)
 
         call_strike_prices = {}
         call_open_interests = {}

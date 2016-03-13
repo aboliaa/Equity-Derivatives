@@ -15,7 +15,7 @@ class Report6DataGetter(DataGetter):
     def validate_input(self, date):
         # TODO: Ideally db layer should raise this exception 
         clauses = [ [('timestamp', '=', date)] ]
-        data = self.get_scrip_data("NIFTY", OPTION, cols=None, clauses=clauses)
+        data = self.get_scrip_data("NIFTY", cols=None, clauses=clauses)
         if not data:
             raise DBError(ENOTFOUND)
 
@@ -39,7 +39,7 @@ class Report6DataGetter(DataGetter):
 
             try:
                 clauses = [ [('timestamp', '=', date), ('opt_type', '=', CE)] ]
-                max_contracts = self.get_max_value(scrip, OPTION, 'contracts', clauses=clauses)
+                max_contracts = self.get_max_value(scrip, 'contracts', clauses=clauses)
                 data['calls'][scrip] = {'scrip': scrip, 'max_contracts': max_contracts} 
             except:
                 # dlog.info(traceback.format_exc())
@@ -48,7 +48,7 @@ class Report6DataGetter(DataGetter):
 
             try: 
                 clauses = [ [('timestamp', '=', date), ('opt_type', '=', PE)] ]
-                max_contracts = self.get_max_value(scrip, OPTION, 'contracts', clauses=clauses)
+                max_contracts = self.get_max_value(scrip, 'contracts', clauses=clauses)
                 data['puts'][scrip] = {'scrip': scrip, 'max_contracts': max_contracts}
             except:
                 # dlog.info(traceback.format_exc())
@@ -67,14 +67,14 @@ class Report6DataGetter(DataGetter):
             clauses = [ [('timestamp', '=', date), 
                          ('opt_type', '=', CE), 
                          ('contracts', '=', call['max_contracts'])] ]
-            scrip = self.get_scrip_data(call['scrip'], OPTION, cols=cols, clauses=clauses)
+            scrip = self.get_scrip_data(call['scrip'], cols=cols, clauses=clauses)
             call.update(scrip[0])
         
         for put in data['puts']:
             clauses = [ [('timestamp', '=', date), 
                          ('opt_type', '=', PE), 
                          ('contracts', '=', put['max_contracts'])] ]
-            scrip = self.get_scrip_data(put['scrip'], OPTION, cols=cols, clauses=clauses)
+            scrip = self.get_scrip_data(put['scrip'], cols=cols, clauses=clauses)
             put.update(scrip[0])
 
         dlog.info("DATA = %s" % (data,))

@@ -11,12 +11,12 @@ class Report4DataGetter(DataGetter):
         super(Report4DataGetter, self).__init__(db)
         self.plot = plot
 
-    def get_sum_of_OI_for_scrip(self, scrip, derivative_type, clauses):
+    def get_sum_of_OI_for_scrip(self, scrip, clauses):
         try:
-            s = self.get_sum(scrip, derivative_type, 'open_int', clauses=clauses)
+            s = self.get_sum(scrip, 'open_int', clauses=clauses)
         except:
             # TODO: Ideally we should handle specific errors here
-            dlog.error("Exception in getting data for %s:%s" % (scrip, derivative_type))
+            dlog.error("Exception in getting data for %s" % (scrip))
             s = 0
 
         # TODO: Raise an proper exception from DB layer.
@@ -28,7 +28,7 @@ class Report4DataGetter(DataGetter):
     def validate_input(self, n, date):
         # TODO: Ideally db layer should raise this exception 
         clauses = [ [('timestamp', '=', date)] ]
-        data = self.get_scrip_data("NIFTY", OPTION, cols=None, clauses=clauses)
+        data = self.get_scrip_data("NIFTY", cols=None, clauses=clauses)
         if not data:
             raise DBError(ENOTFOUND)
 
@@ -75,14 +75,10 @@ class Report4DataGetter(DataGetter):
                 psdate = pseries[i]
 
                 clauses = [ [('timestamp', '=', date), ('exp_dt', '=', sdate)] ]
-                s1 = self.get_sum_of_OI_for_scrip(scrip, FUTURE, clauses)
-                s2 = self.get_sum_of_OI_for_scrip(scrip, OPTION, clauses)
-                sum1 = s1 + s2
+                sum1 = self.get_sum_of_OI_for_scrip(scrip, clauses)
 
                 clauses = [ [('timestamp', '=', prev_date), ('exp_dt', '=', psdate)] ]
-                s1 = self.get_sum_of_OI_for_scrip(scrip, FUTURE, clauses)
-                s2 = self.get_sum_of_OI_for_scrip(scrip, OPTION, clauses)
-                sum2 = s1 + s2
+                sum2 = self.get_sum_of_OI_for_scrip(scrip, clauses)
                 
                 # dlog.info("for scrip %s sum1 and sum2 for series %s are: %s, %s " % (scrip, _s, sum1, sum2))
                 

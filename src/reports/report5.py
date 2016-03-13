@@ -16,11 +16,9 @@ class Report5DataGetter(DataGetter):
         clauses = [[('timestamp', '=', date), ('exp_dt', '=', sr)] for sr in series]
         # dlog.info("clauses = %s" % (clauses,))
         try:
-            sum_of_futures = self.get_sum(scrip, FUTURE, 'open_int', clauses=clauses)
-            sum_of_options = self.get_sum(scrip, OPTION, 'open_int', clauses=clauses)
-            if not sum_of_futures or not sum_of_options:
+            sum_of_OI = self.get_sum(scrip, 'open_int', clauses=clauses)
+            if not sum_of_OI:
                 return 0
-            sum_of_OI = sum_of_futures + sum_of_options
         except:
             dlog.error(traceback.format_exc())
             return 0
@@ -28,6 +26,7 @@ class Report5DataGetter(DataGetter):
         # There are no rows in db for holidays. Hence aggregate query will
         # return output as None. Skip these dates.
         # TODO: Raise an proper exception from DB layer.
+        # TODO: CommonTable Following code can be removed
         if sum_of_OI is None:
             sum_of_OI = 0
 
@@ -39,7 +38,7 @@ class Report5DataGetter(DataGetter):
     def validate_input(self, date):
         # TODO: Ideally db layer should raise this exception 
         clauses = [ [('timestamp', '=', date)] ]
-        data = self.get_scrip_data("NIFTY", OPTION, cols=None, clauses=clauses)
+        data = self.get_scrip_data("NIFTY", cols=None, clauses=clauses)
         if not data:
             raise DBError(ENOTFOUND)
 
@@ -63,7 +62,7 @@ class Report5DataGetter(DataGetter):
 
             skipped_dates = []
             try:
-                min_date = self.get_min_value(scrip, FUTURE, 'timestamp')
+                min_date = self.get_min_value(scrip, 'timestamp')
             except:
                 dlog.error(traceback.format_exc())
                 dlog.error("Exception in scrip %s" % (scrip,))

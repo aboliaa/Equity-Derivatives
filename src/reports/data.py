@@ -32,8 +32,8 @@ class DataGetter(object):
 
     # TODO: Many of the functions in this class accept scripname as input. 
     # Should we define a class for 'scrip'?
-    def get_all_series(self, scrip, derivative_type, date):
-        tablename = self.get_tablename_from_scrip(scrip, derivative_type)
+    def get_all_series(self, scrip, date):
+        tablename = self.get_tablename_from_scrip(scrip)
         _spec = {
                 'tablename' : tablename,
                 'cols'      : [ 'exp_dt' ],
@@ -42,24 +42,15 @@ class DataGetter(object):
         return self.dbobj.select(_spec)
 
     def get_all_series_for_date(self, scrip, date, limit=NUM_SERIES):
-        # Get all series of FUTURE and OPTION and union them
+        # TODO: CommonTable
         try:
-            _series = self.get_all_series(scrip, FUTURE, date)
+            __series = self.get_all_series(scrip, date)
         except:
-            dlog.error("Nothing found for scrip, derivative_type = %s:%s" % (scrip, FUTURE))
-            series_future = set()
+            dlog.error("Nothing found for scrip = %s" % (scrip))
+            _series = ()
         else:
-            series_future = set([x[0] for x in _series])
+            _series = set([x[0] for x in __series])
          
-        try:
-            _series = self.get_all_series(scrip, OPTION, date)
-        except:
-            dlog.error("Nothing found for scrip, derivative_type = %s:%s " % (scrip, OPTION))
-            series_option = set()
-        else:
-            series_option = set([x[0] for x in _series])
-
-        _series = series_future.union(series_option)
         series = sorted(list(_series))
 
         if limit:
@@ -67,7 +58,7 @@ class DataGetter(object):
         else:
             return series
 
-    def get_tablename_from_scrip(self, scrip, derivative_type):
+    def get_tablename_from_scrip(self, scrip):
         _spec = {
                 'tablename' : 'M_SCRIP_INFO',
                 'cols'      : ['instru_type'],
@@ -75,14 +66,13 @@ class DataGetter(object):
                 }
         scrip_info = self.dbobj.select(_spec)
         instru_type = scrip_info[0][0]
-        tablename = "%s%s%s_%s" %(DATATABLE_PREFIX,
-                                  DERIVATIVE_TYPE_MAP[derivative_type],
+        tablename = "%s%s_%s" %(DATATABLE_PREFIX,
                                   REV_INSTRU_TYPE_MAP[instru_type],
                                   scrip)
         return tablename
 
-    def get_scrip_data(self, scrip, derivative_type, cols=None, clauses=None):
-        tablename = self.get_tablename_from_scrip(scrip, derivative_type)
+    def get_scrip_data(self, scrip, cols=None, clauses=None):
+        tablename = self.get_tablename_from_scrip(scrip)
         
         if not clauses:
             clauses = []
@@ -98,8 +88,8 @@ class DataGetter(object):
         data = self._dictify_db_data(cols, result)
         return data
  
-    def get_aggregate_value(self, scrip, derivative_type, op, col, clauses=[]):
-        tablename = self.get_tablename_from_scrip(scrip, derivative_type)
+    def get_aggregate_value(self, scrip, op, col, clauses=[]):
+        tablename = self.get_tablename_from_scrip(scrip)
 
         _spec = {
                 'tablename' : tablename,
@@ -110,20 +100,20 @@ class DataGetter(object):
         data = data[0][0]
         return data
        
-    def get_min_value(self, scrip, derivative_type, col, clauses=[]):
-        data = self.get_aggregate_value(scrip, derivative_type, op='min', col=col, clauses=clauses)
+    def get_min_value(self, scrip, col, clauses=[]):
+        data = self.get_aggregate_value(scrip, op='min', col=col, clauses=clauses)
         return data
      
-    def get_max_value(self, scrip, derivative_type, col, clauses=[]):
-        data = self.get_aggregate_value(scrip, derivative_type, op='max', col=col, clauses=clauses)
+    def get_max_value(self, scrip, col, clauses=[]):
+        data = self.get_aggregate_value(scrip, op='max', col=col, clauses=clauses)
         return data
        
-    def get_sum(self, scrip, derivative_type, col, clauses=[]):
-        data = self.get_aggregate_value(scrip, derivative_type, op='sum', col=col, clauses=clauses)
+    def get_sum(self, scrip, col, clauses=[]):
+        data = self.get_aggregate_value(scrip, op='sum', col=col, clauses=clauses)
         return data
 
     def get_latest_date(self):
-        return self.get_max_value("NIFTY", FUTURE, 'timestamp')
+        return self.get_max_value("NIFTY", 'timestamp')
 
 def get_all_scrips():
     if cache.has_key('scrips') and len(cache['scrips']) > 0:
