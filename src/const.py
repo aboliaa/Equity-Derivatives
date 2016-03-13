@@ -50,7 +50,7 @@ REV_INSTRU_TYPE_MAP = {
 REV_IDX_MAP = {
     FUTIDX: "IDX", 
     FUTSTK: "STK", 
-    FUTIVX: "IVX", 
+    FUTIVX: "VIX", 
     OPTIDX: "IDX", 
     OPTSTK: "STK",
 }
